@@ -1,2 +1,11 @@
 # docs
-Personal documentation notes
+
+Personal documentation notes.
+
+## Manifest
+
+- [conventions](conventions)
+- [devenvs](devenvs)
+- [gitignores](gitignores)
+- [notes](notes)
+- [workflows](workflows)

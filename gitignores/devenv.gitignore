@@ -1,0 +1,9 @@
+################################################################################
+# devenv.gitignore
+#
+# General Dev Environments.
+################################################################################
+
+# JetBrains IDEs
+# Based on: https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore.
+.idea/

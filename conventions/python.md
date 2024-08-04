@@ -28,7 +28,7 @@
 ### 1.1 Google Style
 
 All python code should be written in compliance to
-the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
 
 #### 1.1.2 Pros
 

@@ -115,11 +115,16 @@ Add the path for `OpenOCD` and `STM32CubeMX`:
 - For Windows the default paths are:
     ```
     C:\Users\**NAME_HERE**\Documents\OpenOCD-20230712-0.12.0\bin\openocd.exe
+    ```
+    ```
     C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\STM32CubeMX.exe
+    C:\Users\Daniel\AppData\Local\Programs\STM32CubeMX\STM32CubeMX.exe
     ```
 - For macOS the default paths are:
     ```
     /opt/homebrew/Cellar/open-ocd/0.12.0/bin/openocd
+    ```
+    ```
     /Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources/STM32CubeMX
     ```
 
@@ -133,15 +138,18 @@ Add the path for `Arm GNU Toolchain` (`arm-none-eabi-gcc`).
 - For Windows the default paths are:
     ```
     C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\12.3 rel1\bin\arm-none-eabi-gcc.exe
+    ```
+    ```
     C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\12.3 rel1\bin\arm-none-eabi-g++.exe
     ```
 - For macOS the default paths (for homebrew original GCC or ARM Developer
   version) are:
     ```
     /opt/homebrew/Cellar/ArmGNUToolchain/12.3.rel1/bin/arm-none-eabi-gcc
-    /opt/homebrew/Cellar/ArmGNUToolchain/12.3.rel1/bin/arm-none-eabi-g++
-    ... or ...
     /Applications/ArmGNUToolchain/12.3.rel1/arm-none-eabi/bin/arm-none-eabi-gcc
+    ```
+    ```
+    /opt/homebrew/Cellar/ArmGNUToolchain/12.3.rel1/bin/arm-none-eabi-g++
     /Applications/ArmGNUToolchain/12.3.rel1/arm-none-eabi/bin/arm-none-eabi-g++
     ```
     - Note that for macOS you may see a warning

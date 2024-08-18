@@ -18,9 +18,15 @@
     - [3.3 File Structure](#33-file-structure)
         - [3.3.1 Pros](#331-pros)
         - [3.3.2 Cons](#332-cons)
-    - [3.4 Directory Names](#34-directory-names)
-    - [3.5 Module Names](#35-module-names)
-    - [3.6 Variable Names](#36-variable-names)
+    - [3.4 Naming Convention](#34-naming-convention)
+        - [3.4.1 Directory Names](#341-directory-names)
+        - [3.4.2 Module and File Names](#342-module-and-file-names)
+        - [3.4.3 Variable Names](#343-variable-names)
+            - [3.4.3.1 Constants](#3431-constants)
+        - [3.4.4 Macro and Define Names](#344-macro-and-define-names)
+        - [3.4.5 Typedef Struct Names](#345-typedef-struct-names)
+            - [3.4.5.1 Enum Members](#3451-enum-members)
+        - [3.4.6 Function Names](#346-function-names)
 
 </details>
 
@@ -94,14 +100,39 @@ code generation. Also is the official supported format.
 
 Can be restrictive in certain scenarios when dependent on HAL.
 
-### 3.4 Directory Names
+### 3.4 Naming Convention
 
-Use a single word, all lowercase characters.
+Note: All STM32CubeMX code generated is kept as is. The following is regarding
+developer code.
 
-### 3.5 Module Names
+### 3.4.1 Directory Names
 
-Use snake_case.
+Use a `word`, all lowercase characters.
 
-### 3.6 Variable Names
+### 3.4.2 Module and File Names
 
-Use snake_case.
+Use `snake_case`.
+
+### 3.4.3 Variable Names
+
+Use `snake_case`.
+
+#### 3.4.3.1 Constants
+
+Use `UPPER_SNAKE_CASE`.
+
+### 3.4.4 Macro and Define Names
+
+Use `UPPER_SNAKE_CASE`.
+
+### 3.4.5 Typedef Struct Names
+
+Use `PascalCase`.
+
+#### 3.4.5.1 Enum Members
+
+Use `UPPER_SNAKE_CASE`.
+
+### 3.4.6 Function Names
+
+Use `snake_case`.

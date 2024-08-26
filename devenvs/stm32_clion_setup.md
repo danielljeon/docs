@@ -81,6 +81,12 @@ Installation for macOS:
     - Full original GNU version can be found
       on [Original GCC](https://formulae.brew.sh/formula/arm-none-eabi-gcc).
 
+**Recommended resource:**
+The [Mbed Community Edition](https://github.com/mbed-ce/mbed-os) maintains a
+well documented [GitHub wiki](https://github.com/mbed-ce/mbed-os/wiki) with
+a [Toolchain Setup Guide](https://github.com/mbed-ce/mbed-os/wiki/Toolchain-Setup-Guide)
+for ARM GCC.
+
 ### 1.4 OpenOCD*
 
 [OpenOCD](https://openocd.org/).

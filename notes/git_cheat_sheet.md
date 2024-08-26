@@ -18,10 +18,11 @@
 - [4 Submodule](#411-results-gitmodules)
     - [4.1 Add Submodule](#41-add-submodule)
         - [4.1.1 Results (.gitmodules)](#411-results-gitmodules)
-    - [4.2 Fetch Submodule Commits](#42-fetch-submodule-commits)
-    - [4.3 Pull Submodule](#43-pull-submodule)
-    - [4.4 Update Submodule](#44-update-submodule)
-    - [4.5 Remove Submodule](#45-remove-submodule)
+    - [4.2 Clone with Submodules](#42-clone-with-submodules)
+    - [4.3 Fetch Submodule Commits](#43-fetch-submodule-commits)
+    - [4.4 Pull Submodule](#44-pull-submodule)
+    - [4.5 Update Submodule](#45-update-submodule)
+    - [4.6 Remove Submodule](#46-remove-submodule)
 
 </details>
 
@@ -144,20 +145,26 @@ automatically:
     - Contains the references to the remote repositories acting as submodules.
 3. `.git/config` is modified to include the added submodule.
 
-### 4.2 Fetch Submodule Commits
+### 4.2 Clone with Submodules
+
+```shell
+git clone --recursive <https://github.com/github/.github>  # GitHub repo.
+```
+
+### 4.3 Fetch Submodule Commits
 
 ```shell
 cd repository/submodule # Enter submodule directory.
 git fetch
 ```
 
-### 4.3 Pull Submodule
+### 4.4 Pull Submodule
 
 ```shell
 git submodule update # --init --recursive
 ```
 
-### 4.4 Update Submodule
+### 4.5 Update Submodule
 
 ```shell
 git submodule update # --remote --merge
@@ -166,7 +173,7 @@ git submodule update # --remote --merge
 - If you do not use the `–remote` flag, a manual `git pull` within each
   submodule will be required.
 
-### 4.5 Remove Submodule
+### 4.6 Remove Submodule
 
 ```shell
 git submodule deinit <submodule> # Update .git/config.

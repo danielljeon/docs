@@ -2,7 +2,7 @@
 
 ## Overview
 
-A library of actively used and example GitHub workflows for DevOps CI / CD.
+A library of actively used and example GitHub workflows for DevOps CI/CD.
 
 ## Manifest
 

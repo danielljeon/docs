@@ -18,7 +18,7 @@
         - [3.3.1 Numbering Format](#331-numbering-format)
         - [3.3.2 Writing Format](#332-writing-format)
         - [3.3.3 Horizontal Lines](#333-horizontal-lines)
-        - [3.3.4 Section Links / Header References](#334-section-links--header-references)
+        - [3.3.4 Section Links/Header References](#334-section-linksheader-references)
     - [3.4 Standard Markdown Syntax](#34-standard-markdown-syntax)
         - [3.4.1 Advanced Formatting Syntax](#341-advanced-formatting-syntax)
     - [3.5 Code Blocks](#35-code-blocks)
@@ -45,7 +45,7 @@ repository `README.md` docs, to resource docs and convention docs like this one.
 
 ## 2 Language Rules
 
-All written non-coding / machine language is Canadian English.
+All written non-coding/machine language is Canadian English.
 
 - No oxford comma.
 - Carry overs from British English like "colour".
@@ -66,7 +66,7 @@ Max line length = `80`.
 
 Exceptions to the limit are:
 
-- URLs, filepaths, etc.
+- URLs, file paths, etc.
 - Long constants not containing whitespace that would be inconvenient to split.
 
 #### 3.1.2 Pros
@@ -117,7 +117,7 @@ Use horizontal line breaks `---` to separate long sections of writing.
 The general recommendation is to separate on `Header level 1 & 2` to improve
 readability.
 
-#### 3.3.4 Section Links / Header References
+#### 3.3.4 Section Links/Header References
 
 Use header references when possible to make referencing easy.
 
@@ -191,7 +191,7 @@ $$f' \left( x \right) = \lim_{ h \rightarrow 0 } \frac{f \left( x+h \right) - f
 
 ### 4 Other Media
 
-Links, pictures, etc are very helpful use them appropriately to write good
+Links, pictures, etc. are very helpful use them appropriately to write good
 documentation.
 
 #### 4.1 Pictures

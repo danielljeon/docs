@@ -11,7 +11,7 @@
         - [2.1.1 Permissions](#211-permissions)
         - [2.1.2 Naming](#212-naming)
     - [2.2 Branches](#22-branches)
-    - [2.3 Common / Required files](#23-common--required-files)
+    - [2.3 Common/Required files](#23-commonrequired-files)
         - [2.3.1 .gitignore*](#231-gitignore)
         - [2.3.2 README.md*](#232-readmemd)
         - [2.3.3 documentation/](#233-documentation)
@@ -21,7 +21,7 @@
     - [3.2 Commits](#32-commits)
     - [3.3 Pushes](#33-pushes)
         - [3.3.1 Force Pushes](#331-force-pushes)
-    - [3.4 Merge / Rebase Branch](#34-merge--rebase-branch)
+    - [3.4 Merge/Rebase Branch](#34-mergerebase-branch)
         - [3.4.1 General Recommendation](#341-general-recommendation)
 - [4 Documentation](#4-documentation)
 - [5 GitHub Setup](#5-github-setup)
@@ -73,9 +73,9 @@ All repos should use appropriate naming, if arbitrary default to snake_case.
 
 ### 2.2 Branches
 
-`main` is always the default / production / final release branch.
+`main` is always the default/production/final release branch.
 
-### 2.3 Common / Required files
+### 2.3 Common/Required files
 
 #### 2.3.1 .gitignore*
 
@@ -127,9 +127,9 @@ Never force push unless you absolutely know what you are doing.
 - If you're force pushing you already messed up another practice guideline
   earlier.
 
-### 3.4 Merge / Rebase Branch
+### 3.4 Merge/Rebase Branch
 
-Use pull requests and merge / rebase up the branches to add changes to main.
+Use pull requests and merge/rebase up the branches to add changes to main.
 
 The decision for merge, squash or rebase is specific case by case, always aim to
 use the most appropriate for each situation.
@@ -143,7 +143,7 @@ Some core conditions to consider:
 #### 3.4.1 General Recommendation
 
 1. Merge: General shared branch to shared branch.
-2. Squash: Private branch with many changes to central development / release
+2. Squash: Private branch with many changes to central development/release
    branch.
 3. Rebase: Private branch to any target set as a base for changes.
 
@@ -157,7 +157,7 @@ Always follow documentation conventions follow by and defined in this repo.
 
 ## 5 GitHub Setup
 
-Git origin, org, projects, etc are all set up through GitHub.
+Git origin, org, projects, etc. are all set up through GitHub.
 
 ### 5.1 Organization, Repo & Team Permissions
 
@@ -166,9 +166,6 @@ Organizational access role security must always be maintained.
 ### 5.2 Rulesets
 
 Rule sets outline general rules.
-
-The following example incorporates GitHub Actions Workflows for
-our [black format checker](../workflows/black-formatter.yaml).
 
 **main.json**:
 
@@ -309,9 +306,9 @@ assign yourself as the assigned.
 
 #### 5.5.2 Conversation
 
-Keep the conversation related to the specific issue / pull request at hand. If
-you need to reference another issue / pull request, reference directly for
-convenience and clarity.
+Keep the conversation related to the specific issue/pull request at hand. If you
+need to reference another issue/pull request, reference directly for convenience
+and clarity.
 
 > See GitHub Docs:
 > [Assigning issues and pull requests to other GitHub users](https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users)

@@ -12,7 +12,7 @@ maintained quite well.
 1. Clone the MBed project repo.
 2. Set up the ARM GCC toolchain,
    see [Toolchain Setup Guide](https://github.com/mbed-ce/mbed-os/wiki/Toolchain-Setup-Guide).
-3. IDE / environment setup:
+3. IDE/environment setup:
     - [command line](https://github.com/mbed-ce/mbed-os/wiki/Project-Setup:-Command-Line).
     - [CLion IDE](https://github.com/mbed-ce/mbed-os/wiki/Project-Setup:-CLion).
     - [VS Code IDE](https://github.com/mbed-ce/mbed-os/wiki/Project-Setup:-VS-Code).

@@ -9,7 +9,7 @@
     - [1.1 Google Style](#11-google-style)
         - [1.1.2 Pros](#112-pros)
         - [1.1.3 Cons](#113-cons)
-- [2 Base Reference Conventions Modifications / Extended Specifications](#2-base-reference-conventions-modifications--extended-specifications)
+- [2 Base Reference Conventions Modifications/Extended Specifications](#2-base-reference-conventions-modificationsextended-specifications)
     - [2.1 Python Version](#21-python-version)
         - [2.1.2 Pros](#212-pros)
         - [2.1.3 Cons](#213-cons)
@@ -40,7 +40,7 @@ Difficult for newer coders and takes time to learn.
 
 ---
 
-## 2 Base Reference Conventions Modifications / Extended Specifications
+## 2 Base Reference Conventions Modifications/Extended Specifications
 
 ### 2.1 Python Version
 
@@ -56,7 +56,7 @@ Difficult for newer coders and takes time to learn.
 
 #### 2.1.4 Exceptions
 
-Using an older version of python is allowed only when modifying forks / reusing
+Using an older version of python is allowed only when modifying forks/reusing
 publicly available code which was originally written in an older version.
 
 ## 2.2 Auto-Formatter

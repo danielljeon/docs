@@ -24,7 +24,7 @@ tasks.
 
 Here are the basic conventions used for quick readability for dev envs.
 
-1. **Required / mandatory items**: `*`.
+1. **Required/mandatory items**: `*`.
 2. **Industry standard or very helpful**: `(Recommended)`.
     - Please follow recommendations unless you actually know what you are doing.
 3. **Opinionated suggestions**: `(Suggested)`.

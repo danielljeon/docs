@@ -12,7 +12,7 @@ STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Initial Software Installs / Setup](#1-initial-software-installs--setup)
+- [1 Initial Software Installs](#1-initial-software-installs)
     - [1.1 STM32CubeMX*](#11-stm32cubemx)
     - [1.2 CLion*](#12-clion)
     - [1.3 GNU Compiler Collection (GCC) ARM Toolchain*](#13-gnu-compiler-collection-gcc-arm-toolchain)
@@ -37,7 +37,7 @@ STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
 
 ---
 
-## 1 Initial Software Installs / Setup
+## 1 Initial Software Installs
 
 ### 1.1 STM32CubeMX*
 
@@ -176,7 +176,7 @@ Add the path for `Arm GNU Toolchain` (`arm-none-eabi-gcc`).
 Wait for STM32CubeMX to finish generating a default project.
 
 If you are using version control, verify that any required files such as `.git`
-are still in the project directory, sometimes STM32CubeMX may delete / overwrite
+are still in the project directory, sometimes STM32CubeMX may delete/overwrite
 these files.
 
 #### 2.4.2 Remove Default Generated File Structure
@@ -250,7 +250,7 @@ Set the OpenOCD board file via `Select Board Configuration File` popup.
 - If this does not happen the dropdown will be labeled `Add Configuration...`
 
 - Your file structure should look identical to the picture above except for any
-  project / ST chip names.
+  project/ST chip names.
 
 #### 2.6.3 Verify Run and Debug Config
 

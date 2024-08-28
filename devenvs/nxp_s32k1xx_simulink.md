@@ -8,7 +8,7 @@ S32K1xx embedded development.
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Initial Software Installs / Setup](#1-initial-software-installs--setup)
+- [1 Initial Software Installs](#1-initial-software-installs)
     - [1.1 MATLAB* and Add-ons*](#11-matlab-and-add-ons)
 - [2 Step-by-Step Setup](#2-step-by-step-setup)
     - [2.1 Opening NXP Support Package S32K1xx](#21-opening-nxp-support-package-s32k1xx)
@@ -34,7 +34,7 @@ S32K1xx embedded development.
 
 ---
 
-## 1 Initial Software Installs / Setup
+## 1 Initial Software Installs
 
 ### 1.1 MATLAB* and Add-ons*
 
@@ -130,7 +130,7 @@ You should now see `NXP_MBDToolbox_S32K1xx` on your Add-On manager.
 You will be promoted for a Host ID later on. The Host ID is either a Volume
 Serial Number or a MAC address that restricts your license to 1 computer.
 
-- Note: The license is removable / reversible.
+- Note: The license is removable/reversible.
 
 To get your Host ID follow the terminal commands bellow:
 

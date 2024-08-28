@@ -47,11 +47,10 @@ follow the manual setup instructions.
 
 #### 2.1.1 Python
 
-Install python directly from the official website:
+Install python directly from the official
+website: [Python downloads](https://www.python.org/downloads/).
 
-[Python downloads](https://www.python.org/downloads/).
-
-It is **highly recommended to select / allow the `set environment variable`** (
+It is **highly recommended to select/allow the `set environment variable`** (
 might be slightly different wording) setting for system-wide activation.
 
 ### 2.2 Manual Virtual Environment Creation

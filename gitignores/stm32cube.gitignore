@@ -1,7 +1,7 @@
 ################################################################################
 # stm32cube.gitignore
 #
-# STM32CubeMX / STM32CubeIDE gitignore.
+# STM32CubeMX/STM32CubeIDE gitignore.
 ################################################################################
 
 # Code generation files

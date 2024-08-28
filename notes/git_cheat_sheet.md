@@ -100,7 +100,7 @@ different between <commit> and HEAD. If a file that is different between
 ### 3.2 Amend
 
 Amend changes the most recent commit. A new commit is created and the old is
-removed. Thus this is a destructive action.
+removed. Thus, this is a destructive action.
 
 ```shell
 git add ./<changes> # Stage the changes to add.

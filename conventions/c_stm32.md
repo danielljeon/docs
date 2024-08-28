@@ -70,7 +70,7 @@ Max line length = `80`.
 
 Exceptions to the limit are:
 
-- URLs, filepaths, etc.
+- URLs, file paths, etc.
 - Long constants not containing whitespace that would be inconvenient to split.
 
 #### 3.1.2 Pros

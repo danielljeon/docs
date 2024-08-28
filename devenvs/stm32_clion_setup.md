@@ -3,8 +3,9 @@
 The following documentation details how to set up JetBrains CLion for embedded
 STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
 
-> Currently, the debugger on macOS when using this setup does not work. Build
-> and Run have had no documented issues.
+> Currently, the CLion OpenOCD debugger does not work on macOS. Build and Run
+> have had no documented issues. Recommended to debug with SWO/JTAG tools if
+> required.
 
 ---
 

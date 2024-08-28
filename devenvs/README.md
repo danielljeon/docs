@@ -16,6 +16,7 @@ tasks.
 - [mbed_ce_clion.md](mbed_ce_clion.md)
 - [nxp_s32k1xx_simulink.md](nxp_s32k1xx_simulink.md)
 - [python.md](python.md)
+- [stm32.md](stm32.md)
 - [stm32_clion_setup.md](stm32_clion_setup.md)
 - [stm32_cubeide_setup.md](stm32_cubeide_setup.md)
 

@@ -213,18 +213,6 @@ Rule sets outline general rules.
       }
     },
     {
-      "type": "required_status_checks",
-      "parameters": {
-        "strict_required_status_checks_policy": true,
-        "required_status_checks": [
-          {
-            "context": "black",
-            "integration_id": 123456
-          }
-        ]
-      }
-    },
-    {
       "type": "code_scanning",
       "parameters": {
         "code_scanning_tools": [
@@ -235,12 +223,25 @@ Rule sets outline general rules.
           }
         ]
       }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "do_not_enforce_on_create": true,
+        "required_status_checks": [
+          {
+            "context": "Actions",
+            "integration_id": 15368
+          }
+        ]
+      }
     }
   ],
   "bypass_actors": [
     {
-      "actor_id": 1,
-      "actor_type": "OrganizationAdmin",
+      "actor_id": 5,
+      "actor_type": "RepositoryRole",
       "bypass_mode": "always"
     }
   ]

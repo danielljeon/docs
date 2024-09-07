@@ -24,7 +24,7 @@
         - [3.4.3 Variable Names](#343-variable-names)
             - [3.4.3.1 Constants](#3431-constants)
         - [3.4.4 Macro and Define Names](#344-macro-and-define-names)
-        - [3.4.5 Typedef Struct Names](#345-typedef-struct-names)
+        - [3.4.5 typedef Struct Names](#345-typedef-struct-names)
             - [3.4.5.1 Enum Members](#3451-enum-members)
         - [3.4.6 Function Names](#346-function-names)
 
@@ -125,9 +125,9 @@ Use `UPPER_SNAKE_CASE`.
 
 Use `UPPER_SNAKE_CASE`.
 
-### 3.4.5 Typedef Struct Names
+### 3.4.5 typedef Struct Names
 
-Use `PascalCase`.
+Use `snake_case`.
 
 #### 3.4.5.1 Enum Members
 

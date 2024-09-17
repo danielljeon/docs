@@ -3,10 +3,6 @@
 The following documentation details how to set up JetBrains CLion for embedded
 STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
 
-> Currently, the CLion OpenOCD debugger does not work on macOS. Build and Run
-> have had no documented issues. Recommended to debug with SWO/JTAG tools if
-> required.
-
 ---
 
 <details markdown="1">
@@ -17,21 +13,25 @@ STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
     - [1.2 CLion*](#12-clion)
     - [1.3 GNU Compiler Collection (GCC) ARM Toolchain*](#13-gnu-compiler-collection-gcc-arm-toolchain)
     - [1.4 OpenOCD*](#14-openocd)
-- [2 Complete IDE Setup](#2-complete-ide-setup)
+- [2 CLion Embedded Development Setup](#2-clion-embedded-development-setup)
     - [2.1 Enable Embedded Development Support CLion Plugin](#21-enable-embedded-development-support-clion-plugin)
     - [2.2 Setup OpenOCD and STM32CubeMX Paths](#22-setup-openocd-and-stm32cubemx-paths)
     - [2.3 Setup Arm GNU Toolchain GCC and G++](#23-setup-arm-gnu-toolchain-gcc-and-g)
-    - [2.4 Create new CLion STM32CubeMX project](#24-create-new-clion-stm32cubemx-project)
-        - [2.4.1 Configure Version Control](#241-configure-version-control)
-        - [2.4.2 Remove Default Generated File Structure](#242-remove-default-generated-file-structure)
-    - [2.5 Configure STM32 with STM32CubeMX](#25-configure-stm32-with-stm32cubemx)
-        - [2.5.1 Configure STM32CubeMX Project Manager](#251-configure-stm32cubemx-project-manager)
-        - [2.5.2 Generate Code](#252-generate-code)
-    - [2.6 Configure OpenOCD](#26-configure-openocd)
-        - [2.6.1 Pick Target Board Configuration File](#261-pick-target-board-configuration-file)
-        - [2.6.2 Configure Run and Debug](#262-configure-run-and-debug)
-        - [2.6.3 Verify Run and Debug Config](#263-verify-run-and-debug-config)
-    - [2.7 Hello World](#27-hello-world)
+- [3 STM32CubeMX Project Setup](#3-stm32cubemx-project-setup)
+    - [3.1 Create new CLion STM32CubeMX project](#31-create-new-clion-stm32cubemx-project)
+        - [3.1.1 Configure Version Control](#311-configure-version-control)
+        - [3.1.2 Remove Default Generated File Structure](#312-remove-default-generated-file-structure)
+    - [3.2 Configure STM32 with STM32CubeMX](#32-configure-stm32-with-stm32cubemx)
+        - [3.2.1 Configure STM32CubeMX Project Manager](#321-configure-stm32cubemx-project-manager)
+        - [3.2.2 Generate Code](#322-generate-code)
+    - [3.3 CMake Configuration](#33-cmake-configuration)
+- [4 OpenOCD Configuration](#4-openocd-configuration)
+    - [4.1 Pick Target Board Configuration File](#41-pick-target-board-configuration-file)
+    - [4.2 Configure Run and Debug](#42-configure-run-and-debug)
+        - [4.2.1 Verify Run and Debug Config](#421-verify-run-and-debug-config)
+        - [4.2.2 Hello World](#422-hello-world)
+- [5 Embedded GDB Server](#5-embedded-gdb-server)
+- [6 Other Tools](#6-other-tools)
 
 </details>
 
@@ -100,10 +100,14 @@ for ARM GCC.
 
 ---
 
-## 2 Complete IDE Setup
+## 2 CLion Embedded Development Setup
+
+This section covers the initial setup for Embedded development on CLion.
+Important steps such as ARM GCC executable file path declaration will be set up
+here.
 
 > For reference, official JetBrains documentation:
-> [STM32CubeMX projects](https://www.jetbrains.com/help/clion/2023.1/embedded-development.html).
+> [Embedded development](https://www.jetbrains.com/help/clion/embedded-overview.html).
 
 ### 2.1 Enable Embedded Development Support CLion Plugin
 
@@ -163,7 +167,17 @@ Add the path for `Arm GNU Toolchain` (`arm-none-eabi-gcc`).
       stating `Your CMake run finished with errors more...`.
         - Ignore this error for now, (future TODO).
 
-### 2.4 Create new CLion STM32CubeMX project
+---
+
+## 3 STM32CubeMX Project Setup
+
+CLion allows for integration with STM32CubeMX for pin configuration, code
+generation and more.
+
+> For reference, official JetBrains documentation:
+> [STM32CubeMX projects](https://www.jetbrains.com/help/clion/embedded-development.html).
+
+### 3.1 Create new CLion STM32CubeMX project
 
 ```File → New → Project → STM32CubeMX```
 ![CLion new STM32CubeMX project.png](pictures/stm32ide/CLion%20new%20STM32CubeMX%20project.png?raw=true "CLion new STM32CubeMX project.png")
@@ -171,7 +185,7 @@ Add the path for `Arm GNU Toolchain` (`arm-none-eabi-gcc`).
 - Use the appropriate path if you are opening or creating a version controlled
   project.
 
-#### 2.4.1 Configure Version Control
+#### 3.1.1 Configure Version Control
 
 Wait for STM32CubeMX to finish generating a default project.
 
@@ -179,7 +193,7 @@ If you are using version control, verify that any required files such as `.git`
 are still in the project directory, sometimes STM32CubeMX may delete/overwrite
 these files.
 
-#### 2.4.2 Remove Default Generated File Structure
+#### 3.1.2 Remove Default Generated File Structure
 
 Delete all files in your project except those that you specifically know are
 needed.
@@ -191,7 +205,7 @@ If you are new to the STM32 workflow follow the recommendations below:
 2. Keep files required for version control such as `.git`.
 3. Keep `.idea` (JetBrain's project structure file).
 
-### 2.5 Configure STM32 with STM32CubeMX
+### 3.2 Configure STM32 with STM32CubeMX
 
 If STM32CubeMX fails to open automatically you can find the newly
 created `**PROJECT_NAME_HERE**.ioc` on the left-hand `Project` file structure
@@ -201,7 +215,7 @@ viewer.
   your target ST chip or board.
 - By default, the target chip will be selected to `STM32F030F4Px`.
 
-#### 2.5.1 Configure STM32CubeMX Project Manager
+#### 3.2.1 Configure STM32CubeMX Project Manager
 
 Configure the `Project Manager`.
 
@@ -219,26 +233,48 @@ Configure the `Project Manager`.
     - My `Toolchain Folder Location` is the path of my repository since
       the `Project Name` matches the repo name.
 
-#### 2.5.2 Generate Code
+#### 3.2.2 Generate Code
 
 Generate code with the... `GENERATE CODE` button.
 
 - You may get a warning about overwriting the previous `.ioc`, allow and
   continue.
 
-### 2.6 Configure OpenOCD
+### 3.3 CMake Configuration
 
-#### 2.6.1 Pick Target Board Configuration File
+Configurations for CMake will automatically trigger. If updates are possible,
+the IDE will suggest through popups to reload from CMake.
+
+**_Note: In CLion STM32 configuration `CMakeLists_template.txt` is used to
+ensure consistent `CMakeLists.txt` creation following updates and code
+generation in STM32CubeMX._** Feel free to edit `CMakeLists_template.txt` to
+customize the linker process, such as adding additional required source code
+directories.
+
+---
+
+## 4 OpenOCD Configuration
+
+This section covers OpenOCD configuration for specific embedded targets. OpenOCD
+will allow for running/flashing complied code, with (somewhat unstable)
+debugging capabilities. _See following section(s) for a better debug approach._
+
+> For reference, official JetBrains documentation:
+> [OpenOCD support](https://www.jetbrains.com/help/clion/openocd-support.html).
+
+### 4.1 Pick Target Board Configuration File
+
+Continuing from STM32CubeMX `GENERATE CODE`, switch back to CLion.
 
 Set the OpenOCD board file via `Select Board Configuration File` popup.
 
 ![CLion Select Board Config File.png](pictures/stm32ide/CLion%20Select%20Board%20Config%20File.png)
 
 - Select the chip or board you are targeting, the default should be correct.
-- Upon returning to CLion this popup should open automatically, if not we can
-  select the board file in the following steps manually.
+- **_Upon returning to CLion this popup should open automatically, if not we can
+  select the board file in the following steps manually._**
 
-#### 2.6.2 Configure Run and Debug
+### 4.2 Configure Run and Debug
 
 ```Run / Debug Configurations → Edit Configurations...```
 ![CLion ioc configured.png](pictures/stm32ide/CLion%20ioc%20configured.png)
@@ -252,7 +288,7 @@ Set the OpenOCD board file via `Select Board Configuration File` popup.
 - Your file structure should look identical to the picture above except for any
   project/ST chip names.
 
-#### 2.6.3 Verify Run and Debug Config
+#### 4.2.1 Verify Run and Debug Config
 
 ```Run / Debug Configurations → Edit Configurations...```
 
@@ -272,10 +308,27 @@ Set the OpenOCD board file via `Select Board Configuration File` popup.
 
 - You can also set the download and reset behaviour here.
 
-### 2.7 Hello World
+### 4.2.2 Hello World
 
 Use the project file structure view on the left-hand to see the source code.
 
 Build, Run (flash ST) and Debug are shown in the top mid-to-right.
 
 ![CLion successful flash.png](pictures/stm32ide/CLion%20successful%20flash.png)
+
+---
+
+## 5 Embedded GDB Server
+
+To set up in-IDE debugging, proper integration with debugger hardware such JLink
+or STLink will be required. Follow JetBrains's documentation.
+
+> For reference, official JetBrains documentation:
+> [Embedded GDB Server](https://www.jetbrains.com/help/clion/embedded-gdb-server.html).
+
+---
+
+## 6 Other Tools
+
+> For reference, official JetBrains documentation:
+> [Peripheral view](https://www.jetbrains.com/help/clion/peripheral-view.html).

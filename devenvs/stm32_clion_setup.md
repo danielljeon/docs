@@ -10,9 +10,11 @@ STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
 
 - [1 Initial Software Installs](#1-initial-software-installs)
     - [1.1 STM32CubeMX*](#11-stm32cubemx)
-    - [1.2 CLion*](#12-clion)
-    - [1.3 GNU Compiler Collection (GCC) ARM Toolchain*](#13-gnu-compiler-collection-gcc-arm-toolchain)
-    - [1.4 OpenOCD*](#14-openocd)
+    - [1.2 STM32CubeIDE*](#12-stm32cubeide)
+    - [1.3 CLion*](#13-clion)
+    - [1.4 GNU Compiler Collection (GCC) ARM Toolchain*](#14-gnu-compiler-collection-gcc-arm-toolchain)
+    - [1.5 OpenOCD*](#15-openocd)
+    - [1.6 STM32CubeProgrammer (Recommended)](#16-stm32cubeprogrammer-recommended)
 - [2 CLion Embedded Development Setup](#2-clion-embedded-development-setup)
     - [2.1 Enable Embedded Development Support CLion Plugin](#21-enable-embedded-development-support-clion-plugin)
     - [2.2 Setup OpenOCD and STM32CubeMX Paths](#22-setup-openocd-and-stm32cubemx-paths)
@@ -63,7 +65,16 @@ Installation for macOS:
     sudo xattr -cr ~/SetupSTM32CubeMX-6.9.1.app
     ```
 
-### 1.2 CLion*
+### 1.2 STM32CubeIDE*
+
+[STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html).
+
+- Complete STM32 microcontroller IDE, used for in-CLion STLink debugger.
+- Highly recommended if you are trying to debug and develop entirely in CLion.
+- Without this OpenOCD debugger might work but certain firmware debug sessions
+  have not acted correct for me during HAL setup (often clock config).
+
+### 1.3 CLion*
 
 [CLion](https://www.jetbrains.com/clion/download/).
 
@@ -71,7 +82,7 @@ Installation for macOS:
 - Students can register for
   the [Free Educational Licenses](https://www.jetbrains.com/shop/eform/students).
 
-### 1.3 GNU Compiler Collection (GCC) ARM Toolchain*
+### 1.4 GNU Compiler Collection (GCC) ARM Toolchain*
 
 [GNU Compiler Collection (GCC) ARM Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
 
@@ -88,7 +99,7 @@ well documented [GitHub wiki](https://github.com/mbed-ce/mbed-os/wiki) with
 a [Toolchain Setup Guide](https://github.com/mbed-ce/mbed-os/wiki/Toolchain-Setup-Guide)
 for ARM GCC.
 
-### 1.4 OpenOCD*
+### 1.5 OpenOCD*
 
 [OpenOCD](https://openocd.org/).
 
@@ -97,6 +108,12 @@ for ARM GCC.
     - **Put the main directory for OpenOCD in your PC user's `Documents`
       directory!**
 - For macOS: [Homebrew OpenOCD](https://formulae.brew.sh/formula/open-ocd).
+
+### 1.6 STM32CubeProgrammer (Recommended)
+
+[STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
+
+- ST-LINK hardware application for bare-metal MCU memory operations.
 
 ---
 

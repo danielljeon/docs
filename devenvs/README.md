@@ -18,7 +18,6 @@ tasks.
 - [python.md](python.md)
 - [stm32.md](stm32.md)
 - [stm32_clion_setup.md](stm32_clion_setup.md)
-- [stm32_cubeide_setup.md](stm32_cubeide_setup.md)
 
 ## Conventions
 

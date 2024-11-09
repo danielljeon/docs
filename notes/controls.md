@@ -5,25 +5,28 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Resources](#1-resources)
-- [2 Intro to Control Theory](#2-intro-to-control-theory)
-- [3 Time and Frequency Domain](#3-time-and-frequency-domain)
-- [4 Linear Time Invariant Systems](#4-linear-time-invariant-systems)
-- [5 Transfer Function](#5-transfer-function)
-- [6 Fourier Transform](#6-fourier-transform)
-- [7 Block Diagrams](#7-block-diagrams)
-- [8 Step Response](#8-step-response)
-- [9 Nichols Chart, Nyquist Plot, and Bode Plot](#9-nichols-chart-nyquist-plot-and-bode-plot)
-    - [9.1 Bode Plot](#91-bode-plot)
-- [10 Stability Phase and Gain Margins](#10-stability-phase-and-gain-margins)
-- [11 Routh-Hurwitz Criterion](#11-routh-hurwitz-criterion)
-- [12 Root Locus Method](#12-root-locus-method)
-- [13 Nyquist Stability Criterion](#13-nyquist-stability-criterion)
-- [14 PID Controllers](#14-pid-controllers)
-- [15 PID Implementation in Software](#15-pid-implementation-in-software)
-- [16 PID Tuning](#16-pid-tuning)
-- [17 Time Delays in Control Systems](#17-time-delays-in-control-systems)
-- [18 Gain Scheduling](#18-gain-scheduling)
+<!-- TOC -->
+* [Control Systems](#control-systems)
+  * [1 Resources](#1-resources)
+  * [2 Intro to Control Theory](#2-intro-to-control-theory)
+  * [3 Time and Frequency Domain](#3-time-and-frequency-domain)
+  * [4 Linear Time Invariant Systems](#4-linear-time-invariant-systems)
+  * [5 Transfer Function](#5-transfer-function)
+  * [6 Fourier Transform](#6-fourier-transform)
+  * [7 Block Diagrams](#7-block-diagrams)
+  * [8 Step Response](#8-step-response)
+  * [9 Nichols Chart, Nyquist Plot, and Bode Plot](#9-nichols-chart-nyquist-plot-and-bode-plot)
+    * [9.1 Bode Plot](#91-bode-plot)
+  * [10 Stability Phase and Gain Margins](#10-stability-phase-and-gain-margins)
+  * [11 Routh-Hurwitz Criterion](#11-routh-hurwitz-criterion)
+  * [12 Root Locus Method](#12-root-locus-method)
+  * [13 Nyquist Stability Criterion](#13-nyquist-stability-criterion)
+  * [14 PID Controllers](#14-pid-controllers)
+  * [15 PID Implementation in Software](#15-pid-implementation-in-software)
+  * [16 PID Tuning](#16-pid-tuning)
+  * [17 Time Delays in Control Systems](#17-time-delays-in-control-systems)
+  * [18 Gain Scheduling](#18-gain-scheduling)
+<!-- TOC -->
 
 </details>
 

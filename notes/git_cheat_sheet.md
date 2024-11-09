@@ -5,24 +5,28 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Overview](#1-Overview)
-- [2 General](#2-general)
-- [3 Destructive Actions](#3-destructive-actions)
-    - [3.1 Reset](#31-reset)
-        - [3.1.1 Move to Commit](#311-move-to-commit)
-        - [3.1.2 Move to Branch Tip Reference](#312-move-to-branch-tip-reference)
-        - [3.1.3 Flags](#313-flags)
-    - [3.2 Amend](#32-amend)
-        - [3.2.1 Flags](#321-flags)
-    - [3.3 Pushing Destructive Changes](#33-pushing-destructive-changes)
-- [4 Submodule](#411-results-gitmodules)
-    - [4.1 Add Submodule](#41-add-submodule)
-        - [4.1.1 Results (.gitmodules)](#411-results-gitmodules)
-    - [4.2 Clone with Submodules](#42-clone-with-submodules)
-    - [4.3 Fetch Submodule Commits](#43-fetch-submodule-commits)
-    - [4.4 Pull Submodule](#44-pull-submodule)
-    - [4.5 Update Submodule](#45-update-submodule)
-    - [4.6 Remove Submodule](#46-remove-submodule)
+<!-- TOC -->
+* [Git and GitHub Cheat Sheet](#git-and-github-cheat-sheet)
+  * [1 Overview](#1-overview)
+    * [1.1 Format](#11-format)
+  * [2 General](#2-general)
+  * [3 Destructive Actions](#3-destructive-actions)
+    * [3.1 Reset](#31-reset)
+      * [3.1.1 Move to Commit](#311-move-to-commit)
+      * [3.1.2 Move to Branch Tip Reference](#312-move-to-branch-tip-reference)
+      * [3.1.3 Flags](#313-flags)
+    * [3.2 Amend](#32-amend)
+      * [3.2.1 Flags](#321-flags)
+    * [3.3 Pushing Destructive Changes](#33-pushing-destructive-changes)
+  * [4 Submodule](#4-submodule)
+    * [4.1 Add Submodule](#41-add-submodule)
+    * [4.1.1 Results (.gitmodules)](#411-results-gitmodules)
+    * [4.2 Clone with Submodules](#42-clone-with-submodules)
+    * [4.3 Fetch Submodule Commits](#43-fetch-submodule-commits)
+    * [4.4 Pull Submodule](#44-pull-submodule)
+    * [4.5 Update Submodule](#45-update-submodule)
+    * [4.6 Remove Submodule](#46-remove-submodule)
+<!-- TOC -->
 
 </details>
 

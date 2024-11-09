@@ -7,9 +7,12 @@ Electronic Design Automation (EDA).
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Initial Software Installs](#1-initial-software-installs)
-    - [1.1 KiCad (Suggested)](#11-kicad)
-    - [1.2 Altium Designer*](#12-altium-designer-recommended)
+<!-- TOC -->
+* [EDA Environment](#eda-environment)
+  * [1 Initial Software Installs](#1-initial-software-installs)
+    * [1.1 KiCad*](#11-kicad)
+    * [1.2 Altium Designer (Recommended)](#12-altium-designer-recommended)
+<!-- TOC -->
 
 </details>
 

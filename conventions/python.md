@@ -5,19 +5,22 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Base Reference Conventions](#1-base-reference-conventions)
-    - [1.1 Google Style](#11-google-style)
-        - [1.1.2 Pros](#112-pros)
-        - [1.1.3 Cons](#113-cons)
-- [2 Base Reference Conventions Modifications/Extended Specifications](#2-base-reference-conventions-modificationsextended-specifications)
-    - [2.1 Python Version](#21-python-version)
-        - [2.1.2 Pros](#212-pros)
-        - [2.1.3 Cons](#213-cons)
-        - [2.1.4 Exceptions](#214-exceptions)
-    - [2.2 Auto-Formatter](#22-auto-formatter)
-        - [2.2.1 Pros](#221-pros)
-        - [2.2.2 Cons](#222-cons)
-        - [2.2.3 Integration](#223-integration)
+<!-- TOC -->
+* [Python Code Conventions](#python-code-conventions)
+  * [1 Base Reference Conventions](#1-base-reference-conventions)
+    * [1.1 Google Style](#11-google-style)
+      * [1.1.2 Pros](#112-pros)
+      * [1.1.3 Cons](#113-cons)
+  * [2 Base Reference Conventions Modifications/Extended Specifications](#2-base-reference-conventions-modificationsextended-specifications)
+    * [2.1 Python Version](#21-python-version)
+      * [2.1.2 Pros](#212-pros)
+      * [2.1.3 Cons](#213-cons)
+      * [2.1.4 Exceptions](#214-exceptions)
+  * [2.2 Auto-Formatter](#22-auto-formatter)
+      * [2.2.1 Pros](#221-pros)
+      * [2.2.2 Cons](#222-cons)
+      * [2.2.3 Integration](#223-integration)
+<!-- TOC -->
 
 </details>
 

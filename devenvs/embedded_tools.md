@@ -5,9 +5,12 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Saleae Logic Analyzer](#1-saleae-logic-analyzer)
-- [2 SEGGER JLink](#2-segger-jlink)
-- [3 Tag-Connect](#3-tag-connect)
+<!-- TOC -->
+* [Embedded Tools Environment](#embedded-tools-environment)
+  * [1 Saleae Logic Analyzer](#1-saleae-logic-analyzer)
+  * [2 SEGGER JLink](#2-segger-jlink)
+  * [3 Tag-Connect](#3-tag-connect)
+<!-- TOC -->
 
 </details>
 

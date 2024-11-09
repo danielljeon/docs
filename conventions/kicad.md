@@ -5,9 +5,12 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Background](#1-background)
-- [2 Project Templates](#2-project-templates)
-- [3 Internal Component Libraries](#3-internal-component-libraries)
+<!-- TOC -->
+* [KiCad Conventions](#kicad-conventions)
+  * [1 Background](#1-background)
+  * [2 Project Templates](#2-project-templates)
+  * [3 Internal Component Libraries](#3-internal-component-libraries)
+<!-- TOC -->
 
 </details>
 

@@ -5,20 +5,23 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Overview](#1-overview)
-    - [1.1 Install](#11-install)
-    - [1.2 System Environment Variable](#12-system-environment-variable)
-    - [1.3 Python Virtual Environment](#13-python-virtual-environment)
-- [2 Windows](#2-windows)
-    - [2.1 Install](#21-install)
-        - [2.1.1 Python](#211-python)
-    - [2.2 Manual Virtual Environment Creation](#22-manual-virtual-environment-creation)
-- [3 macOS](#3-macos)
-    - [3.1 Install](#31-install)
-        - [3.1.1 Homebrew](#311-homebrew)
-        - [3.1.2 pyenv](#312-pyenv)
-        - [3.1.3 Python via pyenv](#313-python-via-pyenv)
-    - [3.2 Manual Virtual Environment Creation](#32-manual-virtual-environment-creation)
+<!-- TOC -->
+* [Python Development Environment](#python-development-environment)
+  * [1 Overview](#1-overview)
+    * [1.1 Install](#11-install)
+    * [1.2 System Environment Variable](#12-system-environment-variable)
+    * [1.3 Python Virtual Environment](#13-python-virtual-environment)
+  * [2 Windows](#2-windows)
+    * [2.1 Install](#21-install)
+      * [2.1.1 Python](#211-python)
+    * [2.2 Manual Virtual Environment Creation](#22-manual-virtual-environment-creation)
+  * [3 macOS](#3-macos)
+    * [3.1 Install](#31-install)
+      * [3.1.1 Homebrew](#311-homebrew)
+      * [3.1.2 pyenv](#312-pyenv)
+      * [3.1.3 Python via pyenv](#313-python-via-pyenv)
+    * [3.2 Manual Virtual Environment Creation](#32-manual-virtual-environment-creation)
+<!-- TOC -->
 
 </details>
 

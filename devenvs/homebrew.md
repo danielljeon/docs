@@ -5,9 +5,12 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Official Docs](#1-official-docs)
-- [2 Install](#2-install)
-- [3 Cellar](#3-cellar)
+<!-- TOC -->
+* [Homebrew](#homebrew)
+  * [1 Official Docs](#1-official-docs)
+  * [2 Install](#2-install)
+  * [3 Cellar](#3-cellar)
+<!-- TOC -->
 
 </details>
 

@@ -8,7 +8,10 @@ to STM32, including ST's official tools.
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 STLINK](#1-stlink)
+<!-- TOC -->
+* [STM32 Development Environment](#stm32-development-environment)
+  * [1 STLINK](#1-stlink)
+<!-- TOC -->
 
 </details>
 

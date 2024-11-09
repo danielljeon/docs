@@ -5,21 +5,22 @@
 <details markdown="1">
   <summary>Table of Contents</summary>
 
-- [1 Overview](#1-overview)
-- [2 Account Creation](#2-account-creation)
-    - [2.1 GitHub*](#21-github)
-- [3 Install](#3-install)
-    - [3.1 Windows, macOS and Linux](#31-windows-macos-and-linux)
-        - [3.1.1 Git*](#311-git)
-        - [3.1.2 GitHub Desktop (Recommended)](#312-github-desktop-recommended)
+<!-- TOC -->
+* [Git and GitHub](#git-and-github)
+  * [1 Overview](#1-overview)
+  * [2 Account Creation](#2-account-creation)
+    * [2.1 GitHub*](#21-github)
+  * [3 Install](#3-install)
+    * [3.1 Windows, macOS and Linux](#31-windows-macos-and-linux)
+      * [3.1.1 Git*](#311-git)
+      * [3.1.2 GitHub Desktop (Recommended)](#312-github-desktop-recommended)
+<!-- TOC -->
 
 </details>
 
 ---
 
 ## 1 Overview
-
-See resource document here: [git_github.md](../resources/git_github.md).
 
 See the conventions
 here: [git_github_devops.md](../conventions/git_github_devops.md).

@@ -8,9 +8,6 @@
 <!-- TOC -->
 * [Python Development Environment](#python-development-environment)
   * [1 Overview](#1-overview)
-    * [1.1 Install](#11-install)
-    * [1.2 System Environment Variable](#12-system-environment-variable)
-    * [1.3 Python Virtual Environment](#13-python-virtual-environment)
   * [2 Windows](#2-windows)
     * [2.1 Install](#21-install)
       * [2.1.1 Python](#211-python)
@@ -29,18 +26,8 @@
 
 ## 1 Overview
 
-The following document covers the installation and setup for python to get
-started with other IDEs and dev envs.
-
-### 1.1 Install
-
-### 1.2 System Environment Variable
-
-### 1.3 Python Virtual Environment
-
-Normally the python virtual environment creation is handled via the IDE, but if
-for some reason you want to manually create it and/or learn how it is done,
-follow the manual setup instructions.
+This document provides instructions for installing and setting up Python to
+begin working with other IDEs and development environments.
 
 ---
 

@@ -261,7 +261,7 @@ can be mitigated using **derivative-on-measurement**. Instead of taking the
 derivative of the error signal, the derivative of the fed-back sensor
 measurement is used, eliminating the impulse "kick".
 
-$$d \left[ n \right] = \frac{ 2 K_{D} }{ 2 \tau + T } \left( measurement + prev \; measurement \right) + \frac{ 2 \tau - T }{ 2 \tau + T } d \left[ n - 1 \right]$$
+$$d \left[ n \right] = \frac{ 2 K_{D} }{ 2 \tau + T } \left( measurement + prev \ measurement \right) + \frac{ 2 \tau - T }{ 2 \tau + T } d \left[ n - 1 \right]$$
 
 ```c
 // Differentiator.

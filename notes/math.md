@@ -16,6 +16,8 @@
     * [2.2 Common](#22-common)
     * [2.3 Trigonometric](#23-trigonometric)
   * [3 Laplace Transform Pairs](#3-laplace-transform-pairs)
+  * [4 Fourier Series](#4-fourier-series)
+  * [5 Fourier Transform](#5-fourier-transform)
 <!-- TOC -->
 
 </details>
@@ -99,6 +101,8 @@ $$\int \frac{1}{\cos ^2\left(x\right)}dx=\tan \left(x\right)$$
 
 ## 3 Laplace Transform Pairs
 
+$$X \left( s \right) = \int_{-\infty}^{\infty} x \left( t \right) e^{-st} dt$$
+
 |           $$f \left( t \right)$$           |                                                   $$F= \left( s \right)$$                                                    |
 |:------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
 |        $$n\delta \left( t \right)$$        |                                                            $$n$$                                                             |
@@ -116,3 +120,37 @@ $$\int \frac{1}{\cos ^2\left(x\right)}dx=\tan \left(x\right)$$
 |  $$e^{-at} \cos \left( \omega t \right)$$  |                                      $$\frac{s+a}{ \left( s+a \right) ^2+ \omega ^2}$$                                       |
 | $$\frac{ d^{n}f \left( t \right) }{dt^n}$$ | $$s^nF \left( s \right) -s^{n-1}f \left( 0 \right) -s^{n-2} f' \left( 0 \right) -f^{ \left( n-1 \right) } \left( 0 \right)$$ |
 |     $$\int_0^t f \left( t \right) dt$$     |                                              $$\frac{1}{s} F \left( s \right)$$                                              |
+
+---
+
+## 4 Fourier Series
+
+The fourier series represents **periodic** signals as a sum of sinusoids.
+
+$$x \left( t \right) = a_0 + \sum_{n = 1}^{\infty} a_n \cos \left( n \omega_0 t \right) + b_n \sin \left( n \omega_0 t \right)$$
+
+where:
+
+$$\omega_0 = \frac{2 \pi}{T}$$
+$$a_0 = \frac{1}{T} \int_{-T/2}^{T/2} x \left( t \right) dt$$
+
+- $n$ is the harmonic number, starting from 1.
+    - Harmonics are integer multiples of the fundamental frequency ($n = 1$).
+        - If the fundamental frequency is $f_0$, the first harmonic would
+          be $2f_0$, the second harmonic $3f_0$, and so on.
+
+and for integer $n > 0$:
+
+$$a_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \cos \left( n \omega_0 t \right)$$
+$$b_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \sin \left( n \omega_0 t \right)$$
+
+---
+
+## 5 Fourier Transform
+
+The Fourier transform represents a signal as a sum of sinusoids of continuous
+frequencies, allowing for the analysis of **non-periodic** signals in the
+frequency domain.
+
+$$X \left( j \omega \right) = \int_{-\infty}^{\infty} x \left( t \right) e^{-j \omega t} dt$$
+$$x \left( t \right) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} X \left( j \omega \right) e^{j \omega t} dt$$

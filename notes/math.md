@@ -141,8 +141,8 @@ $$a_0 = \frac{1}{T} \int_{-T/2}^{T/2} x \left( t \right) dt$$
 
 and for integer $n > 0$:
 
-$$a_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \cos \left( n \omega_0 t \right)$$
-$$b_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \sin \left( n \omega_0 t \right)$$
+$$a_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \cos \left( n \omega_0 t \right) dt$$
+$$b_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \sin \left( n \omega_0 t \right) dt$$
 
 ---
 

@@ -18,6 +18,7 @@
   * [3 Laplace Transform Pairs](#3-laplace-transform-pairs)
   * [4 Fourier Series](#4-fourier-series)
   * [5 Fourier Transform](#5-fourier-transform)
+    * [5.1 Discrete Fourier Transform](#51-discrete-fourier-transform)
 <!-- TOC -->
 
 </details>
@@ -127,30 +128,51 @@ $$X \left( s \right) = \int_{-\infty}^{\infty} x \left( t \right) e^{-st} dt$$
 
 The fourier series represents **periodic** signals as a sum of sinusoids.
 
-$$x \left( t \right) = a_0 + \sum_{n = 1}^{\infty} a_n \cos \left( n \omega_0 t \right) + b_n \sin \left( n \omega_0 t \right)$$
+$$x \left( t \right) = A_0 + \sum_{n = 1}^{\infty} A_n \cos \left( n \omega_0 t \right) + B_n \sin \left( n \omega_0 t \right)$$
 
 where:
 
 $$\omega_0 = \frac{2 \pi}{T}$$
-$$a_0 = \frac{1}{T} \int_{-T/2}^{T/2} x \left( t \right) dt$$
+$$A_0 = \frac{1}{T} \int_{-T/2}^{T/2} x \left( t \right) dt$$
 
-- $n$ is the harmonic number, starting from 1.
+- $n$: The harmonic number, starting from 1.
     - Harmonics are integer multiples of the fundamental frequency ($n = 1$).
         - If the fundamental frequency is $f_0$, the first harmonic would
           be $2f_0$, the second harmonic $3f_0$, and so on.
 
 and for integer $n > 0$:
 
-$$a_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \cos \left( n \omega_0 t \right) dt$$
-$$b_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \sin \left( n \omega_0 t \right) dt$$
+$$A_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \cos \left( n \omega_0 t \right) dt$$
+$$B_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \sin \left( n \omega_0 t \right) dt$$
 
 ---
 
 ## 5 Fourier Transform
 
-The Fourier transform represents a signal as a sum of sinusoids of continuous
+The Fourier transform represents a signal as a sum of sinusoid's of continuous
 frequencies, allowing for the analysis of **non-periodic** signals in the
 frequency domain.
 
 $$X \left( j \omega \right) = \int_{-\infty}^{\infty} x \left( t \right) e^{-j \omega t} dt$$
 $$x \left( t \right) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} X \left( j \omega \right) e^{j \omega t} dt$$
+
+### 5.1 Discrete Fourier Transform
+
+$$y \left( f \right) = \frac{2}{N} \sum_{r = 0}^{N - 1} y \left( r \Delta t \right) e^{-i 2 \pi \frac{kr}{N}}$$
+
+where:
+
+- $y(r \Delta t)$: The original signal sampled at discrete time
+  steps $r \Delta t$.
+- $r$: The discrete time index.
+- $N$: The total number of discrete samples.
+- $k$: The frequency index corresponding to a discrete frequency component.
+    - Each value of $k$ corresponds to a specific frequency in the transformed
+      domain.
+    - The relationship between $k$ and the actual frequency depends on the
+      sampling rate $f_s$:
+        - $f_k = \frac{k}{N} f_s$.
+- $e^{-i 2 \pi \frac{kr}{N}}$: The complex exponential term used to extract the
+  frequency components (similar to a Fourier series).
+- $\frac{2}{N}$: A normalization factor (depending on conventions, this could
+  also be $\frac{1}{N}$, $\frac{1}{\sqrt{N}}$, or similar).

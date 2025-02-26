@@ -16,9 +16,10 @@
     * [2.2 Common](#22-common)
     * [2.3 Trigonometric](#23-trigonometric)
   * [3 Laplace Transform Pairs](#3-laplace-transform-pairs)
-  * [4 Fourier Series](#4-fourier-series)
-  * [5 Fourier Transform](#5-fourier-transform)
-    * [5.1 Discrete Fourier Transform](#51-discrete-fourier-transform)
+  * [4 Fourier Analysis](#4-fourier-analysis)
+    * [4.1 Fourier Series](#41-fourier-series)
+    * [4.2 Fourier Transform](#42-fourier-transform)
+      * [4.2.1 Discrete Fourier Transform (DFT)](#421-discrete-fourier-transform-dft)
 <!-- TOC -->
 
 </details>
@@ -124,7 +125,9 @@ $$X \left( s \right) = \int_{-\infty}^{\infty} x \left( t \right) e^{-st} dt$$
 
 ---
 
-## 4 Fourier Series
+## 4 Fourier Analysis
+
+### 4.1 Fourier Series
 
 The fourier series represents **periodic** signals as a sum of sinusoids.
 
@@ -139,15 +142,18 @@ $$A_0 = \frac{1}{T} \int_{-T/2}^{T/2} x \left( t \right) dt$$
     - Harmonics are integer multiples of the fundamental frequency ($n = 1$).
         - If the fundamental frequency is $f_0$, the first harmonic would
           be $2f_0$, the second harmonic $3f_0$, and so on.
+- $T$: The signal time period (time for 1 full cycle).
 
 and for integer $n > 0$:
 
 $$A_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \cos \left( n \omega_0 t \right) dt$$
 $$B_n = \frac{2}{T} \int_{-T/2}^{T/2} x \left( t \right) \sin \left( n \omega_0 t \right) dt$$
 
----
+Amplitude or Fourier Magnitude is given by:
 
-## 5 Fourier Transform
+$$| C_n | = \sqrt{A_n^2 + B_n^2}$$
+
+### 4.2 Fourier Transform
 
 The Fourier transform represents a signal as a sum of sinusoid's of continuous
 frequencies, allowing for the analysis of **non-periodic** signals in the
@@ -156,23 +162,32 @@ frequency domain.
 $$X \left( j \omega \right) = \int_{-\infty}^{\infty} x \left( t \right) e^{-j \omega t} dt$$
 $$x \left( t \right) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} X \left( j \omega \right) e^{j \omega t} dt$$
 
-### 5.1 Discrete Fourier Transform
+#### 4.2.1 Discrete Fourier Transform (DFT)
 
 $$y \left( f \right) = \frac{2}{N} \sum_{r = 0}^{N - 1} y \left( r \Delta t \right) e^{-i 2 \pi \frac{kr}{N}}$$
 
 where:
 
+- $\frac{2}{N}$: A normalization factor (depending on conventions, this could
+  also be $\frac{1}{N}$, $\frac{1}{\sqrt{N}}$, or similar).
 - $y(r \Delta t)$: The original signal sampled at discrete time
   steps $r \Delta t$.
-- $r$: The discrete time index.
+- $e^{-i 2 \pi \frac{kr}{N}}$: The complex exponential term used to extract the
+  frequency components.
+    - This is effectively creating Fourier series sines and cosines at various
+      frequencies.
 - $N$: The total number of discrete samples.
+- $r$: The discrete time index.
+- $\Delta t$: The time step, given by the following:
+    - $\Delta t = \frac{T}{N}$.
 - $k$: The frequency index corresponding to a discrete frequency component.
     - Each value of $k$ corresponds to a specific frequency in the transformed
       domain.
     - The relationship between $k$ and the actual frequency depends on the
       sampling rate $f_s$:
         - $f_k = \frac{k}{N} f_s$.
-- $e^{-i 2 \pi \frac{kr}{N}}$: The complex exponential term used to extract the
-  frequency components (similar to a Fourier series).
-- $\frac{2}{N}$: A normalization factor (depending on conventions, this could
-  also be $\frac{1}{N}$, $\frac{1}{\sqrt{N}}$, or similar).
+
+For more information:
+
+- YouTube,
+  MATLAB: [Understanding the Discrete Fourier Transform and the FFT](https://youtu.be/QmgJmh2I3Fw)

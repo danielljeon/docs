@@ -186,7 +186,7 @@ where:
 - $\frac{2}{N}$: A normalization factor ($2 \times \frac{1}{N}$) to adjust
   magnitude to the true magnitude at a given frequency bin.
     - The Nyquist limit ($\frac{f_s}{2}$) requires that the double ended result
-      is converted to single ended ($\times 2$)
+      is converted to single ended ($\times 2$).
     - To find the true magnitude of the frequency the result is divided by the
       sample count ($\times \frac{1}{N}$).
 - $\Delta t$: The time step, given by the following:
@@ -198,7 +198,8 @@ $$e^{jx} = \cos x + j \sin x$$
 
 - This is used to find the frequency components, representing the sinusoidal
   representation at a given frequency.
-- Thus the final result is a real number and imaginary number:
+    - Here $x$ represents the larger complex exponential in the DFT.
+- Thus, the final result is a real number and imaginary number:
 
 $$x(k) = A_k + jB_k$$
 

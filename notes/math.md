@@ -164,30 +164,52 @@ $$x \left( t \right) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} X \left( j \omega
 
 #### 4.2.1 Discrete Fourier Transform (DFT)
 
-$$y \left( f \right) = \frac{2}{N} \sum_{r = 0}^{N - 1} y \left( r \Delta t \right) e^{-i 2 \pi \frac{kr}{N}}$$
+$$X \left( k \right) = \sum_{n = 0}^{N - 1} x \left( n \right) \cdot e^{-j \frac{2 \pi k n}{N}}$$
+$$x \left( f \right)_{normalized, \space single \space ended} = \frac{2}{N} X \left( k \right)$$
 
 where:
 
-- $\frac{2}{N}$: A normalization factor (depending on conventions, this could
-  also be $\frac{1}{N}$, $\frac{1}{\sqrt{N}}$, or similar).
-- $y(r \Delta t)$: The original signal sampled at discrete time
-  steps $r \Delta t$.
+- $N$: The total number of discrete samples.
+- $x \left( n \right)$: The signal sample value at index $n$.
+- $n$: The time-domain sample index.
+    - It runs from $0$ to $N-1$, covering all the $N$ samples in the input
+      signal.
+- $k$: The frequency-domain index. Like $n$, it runs from $0$ to $N-1$.
+    - Each value of $k$ corresponds to a specific frequency in the transformed
+      domain. The frequency bin is given by the sample frequency $f_s$:
+        - $f_k = \frac{k}{N} f_s$.
 - $e^{-i 2 \pi \frac{kr}{N}}$: The complex exponential term used to extract the
   frequency components.
     - This is effectively creating Fourier series sines and cosines at various
       frequencies.
-- $N$: The total number of discrete samples.
-- $r$: The discrete time index.
+    - See the section below for Euler's Formula.
+- $\frac{2}{N}$: A normalization factor ($2 \times \frac{1}{N}$) to adjust
+  magnitude to the true magnitude at a given frequency bin.
+    - The Nyquist limit ($\frac{f_s}{2}$) requires that the double ended result
+      is converted to single ended ($\times 2$)
+    - To find the true magnitude of the frequency the result is divided by the
+      sample count ($\times \frac{1}{N}$).
 - $\Delta t$: The time step, given by the following:
     - $\Delta t = \frac{T}{N}$.
-- $k$: The frequency index corresponding to a discrete frequency component.
-    - Each value of $k$ corresponds to a specific frequency in the transformed
-      domain.
-    - The relationship between $k$ and the actual frequency depends on the
-      sampling rate $f_s$:
-        - $f_k = \frac{k}{N} f_s$.
+
+Euler's Formula:
+
+$$e^{jx} = \cos x + j \sin x$$
+
+- This is used to find the frequency components, representing the sinusoidal
+  representation at a given frequency.
+- Thus the final result is a real number and imaginary number:
+
+$$x(k) = A_k + jB_k$$
+
+Magnitude and Phase angle of the final x(k) result is given by:
+
+$$C_n = \sqrt{A_k^2 + B_k^2}$$
+$$\theta = \tan ^{-1} \left( \frac{B_k}{A_k} \right)$$
 
 For more information:
 
+- YouTube, Simon
+  Xu: [Discrete Fourier Transform - Simple Step by Step](https://youtu.be/mkGsMWi_j4Q).
 - YouTube,
   MATLAB: [Understanding the Discrete Fourier Transform and the FFT](https://youtu.be/QmgJmh2I3Fw)

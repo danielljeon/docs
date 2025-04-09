@@ -176,7 +176,7 @@ where:
       signal.
 - $k$: The frequency-domain index. Like $n$, it runs from $0$ to $N-1$.
     - Each value of $k$ corresponds to a specific frequency in the transformed
-      domain. The frequency bin is given by the sample frequency $f_s$:
+      domain. The frequency bin is given by the sampling frequency $f_s$:
         - $f_k = \frac{k}{N} f_s$.
 - $e^{-i 2 \pi \frac{kr}{N}}$: The complex exponential term used to extract the
   frequency components.
@@ -216,4 +216,4 @@ For more information:
 - YouTube, Simon
   Xu: [Discrete Fourier Transform - Simple Step by Step](https://youtu.be/mkGsMWi_j4Q).
 - YouTube,
-  MATLAB: [Understanding the Discrete Fourier Transform and the FFT](https://youtu.be/QmgJmh2I3Fw)
+  MATLAB: [Understanding the Discrete Fourier Transform and the FFT](https://youtu.be/QmgJmh2I3Fw).

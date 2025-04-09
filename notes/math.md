@@ -1,4 +1,4 @@
-# Engineering Basics
+# Engineering Math Basics
 
 ---
 
@@ -6,7 +6,7 @@
   <summary>Table of Contents</summary>
 
 <!-- TOC -->
-* [Engineering Basics](#engineering-basics)
+* [Engineering Math Basics](#engineering-math-basics)
   * [1 Derivatives](#1-derivatives)
     * [1.1 Rules](#11-rules)
     * [1.2 Common](#12-common)
@@ -185,8 +185,11 @@ where:
     - See the section below for Euler's Formula.
 - $\frac{2}{N}$: A normalization factor ($2 \times \frac{1}{N}$) to adjust
   magnitude to the true magnitude at a given frequency bin.
-    - The Nyquist limit ($\frac{f_s}{2}$) requires that the double ended result
-      is converted to single ended ($\times 2$).
+    - Due to the symetry at the Nyquist limit ($\frac{f_s}{2}$) a product of
+      2 ($\times 2$) is used to obtain the single ended result.
+        - Following the Nyquist-Shannon sampling theorem, the sampling
+          frequency ($f_{s}$) must be greater than or equal to twice the maximum
+          signal frequency ($2 f_{signal}$) to prevent aliasing.
     - To find the true magnitude of the frequency the result is divided by the
       sample count ($\times \frac{1}{N}$).
 - $\Delta t$: The time step, given by the following:

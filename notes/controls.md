@@ -36,6 +36,7 @@
   * [16 PID Tuning](#16-pid-tuning)
   * [17 Time Delays in Control Systems](#17-time-delays-in-control-systems)
   * [18 Gain Scheduling](#18-gain-scheduling)
+  * [19 State-Space](#19-state-space)
 <!-- TOC -->
 
 </details>
@@ -351,3 +352,14 @@ MATLAB: [Why Time Delay Matters | Control Systems in Practice](https://youtu.be/
 
 YouTube,
 MATLAB: [What Is Gain Scheduling? | Control Systems in Practice](https://youtu.be/YiUjAV1bhKs)
+
+---
+
+## 19 State-Space
+
+YouTube, MATLAB:
+
+1. [Introduction to State-Space Equations | State Space, Part 1](https://youtu.be/hpeKrMG-WP0)
+2. [What is Pole Placement (Full State Feedback) | State Space, Part 2](https://youtu.be/FXSpHy8LvmY)
+3. [A Conceptual Approach to Controllability and Observability | State Space, Part 3](https://youtu.be/BYvTEfNAi38)
+4. [What Is Linear Quadratic Regulator (LQR) Optimal Control? | State Space, Part 4](https://youtu.be/E_RDCFOlJx4)

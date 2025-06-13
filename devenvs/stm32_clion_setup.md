@@ -12,14 +12,15 @@ STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
 * [STM32 CLion & STM32CubeMX Developer Environment Setup](#stm32-clion--stm32cubemx-developer-environment-setup)
   * [1 Initial Software Installs](#1-initial-software-installs)
     * [1.1 STM32CubeMX*](#11-stm32cubemx)
-    * [1.2 STM32CubeIDE*](#12-stm32cubeide)
-    * [1.3 CLion*](#13-clion)
-    * [1.4 GNU Compiler Collection (GCC) ARM Toolchain*](#14-gnu-compiler-collection-gcc-arm-toolchain)
-    * [1.5 OpenOCD*](#15-openocd)
-    * [1.6 STM32CubeProgrammer (Recommended)](#16-stm32cubeprogrammer-recommended)
+    * [1.2 STM32CubeCLT*](#12-stm32cubeclt)
+    * [1.3 STM32CubeIDE*](#13-stm32cubeide)
+    * [1.4 CLion*](#14-clion)
+    * [1.5 GNU Compiler Collection (GCC) ARM Toolchain*](#15-gnu-compiler-collection-gcc-arm-toolchain)
+    * [1.6 OpenOCD*](#16-openocd)
+    * [1.7 STM32CubeProgrammer (Recommended)](#17-stm32cubeprogrammer-recommended)
   * [2 CLion Embedded Development Setup](#2-clion-embedded-development-setup)
     * [2.1 Enable Embedded Development Support CLion Plugin](#21-enable-embedded-development-support-clion-plugin)
-    * [2.2 Setup OpenOCD and STM32CubeMX Paths](#22-setup-openocd-and-stm32cubemx-paths)
+    * [2.2 Setup OpenOCD, STM32CubeMX and STM32CubeCLT Paths](#22-setup-openocd-stm32cubemx-and-stm32cubeclt-paths)
     * [2.3 Setup Arm GNU Toolchain GCC and G++](#23-setup-arm-gnu-toolchain-gcc-and-g)
   * [3 STM32CubeMX Project Setup](#3-stm32cubemx-project-setup)
     * [3.1 Create new CLion STM32CubeMX project](#31-create-new-clion-stm32cubemx-project)
@@ -60,20 +61,30 @@ Prerequisites for macOS:
 
 2. [Rosetta](https://support.apple.com/en-us/HT211861).
 
+</details>
+
 Installation for macOS:
 
-1. Run `SetupSTM32CubeMX-6.9.1.app` for the application wizard.
-2. If stopped by macOS, open the `Privacy & Security` in System Settings to
-   allow running `SetupSTM32CubeMX-6.9.1.app`.
+- If stopped by macOS, open the `Privacy & Security` in System Settings to allow
+  running `SetupSTM32CubeMX-6.9.1.app`.
 
     - If wizard never opens or errors, try (replace `6.9.1` with your version):
     ```shell
     sudo xattr -cr ~/SetupSTM32CubeMX-6.9.1.app
     ```
 
-</details>
+### 1.2 STM32CubeCLT*
 
-### 1.2 STM32CubeIDE*
+[STM32CubeCLT](https://www.st.com/en/development-tools/stm32cubeclt.html).
+
+STMicroelectronics tool integration for external IDEs.
+
+Installation for macOS:
+
+- If stopped by macOS, open the `Privacy & Security` in System Settings to allow
+  running `st-stm32cubeclt_1.18.0_24403_20250225_1636-macosx_x86_64.pkg`.
+
+### 1.3 STM32CubeIDE*
 
 [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html).
 
@@ -82,7 +93,7 @@ Installation for macOS:
 - Without this OpenOCD debugger might work but certain firmware debug sessions
   have not acted correct for me during HAL setup (often clock config).
 
-### 1.3 CLion*
+### 1.4 CLion*
 
 [CLion](https://www.jetbrains.com/clion/download/).
 
@@ -90,7 +101,7 @@ Installation for macOS:
 - Students can register for
   the [Free Educational Licenses](https://www.jetbrains.com/shop/eform/students).
 
-### 1.4 GNU Compiler Collection (GCC) ARM Toolchain*
+### 1.5 GNU Compiler Collection (GCC) ARM Toolchain*
 
 [GNU Compiler Collection (GCC) ARM Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
 
@@ -107,7 +118,7 @@ well documented [GitHub wiki](https://github.com/mbed-ce/mbed-os/wiki) with
 a [Toolchain Setup Guide](https://github.com/mbed-ce/mbed-os/wiki/Toolchain-Setup-Guide)
 for ARM GCC.
 
-### 1.5 OpenOCD*
+### 1.6 OpenOCD*
 
 [OpenOCD](https://openocd.org/).
 
@@ -117,7 +128,7 @@ for ARM GCC.
       directory!**
 - For macOS: [Homebrew OpenOCD](https://formulae.brew.sh/formula/open-ocd).
 
-### 1.6 STM32CubeProgrammer (Recommended)
+### 1.7 STM32CubeProgrammer (Recommended)
 
 [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html).
 
@@ -140,11 +151,11 @@ Add the `Embedded Development Support` plugin for CLion:
 ```Settings → Plugins```
 ![CLion Embedded Development Support plugin.png](pictures/stm32ide/CLion%20Embedded%20Development%20Support%20plugin.png)
 
-### 2.2 Setup OpenOCD and STM32CubeMX Paths
+### 2.2 Setup OpenOCD, STM32CubeMX and STM32CubeCLT Paths
 
 Add the path for `OpenOCD` and `STM32CubeMX`:
 ```Settings → Build, Execution, Deployment → Embedded Development```
-![CLion Embedded Development OpenOCD and STM32CubeMX path setting.png](pictures/stm32ide/CLion%20Embedded%20Development%20OpenOCD%20and%20STM32CubeMX%20path%20setting.png)
+![CLion Embedded Development OpenOCD STM32CubeMX and STM32CubeCLT path setting.png](pictures/stm32ide/CLion%20Embedded%20Development%20OpenOCD%20STM32CubeMX%20and%20STM32CubeCLT%20path%20setting.png)
 
 - You can always click the `Test` button to see if the path is valid.
 
@@ -154,7 +165,10 @@ Add the path for `OpenOCD` and `STM32CubeMX`:
     ```
     ```
     C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeMX\STM32CubeMX.exe
-    C:\Users\Daniel\AppData\Local\Programs\STM32CubeMX\STM32CubeMX.exe
+    C:\Users\**NAME_HERE**\AppData\Local\Programs\STM32CubeMX\STM32CubeMX.exe
+    ```
+    ```
+    C:\ST\STM32CubeCTL
     ```
 - For macOS the default paths are:
     ```
@@ -162,6 +176,9 @@ Add the path for `OpenOCD` and `STM32CubeMX`:
     ```
     ```
     /Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources/STM32CubeMX
+    ```
+    ```
+    /opt/ST/STM32CubeCLT_1.18.0
     ```
 
 ### 2.3 Setup Arm GNU Toolchain GCC and G++

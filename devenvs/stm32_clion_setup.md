@@ -24,11 +24,8 @@ STM32 development utilizing STM32CubeMX, GNU ARM Toolchain and OpenOCD.
     * [2.3 Setup Arm GNU Toolchain GCC and G++](#23-setup-arm-gnu-toolchain-gcc-and-g)
   * [3 STM32CubeMX Project Setup](#3-stm32cubemx-project-setup)
     * [3.1 Create new CLion STM32CubeMX project](#31-create-new-clion-stm32cubemx-project)
-      * [3.1.1 Configure Version Control](#311-configure-version-control)
-      * [3.1.2 Remove Default Generated File Structure](#312-remove-default-generated-file-structure)
-    * [3.2 Configure STM32 with STM32CubeMX](#32-configure-stm32-with-stm32cubemx)
-      * [3.2.1 Configure STM32CubeMX Project Manager](#321-configure-stm32cubemx-project-manager)
-      * [3.2.2 Generate Code](#322-generate-code)
+      * [3.1.1 Configure STM32CubeMX Project Manager](#311-configure-stm32cubemx-project-manager)
+    * [3.2 Configure Version Control](#32-configure-version-control)
     * [3.3 CMake Configuration](#33-cmake-configuration)
   * [4 OpenOCD Configuration](#4-openocd-configuration)
     * [4.1 Pick Target Board Configuration File](#41-pick-target-board-configuration-file)
@@ -222,42 +219,13 @@ generation and more.
 ### 3.1 Create new CLion STM32CubeMX project
 
 ```File → New → Project → STM32CubeMX```
-![CLion new STM32CubeMX project.png](pictures/stm32ide/CLion%20new%20STM32CubeMX%20project.png?raw=true "CLion new STM32CubeMX project.png")
+![CLion new STM32CubeMX project.png](pictures/stm32ide/CLion%20new%20STM32CubeMX%20project.png)
 
+- Follow the instructions listed.
 - Use the appropriate path if you are opening or creating a version controlled
   project.
 
-#### 3.1.1 Configure Version Control
-
-Wait for STM32CubeMX to finish generating a default project.
-
-If you are using version control, verify that any required files such as `.git`
-are still in the project directory, sometimes STM32CubeMX may delete/overwrite
-these files.
-
-#### 3.1.2 Remove Default Generated File Structure
-
-Delete all files in your project except those that you specifically know are
-needed.
-
-If you are new to the STM32 workflow follow the recommendations below:
-
-1. Keep `CMakeLists.txt`, `CMakeLists_template.txt`,
-   `**PROJECT_NAME_HERE**.ioc`.
-2. Keep files required for version control such as `.git`.
-3. Keep `.idea` (JetBrain's project structure file).
-
-### 3.2 Configure STM32 with STM32CubeMX
-
-If STM32CubeMX fails to open automatically you can find the newly
-created `**PROJECT_NAME_HERE**.ioc` on the left-hand `Project` file structure
-viewer.
-
-- You can edit the `.ioc` at any later time, but you should at least select
-  your target ST chip or board.
-- By default, the target chip will be selected to `STM32F030F4Px`.
-
-#### 3.2.1 Configure STM32CubeMX Project Manager
+#### 3.1.1 Configure STM32CubeMX Project Manager
 
 Configure the `Project Manager`.
 
@@ -267,6 +235,7 @@ Configure the `Project Manager`.
 2. `Project Location` = will be the root directory of your project.
 3. `Toolchain / IDE` = `STM32CubeIDE`.
 4. `Generate Under Root` = `True`.
+5. Generate code with the... `GENERATE CODE` button.
 
 ![STM32CubeMX code generation settings.png](pictures/stm32ide/STM32CubeMX%20code%20generation%20settings.png)
 
@@ -275,12 +244,13 @@ Configure the `Project Manager`.
     - My `Toolchain Folder Location` is the path of my repository since
       the `Project Name` matches the repo name.
 
-#### 3.2.2 Generate Code
+### 3.2 Configure Version Control
 
-Generate code with the... `GENERATE CODE` button.
+Wait for STM32CubeMX to finish generating a default project.
 
-- You may get a warning about overwriting the previous `.ioc`, allow and
-  continue.
+If you are using version control, verify that any required files such as `.git`
+are still in the project directory, sometimes STM32CubeMX may delete/overwrite
+these files.
 
 ### 3.3 CMake Configuration
 

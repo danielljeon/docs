@@ -30,6 +30,7 @@
     * [3.12 Combine Bytes](#312-combine-bytes)
     * [3.13 Split a Larger Data Type into Bytes](#313-split-a-larger-data-type-into-bytes)
     * [3.14 Circular Shift](#314-circular-shift)
+* [4 Execution Time Analysis](#4-execution-time-analysis)
 <!-- TOC -->
 
 </details>
@@ -241,3 +242,30 @@ uint8_t high_byte = (value >> 8) & 0xFF; // high_byte = 0x12.
 uint8_t value = 0b11010110;
 uint8_t result = (value << 3) | (value >> (8 - 3)); // result = 0b10110110.
 ```
+
+---
+
+# 4 Execution Time Analysis
+
+1. **Offboard**: Inspecting compiled assembly code.
+    - Tooling: `objdump`, CMake post-build disassembly, ELF/map analysis.
+    - Purpose: Verify what the compiler actually emitted (instruction count, inlining, branches).
+    - Limitation: Can't capture runtime effects (interrupts, caches, bus contention).
+    - Example ARM GCC toolchain `CMakeLists.txt` segment:
+        ```cmake
+        add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+                COMMAND arm-none-eabi-objdump -d -S $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
+                > ${CMAKE_PROJECT_NAME}.disasm)
+        ```
+        - Every CMake build automatically produces a human-readable assembly listing of the
+          firmware, with C source lines interleaved (when built with debug info enabled, e.g. `-g`),
+          for inspection and debugging.
+2. **Onboard (external)**: Using an oscilloscope/logic analyzer.
+    - Tooling: GPIO pulse instrumentation + scope/logic analyzer.
+    - Purpose: Hard real-time observation of latencies, jitter, ISR execution windows.
+    - Limitation: Only shows what you toggle, coarse system visibility unless heavily instrumented.
+3. **Onboard (internal)**: Using timer/counter peripherals.
+    - Tooling: Data Watchpoint and Trace unit (DWT) Cycle Counter Register (CYCCNT), SysTick,
+      general timers.
+    - Purpose: Cycle-accurate, low-overhead measurement of function/runtime sections.
+    - Limitation: Measures only where you target, unknown system-wide activity.

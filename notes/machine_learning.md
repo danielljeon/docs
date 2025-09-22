@@ -11,6 +11,8 @@
   * [2 Optimization](#2-optimization)
     * [3.1 Gradient Descent](#31-gradient-descent)
   * [3 Prediction Models](#3-prediction-models)
+    * [3.1 Overview](#31-overview)
+      * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
     * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
       * [3.2.1 Gradient Descent Approach](#321-gradient-descent-approach)
       * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
@@ -52,6 +54,14 @@ global minimum.
 ---
 
 ## 3 Prediction Models
+
+### 3.1 Overview
+
+#### 3.1.1 Overfitting and Overtraining
+
+Overfitting happens when a prediction model captures noise or random fluctuations in the training
+data instead of the underlying patterns that generalize to unseen data. Or in other words, **the
+model memorizes the training data instead of learning general rules**.
 
 ### 3.2 Linear Regression: Continuous Outcome Prediction
 

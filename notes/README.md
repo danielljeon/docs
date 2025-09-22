@@ -13,3 +13,4 @@ purposes.
 - [git_cheat_sheet.md](git_cheat_sheet.md)
 - [machine_learning.md](machine_learning.md)
 - [math.md](math.md)
+- [robotics.md](robotics.md)

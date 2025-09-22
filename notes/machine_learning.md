@@ -21,6 +21,10 @@
       * [3.3.2 Decision Boundary](#332-decision-boundary)
       * [3.3.3 Maximum Likelihood](#333-maximum-likelihood)
         * [3.3.3.1 Maximum Log-Likelihood (+ Gradient Decent) Approach](#3331-maximum-log-likelihood--gradient-decent-approach)
+    * [3.4 Decision Trees: Rules-based Hierarchical Splits](#34-decision-trees-rules-based-hierarchical-splits)
+      * [3.4.1 Information Gain and Entropy](#341-information-gain-and-entropy)
+        * [3.4.1.1 Overfitting and Pruning](#3411-overfitting-and-pruning)
+      * [3.4.2 Gini Index and Weighted Sum](#342-gini-index-and-weighted-sum)
 <!-- TOC -->
 
 </details>
@@ -195,3 +199,65 @@ $$\ell_{log}(\omega) = \sum_{i=1}^N \Big[t^{(i)} \log p(t=1 \mid x^{(i)}; \omega
 - Note: the log-likelihood $\ell(\omega)$ is concave in $\omega$.
     - Optimizers that minimize objectives typically use the negative $J(\omega) = -\ell(\omega)$,
       which is convex.
+
+### 3.4 Decision Trees: Rules-based Hierarchical Splits
+
+Decision trees are prediction models that uses a series of simple yes/no rules to split data into
+branches, creating a hierarchical structure that ends in outcomes or predictions. Each split is
+based on a feature that best separates the data, making the model easy to interpret and visualize,
+like following a flowchart to reach a decision.
+
+Process:
+
+1. Select an attribute as the start of the tree.
+    - Greedy search.
+    - Information Gain and Entropy.
+    - Gini Index and Weighted Sum.
+2. Split the Data.
+3. Check the homogeneity of new splits.
+4. Branch out or terminate with a leaf (terminate on zero entropy/uncertainty attributes).
+
+#### 3.4.1 Information Gain and Entropy
+
+Is a measure used in decision trees to decide which attribute to split on at each step. It
+quantifies how much "uncertainty" (entropy) in the dataset is reduced after splitting the data based
+on a given attribute.
+
+$$IG(S, A) = H(S) - \sum_{v \in V(A)} \frac{|S_v|}{|S|} H(S_v)$$
+
+where:
+
+- $H(S)$: The entropy of the full dataset.
+- $S$: The entire dataset (or the subset of data currently at a node in the decision tree).
+- $S_v$: The subset after splitting on value $v$.
+- $V(A)$: The set of possible values of attribute $A$.
+- $\sum_{v \in V(A)} \frac{|S_v|}{|S|} H(S_v)$: is the weighted average entropyof the subsets after
+  splitting on attribute $A$.
+
+The entropy or uncertainty is calculated as follows:
+
+$$H(S) = -\,p(+) \log_{2} p(+) - p(-) \log_{2} p(-)$$
+
+where:
+
+- $p(+)$: Is the probability of positive examples.
+- $p(-)$: Is the probability of negative examples.
+
+##### 3.4.1.1 Overfitting and Pruning
+
+When a decision tree overfits, pruning is used to simplify it. The idea is to replace certain
+subtrees with leaf nodes that predict the majority class. This is tested on a validation set
+(separate from the training and test sets). If accuracy improves or stays the same, the prune is
+kept; if not, it's reverted. This prevents the model from memorizing noise and helps it generalize
+better.
+
+- Sometimes helps to split data into 3: training, testing and pruning.
+
+#### 3.4.2 Gini Index and Weighted Sum
+
+$$Gini = 1 - \sum_{i=1}^{n} p_i^2$$
+
+where:
+
+- $p_i$: The probability of class $i$.
+- $n$: The number of classes.

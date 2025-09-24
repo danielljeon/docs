@@ -10,6 +10,16 @@
   * [1 Mathematical Conventions](#1-mathematical-conventions)
     * [1.1 Matrix Operations and Transforms](#11-matrix-operations-and-transforms)
   * [2 Homogenous Transformation Matrix Operator](#2-homogenous-transformation-matrix-operator)
+  * [3 Basic Problems of Manipulators](#3-basic-problems-of-manipulators)
+    * [3.1 FD: Forward Displacement](#31-fd-forward-displacement)
+    * [3.2 ID: Inverse Displacement](#32-id-inverse-displacement)
+    * [3.3 FV: Forward Velocity](#33-fv-forward-velocity)
+    * [3.4 IV: Inverse Velocity](#34-iv-inverse-velocity)
+    * [3.5 FF: Forward Force](#35-ff-forward-force)
+    * [3.6 IF: Inverse Force](#36-if-inverse-force)
+  * [4 Denavit-Hartenberg (D&H) Convention: Manipulator Representation](#4-denavit-hartenberg-dh-convention-manipulator-representation)
+    * [4.1 Zero Displacement Condition](#41-zero-displacement-condition)
+    * [4.2 Homogenous Transform Representation](#42-homogenous-transform-representation)
 <!-- TOC -->
 
 </details>
@@ -116,3 +126,70 @@ These transforms assume a standard right hand rule and active rotation.
   curled fingers indicate the positive rotation direction. So R_z(\theta) rotates a point in the
   xy-plane counterclockwise when looking down the +z-axis.
 - **Active rotation:** The vector is rotated in a fixed coordinate frame.
+
+---
+
+## 3 Basic Problems of Manipulators
+
+### 3.1 FD: Forward Displacement
+
+### 3.2 ID: Inverse Displacement
+
+### 3.3 FV: Forward Velocity
+
+### 3.4 IV: Inverse Velocity
+
+### 3.5 FF: Forward Force
+
+### 3.6 IF: Inverse Force
+
+---
+
+## 4 Denavit-Hartenberg (D&H) Convention: Manipulator Representation
+
+The D&H convention is a systematic recipe for assigning coordinate frames to robot links and joints
+to describe kinematics using 4 parameters. However, the D&H convention does not result in a single
+unique coordinate frame representation for a given system, since multiple equally valid frame
+attachments may exist.
+
+When attaching frames under the D&H convention:
+
+- The $z_i$ axis is aligned with the $i^{th}$ joint axis.
+- The $x_i$ axis is directed along the common normal between $z_i$ and $z_{i+1}$ (or, if the axes
+  intersect, chosen perpendicular to $z_i$).
+- The $y_i$ axis is chosen to complete a right-handed coordinate system.
+
+Note: $a_i$ corresponds to the common normal distance between successive $z$-axes.
+
+The 4 parameters are defined as:
+
+1. $a_{i-1}$ is the distance from $\hat{z}_{i-1}$ to $\hat{z}_i$ measured along $\hat{x}_{i-1}$.
+2. $\alpha_{i-1}$ is the angle between $\hat{z}_{i-1}$ and $\hat{z}_i$ measured
+   about $\hat{x}_{i-1}$.
+3. $d_i$ is the distance from $\hat{x}_{i-1}$ to $\hat{x}_i$ measured along $\hat{z}_i$.
+4. $\theta_i$ is the angle between $\hat{x}_{i-1}$ and $\hat{x}_i$ measured about $\hat{z}_i$.
+
+### 4.1 Zero Displacement Condition
+
+In the D&H convention, the zero displacement condition specifies that each joint
+variable ($\theta_i$ for revolute or $d_i$ for prismatic) is measured relative to a reference
+configuration where the parameter equals zero. This anchors the D&H parameters to the robot's
+physical geometry.
+
+### 4.2 Homogenous Transform Representation
+
+$${}^{i-1}T_i \;=\; R_{x_{i-1}}(\alpha_{i-1}) \, D_{x_{i-1}}(a_{i-1}) \, R_{z_i}(\theta_i) \, D_{z_i}(d_i)$$
+
+or
+
+$${}^{i-1}T_i \;=\; D_{x_{i-1}}(a_{i-1}) \, R_{x_{i-1}}(\alpha_{i-1}) \, D_{z_i}(d_i) \, R_{z_i}(\theta_i)$$
+
+When expanded into the full matrix from, this is represented as:
+
+$${}^{i-1}T_i =
+\begin{bmatrix}
+\cos(\theta_i) & -\sin(\theta_i) & 0 & a_{i-1} \\
+\sin(\theta_i) \cos(\alpha_{i-1}) & \cos(\theta_i) \cos(\alpha_{i-1}) & -\sin(\alpha_{i-1}) & -\sin(\alpha_{i-1}) d_i \\
+\sin(\theta_i) \sin(\alpha_{i-1}) & \cos(\theta_i) \sin(\alpha_{i-1}) & \cos(\alpha_{i-1}) & \cos(\alpha_{i-1}) d_i \\
+0 & 0 & 0 & 1
+\end{bmatrix}$$

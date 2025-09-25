@@ -6,25 +6,27 @@
   <summary>Table of Contents</summary>
 
 <!-- TOC -->
+
 * [Machine Learning](#machine-learning)
-  * [1 Intro and Data](#1-intro-and-data)
-  * [2 Optimization](#2-optimization)
-    * [3.1 Gradient Descent](#31-gradient-descent)
-  * [3 Prediction Models](#3-prediction-models)
-    * [3.1 Overview](#31-overview)
-      * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
-    * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
-      * [3.2.1 Gradient Descent Approach](#321-gradient-descent-approach)
-      * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
-    * [3.3 Logistic Regression: Probability Based Classification](#33-logistic-regression-probability-based-classification)
-      * [3.3.1 Sigmoid](#331-sigmoid)
-      * [3.3.2 Decision Boundary](#332-decision-boundary)
-      * [3.3.3 Maximum Likelihood](#333-maximum-likelihood)
-        * [3.3.3.1 Maximum Log-Likelihood (+ Gradient Decent) Approach](#3331-maximum-log-likelihood--gradient-decent-approach)
-    * [3.4 Decision Trees: Rules-based Hierarchical Splits](#34-decision-trees-rules-based-hierarchical-splits)
-      * [3.4.1 Information Gain and Entropy](#341-information-gain-and-entropy)
-        * [3.4.1.1 Overfitting and Pruning](#3411-overfitting-and-pruning)
-      * [3.4.2 Gini Index and Weighted Sum](#342-gini-index-and-weighted-sum)
+    * [1 Intro and Data](#1-intro-and-data)
+    * [2 Optimization](#2-optimization)
+        * [3.1 Gradient Descent](#31-gradient-descent)
+    * [3 Prediction Models](#3-prediction-models)
+        * [3.1 Overview](#31-overview)
+            * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
+        * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
+            * [3.2.1 Gradient Descent Approach](#321-gradient-descent-approach)
+            * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
+        * [3.3 Logistic Regression: Probability Based Classification](#33-logistic-regression-probability-based-classification)
+            * [3.3.1 Sigmoid](#331-sigmoid)
+            * [3.3.2 Decision Boundary](#332-decision-boundary)
+            * [3.3.3 Maximum Likelihood](#333-maximum-likelihood)
+                * [3.3.3.1 Maximum Log-Likelihood (+ Gradient Decent) Approach](#3331-maximum-log-likelihood--gradient-decent-approach)
+        * [3.4 Decision Trees: Rules-based Hierarchical Splits](#34-decision-trees-rules-based-hierarchical-splits)
+            * [3.4.1 Information Gain and Entropy](#341-information-gain-and-entropy)
+                * [3.4.1.1 Overfitting and Pruning](#3411-overfitting-and-pruning)
+            * [3.4.2 Gini Index and Weighted Sum](#342-gini-index-and-weighted-sum)
+
 <!-- TOC -->
 
 </details>
@@ -261,3 +263,96 @@ where:
 
 - $p_i$: The probability of class $i$.
 - $n$: The number of classes.
+
+### 3.4.3 Decision Regression Trees
+
+Process:
+
+1. Select an attribute to test, note that eventually all attributes must be tested.
+2. Identify possible splits between each data point ($n_{\mathrm{attributes}} - 1$).
+3. Calculate the averages of each sub-dataset formed by each split.
+   $$\hat{y}_{\tau} = \frac{1}{N_{\tau}} \sum_{x_n \in Y_{\tau}}^{N} t_n$$
+
+   where:
+
+    - $\hat{y}_{\tau}$: The predicted/estimated output for subset $\tau$.
+    - $N_{\tau}$: The number of samples in subset $Y_{\tau}$.
+    - $t_n$: The target value (label/output) for sample $x_n$.
+    - $x_n$: A single data sample/observation.
+    - $Y_{\tau}$: The subset of data samples belonging to region/leaf $\tau$.
+    - $N$: The total number of samples in the dataset.
+4. Calculate the error of each subset for every split and add them together.
+   The error for each subset is given by:
+
+   $$E_{\tau} = \sum_{i=1}^{N} \left( y_{(i)} - \hat{y}_{\tau} \right)^2$$
+
+   where:
+
+    - $E_{\tau}$: The total squared error for subset $\tau$.
+    - $y_{(i)}$: The observed/true value of the i-th sample.
+    - $i$: The index running over the samples in the dataset (from 1 to $N$).
+
+   The total error for each split is given by:
+
+   $$E = \sum_{\tau=1}^{\tau} E_{\tau}$$
+
+   where:
+
+    - $E$: The total error across all subsets.
+    - $\tau$: The index of the subset (e.g., a region, cluster, or leaf in a tree).
+5. Select the split with the least respective error.
+6. Repeat the steps for all attributes.
+
+### 3.4.4 Random Forest: Bagging
+
+$$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{n=1}^{N} H_n(x)$$
+
+- $\hat{H}_{bag}(x)$: The bagged (averaged) predictor output for input $x$.
+- $H_n(x)$: The prediction made by the $n$-th model (or learner) on input $x$.
+- $x$: The input sample or data point.
+
+Process:
+
+1. Divide the training data set into N random subsets.
+2. Build $N$ trees to generate multiple hypothesis $Hn(x)$
+    - Randomly overwrite the entropy decision and force data splits throughout the forest
+3. Use the forest to predict the target variable of test instances as the average of all trees in
+   the forest.
+
+### 3.4.5 Adaboost: Adaptive Boosting on Trees
+
+1. Assign equal we.ights to the dataset.
+2. Select a stump.
+3. Calculate the importance factor $\alpha$, for each datapoint factor.
+   $$\alpha = \tfrac{1}{2} \log_{e} \left( \frac{1 - \text{Total Error}}{\text{Total Error}} \right)$$
+
+   where:
+
+    - $\alpha$: The weight assigned to a weak learner (in boosting).
+    - $\text{Total Error}$: The weighted error rate of the weak learner.
+        - For example: the sum of misclassified sample weights divided by the total.
+4. Reweight the data points with the calculated importance factors.
+    - Correct sample: $\omega_{(i)} \leftarrow \omega_{(i)} e^{-\alpha}$.
+    - Incorrect sample: $\omega_{(i)} \leftarrow \omega_{(i)} e^{\alpha}$.
+
+   where:
+
+    - $\omega_{(i)}$: weight (importance factor) of the $i$-th training sample
+5. Normalize the new weights.
+   $$\omega_{(i)} \leftarrow \frac{\omega_{(i)}}{\sum_{i=1}^{N} \omega_{(i)}}$$
+
+   where:
+
+    - $\sum_{i=1}^{N} \omega_{(i)}$: Is the normalization constant, it ensures all weights sum to 1.
+6. Make the newly formed dataset.
+7. Repeat steps with the new dataset.
+
+### 3.4.6 Adaboost and Random Forest
+
+$$\alpha = \tfrac{1}{2} \log_{e} \left( \frac{1 - \text{Total Error}}{\text{Total Error}} \right)$$
+
+where:
+
+- $\alpha$: The weight assigned to a weak learner (in boosting).
+- $\text{Total Error}$: The weighted error rate of the weak learner (fraction of sample weights
+  misclassified).

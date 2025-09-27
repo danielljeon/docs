@@ -103,7 +103,7 @@ where:
 The objective function is the mathematical expression that should be minimized in order to find the
 best-fitting line (or hyperplane):
 
-$$E(\omega) = \frac{1}{2} \sum_{n=1}^{N} \left\{ f(x_n, \omega) - t_n \right\}^2$$
+$$E(\omega) = \frac{1}{2} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
 
 - $E(\omega)$: The error (loss) function, measures how well the model with parameters $\omega$ fits
   the data.

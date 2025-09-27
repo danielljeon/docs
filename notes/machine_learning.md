@@ -14,13 +14,14 @@
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
     * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
-      * [3.2.1 Gradient Descent Approach](#321-gradient-descent-approach)
+      * [3.2.1 Gradient Descent Approach: Mean Squared Error (MSE)](#321-gradient-descent-approach-mean-squared-error-mse)
       * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
     * [3.3 Logistic Regression: Probability Based Classification](#33-logistic-regression-probability-based-classification)
       * [3.3.1 Sigmoid](#331-sigmoid)
       * [3.3.2 Decision Boundary](#332-decision-boundary)
       * [3.3.3 Maximum Likelihood](#333-maximum-likelihood)
-        * [3.3.3.1 Maximum Log-Likelihood (+ Gradient Decent) Approach](#3331-maximum-log-likelihood--gradient-decent-approach)
+        * [3.3.3.1 Maximum Log-Likelihood](#3331-maximum-log-likelihood)
+        * [3.3.3.2 Binary Cross Entropy (BCE)](#3332-binary-cross-entropy-bce)
     * [3.4 Decision Trees: Rules-based Hierarchical Splits](#34-decision-trees-rules-based-hierarchical-splits)
       * [3.4.1 Information Gain and Entropy](#341-information-gain-and-entropy)
         * [3.4.1.1 Overfitting and Pruning](#3411-overfitting-and-pruning)
@@ -98,10 +99,11 @@ where:
     - If $M = 1$, the model is simple linear regression (a straight line).
     - If $M > 1$, the model is polynomial regression.
 
-#### 3.2.1 Gradient Descent Approach
+#### 3.2.1 Gradient Descent Approach: Mean Squared Error (MSE)
 
 The objective function is the mathematical expression that should be minimized in order to find the
-best-fitting line (or hyperplane):
+best-fitting line (or hyperplane), in linear regression this is known as the Mean Squared Error
+(MSE):
 
 $$E(\omega) = \frac{1}{2} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
 
@@ -188,7 +190,7 @@ where:
 - $p(t=1 \mid x^{(i)}; \omega)$: the probability, predicted by the model with parameters $\omega$,
   that sample $i$ belongs to class 1.
 
-##### 3.3.3.1 Maximum Log-Likelihood (+ Gradient Decent) Approach
+##### 3.3.3.1 Maximum Log-Likelihood
 
 In order to make finding the maximum likelihood easier, the log can be taken, converting the product
 over $N$ samples to a sum. This allows the maximum log-likelihood to be used as the objective
@@ -201,8 +203,15 @@ $$\ell_{log}(\omega) = \sum_{i=1}^N \Big[t^{(i)} \log p(t=1 \mid x^{(i)}; \omega
 - So, for each data point, the function rewards the model if it assigns high probability to the
   correct label.
 - Note: the log-likelihood $\ell(\omega)$ is concave in $\omega$.
-    - Optimizers that minimize objectives typically use the negative $J(\omega) = -\ell(\omega)$,
-      which is convex.
+
+##### 3.3.3.2 Binary Cross Entropy (BCE)
+
+Real life optimizers that minimise the objective function typically use the inverse of the Maximum
+Log-Likelihood, known as the Binary Cross Entropy (BCE):
+
+$$J(\omega) = - \frac{1}{N} \ell_{log}(\omega)$$
+
+- The mean is also taken to keep the loss independent of dataset size.
 
 ### 3.4 Decision Trees: Rules-based Hierarchical Splits
 

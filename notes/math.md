@@ -20,6 +20,11 @@
     * [4.1 Fourier Series](#41-fourier-series)
     * [4.2 Fourier Transform](#42-fourier-transform)
       * [4.2.1 Discrete Fourier Transform (DFT)](#421-discrete-fourier-transform-dft)
+  * [5 Statistics](#5-statistics)
+    * [5.1 Intro](#51-intro)
+    * [5.2 Distribution](#52-distribution)
+      * [5.2.1 Normal Distribution](#521-normal-distribution)
+      * [5.2.2 Binomial Distribution](#522-binomial-distribution)
 <!-- TOC -->
 
 </details>
@@ -217,3 +222,81 @@ For more information:
   Xu: [Discrete Fourier Transform - Simple Step by Step](https://youtu.be/mkGsMWi_j4Q).
 - YouTube,
   MATLAB: [Understanding the Discrete Fourier Transform and the FFT](https://youtu.be/QmgJmh2I3Fw).
+
+---
+
+## 5 Statistics
+
+### 5.1 Intro
+
+### 5.2 Distribution
+
+#### 5.2.1 Normal Distribution
+
+Probability is given by:
+
+$$p(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\tfrac{1}{2} \left( \tfrac{x - \mu}{\sigma} \right)^2}$$
+
+where:
+
+- $x$: The random variable.
+- $\mu$: The mean (average) of the distribution.
+- $\sigma^2$: The variance or spread of the distribution.
+- $\sigma$: The standard deviation (square root of variance).
+- $p(x)$: The probability density at value x.
+
+Variance:
+
+$$\sigma^2 = \frac{\sum_{i=1}^N (x_i - \mu)^2}{N}$$
+
+where:
+
+- $x_i$: The i-th data point in the sample.
+- $\mu$: The mean of the dataset.
+- $N$: The total number of data points.
+- $\sigma^2$: Variance (average squared distance from the mean).
+
+Standard deviation:
+
+$$\sigma = \sqrt{\sigma^2}$$
+
+**Central limit theorem**: A random variable trends toward a normal distribution when 30 samples are
+reached ($n \geq 30$).
+
+#### 5.2.2 Binomial Distribution
+
+Probability is given by:
+
+$$p(r) = \frac{n!}{r!(n-r)!} p^r (1-p)^{n-r}$$
+
+where:
+
+- $r$: Number of "successes" in $n$ trials.
+- $p$: Probability of success in a single trial.
+- $(1-p)$: Probability of failure in a single trial.
+- $p(r)$: Probability of observing exactly $r$ successes out of $n$ trials.
+
+Mean is:
+
+$$\mathbb{E}[Y] = \sum_{i=1}^{n} r_i \, P(Y = r_i)$$
+
+where:
+
+- $\mathbb{E}[Y]$: Expected value (mean) of the distribution.
+- $r_i$: The i-th possible outcome (number of successes).
+- $P(Y = r_i)$: Probability that the random variable Y takes value $r_i$.
+- $n$: Total number of possible outcomes.
+
+Variance:
+
+$$np(1-p)$$
+
+where:
+
+- $n$: Number of trials.
+- $p$: Probability of success.
+- $(1-p)$: Probability of failure.
+
+Standard deviation:
+
+$$\sqrt{np(1-p)}$$

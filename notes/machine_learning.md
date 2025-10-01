@@ -10,7 +10,7 @@
   * [1 Intro and Data](#1-intro-and-data)
   * [2 Optimization](#2-optimization)
     * [3.1 Gradient Descent](#31-gradient-descent)
-  * [3 Prediction Models](#3-prediction-models)
+  * [3 Supervised Prediction Models](#3-supervised-prediction-models)
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
     * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
@@ -30,6 +30,13 @@
     * [3.4.4 Random Forest: Bagging](#344-random-forest-bagging)
     * [3.4.5 Adaboost: Adaptive Boosting on Trees](#345-adaboost-adaptive-boosting-on-trees)
     * [3.4.6 Adaboost and Random Forest](#346-adaboost-and-random-forest)
+  * [4 Unsupervised Prediction Models](#4-unsupervised-prediction-models)
+    * [4.1 K-Means Clustering](#41-k-means-clustering)
+      * [4.1.1 K-Nearest Neighbour: Hard Classification](#411-k-nearest-neighbour-hard-classification)
+        * [4.1.1.1 Distance Measurements](#4111-distance-measurements)
+        * [4.1.1.2 Standardization and Normalization](#4112-standardization-and-normalization)
+        * [4.1.1.3 Weighted K-Nearest Neighbour](#4113-weighted-k-nearest-neighbour)
+    * [4.2 Gaussian Mixture Models (GMM): Soft Classification](#42-gaussian-mixture-models-gmm-soft-classification)
 <!-- TOC -->
 
 </details>
@@ -62,7 +69,7 @@ global minimum.
 
 ---
 
-## 3 Prediction Models
+## 3 Supervised Prediction Models
 
 ### 3.1 Overview
 
@@ -367,3 +374,60 @@ where:
 - $\alpha$: The weight assigned to a weak learner (in boosting).
 - $\text{Total Error}$: The weighted error rate of the weak learner (fraction of sample weights
   misclassified).
+
+---
+
+## 4 Unsupervised Prediction Models
+
+### 4.1 K-Means Clustering
+
+#### 4.1.1 K-Nearest Neighbour: Hard Classification
+
+Decision boundaries are made separating points (or feature values) into zones for prediction.
+
+By calculating the distance between each feature and cutting the distance line
+equidistant, perpendicular splits are created known as a Voronoi Diagram.
+
+##### 4.1.1.1 Distance Measurements
+
+**Euclidian Distance:** essentially by using a summed pythagorean theorem the distance between
+points can be found.
+
+$$\mathrm{ED} = \left\lVert x^{(a)} - x^{(b)} \right\rVert = \sqrt{ \sum_{j=1}^{d} \left( x_j^{(a)} - x_j^{(b)} \right)^2 }$$
+
+where:
+
+- $d$: The number of points (features in machine learning).
+
+**Hamming Distance:** Finding the difference between binary numbers, for example:
+
+`100011 XOR 110110 = 010101 -> 3 ones`
+
+**Cosine Distance:** Calculating the cos of the angle between points to measure the distance.
+
+##### 4.1.1.2 Standardization and Normalization
+
+In cases for datasets or applications with various features with large differences in units of
+measure, the data can be preprocessed for a better distance comparison.
+
+Values can be normalized to be in the range 0 to 1.
+
+Values can also be standardized by scaling each feature's values ensuring a mean of $\mu = 0$ and a
+variance of $\sigma^2 = 1$.
+
+$$\sigma^2 = \frac{\sum (x_i - \mu)^2}{N} = 1$$
+
+##### 4.1.1.3 Weighted K-Nearest Neighbour
+
+$$w_i = \frac{1}{\mathrm{ED}_i}$$
+
+### 4.2 Gaussian Mixture Models (GMM): Soft Classification
+
+A Gaussian Mixture Model (GMM) assumes data points come from a mix of several Gaussian (bell-shaped)
+distributions, each with its own mean and spread. Instead of hard-assigning each point to a single
+cluster like k-means, GMM gives probabilities (soft assignments) of belonging to each cluster. This
+makes GMM more flexible, since it can model elliptical clusters of different sizes and orientations,
+while k-means only captures spherical clusters of equal variance. In short, GMM is a probabilistic,
+more general version of clustering compared to k-means.
+
+$$p(X \mid \mu, \Sigma) = \frac{1}{\sqrt{(2 \pi)^d \lvert \Sigma \rvert}} \, e^{-\tfrac{1}{2} (X - \mu)^{T} \Sigma^{-1} (X - \mu)}$$

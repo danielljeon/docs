@@ -9,7 +9,8 @@
 * [Machine Learning](#machine-learning)
   * [1 Intro and Data](#1-intro-and-data)
   * [2 Optimization](#2-optimization)
-    * [3.1 Gradient Descent](#31-gradient-descent)
+    * [2.1 The Cost Function](#21-the-cost-function)
+    * [2.2 Gradient Descent](#22-gradient-descent)
   * [3 Supervised Prediction Models](#3-supervised-prediction-models)
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
@@ -49,23 +50,32 @@
 
 ## 2 Optimization
 
-### 3.1 Gradient Descent
+### 2.1 The Cost Function
+
+The cost function, also known as the loss function, measures how well a machine learning model's
+predictions match the actual target values. It quantifies the error between the expected and
+predicted outputs, providing the feedback signal that guides learning.
+
+### 2.2 Gradient Descent
 
 Gradient descent is an iterative optimization algorithm that minimizes an objective function by
 moving the current guess down the slope (opposite to the gradient), taking small incremental steps.
 
-$$a_{n+1} = {a}_{n} - \eta_{n} p_{n}$$
+$$a_{n+1} = a_n - \eta_n \nabla f(a_n)$$
 
 where:
 
 - $a_{n+1}$: The next iterate after applying the gradient descent step.
 - $a_{n}$: The current iterate at iteration n.
-- $\eta_n$: Step size at iteration n.
-- $p_{n}$: The gradient of the function at the iteration n.
+- $\eta_n$: The learning rate or step size at iteration n.
+- $p_{n}$: The gradient of the cost function at the iteration n.
 
 Heuristic optimization methods often incorporate randomization or other exploratory strategies to
 reduce the chance of getting trapped in local minima and to improve the likelihood of finding a
 global minimum.
+
+YouTube,
+3Blue1Brown: [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://youtu.be/IHZwWFHWa-w)
 
 ---
 

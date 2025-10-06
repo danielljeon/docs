@@ -30,7 +30,13 @@
     * [3.12 Combine Bytes](#312-combine-bytes)
     * [3.13 Split a Larger Data Type into Bytes](#313-split-a-larger-data-type-into-bytes)
     * [3.14 Circular Shift](#314-circular-shift)
-* [4 Execution Time Analysis](#4-execution-time-analysis)
+  * [4 Execution Time Analysis](#4-execution-time-analysis)
+  * [5 Operating Systems](#5-operating-systems)
+    * [5.1 Threads and Processes](#51-threads-and-processes)
+  * [6 Scheduling](#6-scheduling)
+    * [6.1 Tasks](#61-tasks)
+      * [6.1.1 Task States](#611-task-states)
+      * [6.1.2 Preemption](#612-preemption)
 <!-- TOC -->
 
 </details>
@@ -245,7 +251,7 @@ uint8_t result = (value << 3) | (value >> (8 - 3)); // result = 0b10110110.
 
 ---
 
-# 4 Execution Time Analysis
+## 4 Execution Time Analysis
 
 1. **Offboard**: Inspecting compiled assembly code.
     - Tooling: `objdump`, CMake post-build disassembly, ELF/map analysis.
@@ -269,3 +275,62 @@ uint8_t result = (value << 3) | (value >> (8 - 3)); // result = 0b10110110.
       general timers.
     - Purpose: Cycle-accurate, low-overhead measurement of function/runtime sections.
     - Limitation: Measures only where you target, unknown system-wide activity.
+
+---
+
+## 5 Operating Systems
+
+### 5.1 Threads and Processes
+
+A **process** is an independent program running on your computer, with its own memory and resources
+managed by the operating system. Each process operates in isolation, meaning one process can't
+directly access another's memory, which makes them stable, but slower to communicate. Starting a new
+process is relatively expensive since the system must allocate separate memory and resources for it.
+
+A **thread**, on the other hand, is a smaller unit of execution within a process. Multiple threads
+can run at the same time within the same program, sharing the same memory space and data. This makes
+threads faster and more efficient for multitasking, but also more prone to errors like race
+conditions if they try to access shared data at the same time without proper coordination.
+
+---
+
+## 6 Scheduling
+
+### 6.1 Tasks
+
+Generally, tasks are either "periodic" or "aperiodic":
+
+1. **Periodic**:
+    - Cyclic execution: Repeats at specific frequency.
+    - Hard deadlines: Each instance must complete execution prior to the next instance starting to
+      prevent backlogs.
+2. **Aperiodic**:
+    - Event-driven: Triggered be an event.
+    - Deadlines: Either no deadlines or soft deadlines.
+
+Given task $T_i$:
+
+- $r_i$: The **release time**, or time a task takes to become available for execution.
+    - The response time is the time between a task being released and finishing its execution.
+- $e_i$: The **execution time** of a task.
+- $D_i$: The **relative deadline**, or the maximum allowable response time.
+- $p_i$: The **period**, the time between the release times of two consecutive instances.
+- $\phi_i$: The **phase** or release time of the task's first instance.
+- $u_i$: The **utilization** ratio of a task's execution time over its period:
+  $$u_i = \frac{e_i}{p_i}$$
+
+#### 6.1.1 Task States
+
+There are 3 general states for a given task:
+
+1. **Ready**: Ready to execute.
+2. **Running**: Actively executing.
+3. **Blocked**: Awaiting an external event or prerequisite conditions before executing.
+
+#### 6.1.2 Preemption
+
+Preemption is the act of temporarily interrupting a running task to run a higher priority task.
+
+- **Preemptable**: preemption is possible for a given task.
+- **Nonpreemptable**: preemption is not possible (no interruption) for a given task.
+- **Partially preemptable**: certain parts of a task are not allowed to be interrupted.

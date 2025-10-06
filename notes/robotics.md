@@ -9,6 +9,7 @@
 * [Robotics](#robotics)
   * [1 Mathematical Conventions](#1-mathematical-conventions)
     * [1.1 Matrix Operations and Transforms](#11-matrix-operations-and-transforms)
+    * [1.2 Quadrant-Aware Trigonometric Functions](#12-quadrant-aware-trigonometric-functions)
   * [2 Homogenous Transformation Matrix Operator](#2-homogenous-transformation-matrix-operator)
   * [3 Denavit-Hartenberg (D&H) Convention: Manipulator Representation](#3-denavit-hartenberg-dh-convention-manipulator-representation)
     * [3.1 Zero Displacement Condition](#31-zero-displacement-condition)
@@ -16,6 +17,11 @@
   * [4 Basic Problems of Manipulators](#4-basic-problems-of-manipulators)
     * [4.1 Forward Displacement (FD)](#41-forward-displacement-fd)
     * [4.2 Inverse Displacement (ID)](#42-inverse-displacement-id)
+        * [4.2.1 Inverse of Transformation Equations](#421-inverse-of-transformation-equations)
+        * [4.2.2 Square and Add Trigonometric Equations](#422-square-and-add-trigonometric-equations)
+        * [4.2.3 Trigonometric Identities to Simplify Coupled Terms](#423-trigonometric-identities-to-simplify-coupled-terms)
+        * [4.2.4 Tangent Half-Angle Substitution](#424-tangent-half-angle-substitution)
+        * [4.2.5 Geometric Substitution or Projection](#425-geometric-substitution-or-projection)
     * [4.3 Forward Velocity (FV)](#43-forward-velocity-fv)
     * [4.4 Inverse Velocity (IV)](#44-inverse-velocity-iv)
     * [4.5 Forward Force (FF)](#45-forward-force-ff)
@@ -56,6 +62,21 @@ $$\mathbf{p}_0 = {}^0T_1 \big( {}^1T_2 \, \mathbf{p}_2 \big)$$
 the actual multiplication is still right-to-left.
 
 **Notation is read logically left to right, mathematical calculations are done right to left.**
+
+### 1.2 Quadrant-Aware Trigonometric Functions
+
+In robotics, special trigonometric functions like $\operatorname{Atan2}(y, x)$ are used instead of
+the standard one-argument versions (such as $\tan^{-1}(y/x)$). These functions are quadrant-aware,
+meaning they consider the signs of both x and y to determine the correct angle direction in the full
+360 degree plane.
+
+This is important because robotic joints and end-effectors often move through multiple quadrants,
+and a normal arctangent function would lose that sign information, leading to incorrect angles or
+sudden jumps in orientation.
+
+Functions like `atan2` ensure that the calculated joint or tool angles always match the true
+geometric direction of motion, which is essential for accurate positioning, smooth control, and
+avoiding discontinuities in inverse kinematics.
 
 ---
 
@@ -191,6 +212,22 @@ $${}^{i-1}T_i =
 | **Forward Force (FF)**        | Joint torques           | End-effector forces     | $F = J^{-T}(\theta) \tau$               | Statics             |
 | **Inverse Force (IF)**        | End-effector forces     | Joint torques           | $\tau = J^{T}(\theta) F$                | Statics             |
 
+Useful conversions:
+
+| Formula                                                             | Result                                                                                                   |
+|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| $\sin\theta = a$                                                    | $\theta = \operatorname{Atan2}\!\left(a, \pm\sqrt{1 - a^2}\right)$                                       |
+| $\cos\theta = b$                                                    | $\theta = \pm \operatorname{Atan2}\!\left(\sqrt{1 - b^2},\, b\right)$                                    |
+| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \operatorname{Atan2}(a, -b)$ and $\theta = \operatorname{Atan2}(-a, b)$                        |
+| $a\cos\theta + b\sin\theta = c$                                     | $\theta = \operatorname{Atan2}(b, a) \pm \operatorname{Atan2}\!\left(\sqrt{a^2 + b^2 - c^2},\, c\right)$ |
+| $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ | $\theta = \operatorname{Atan2}(ad - bc,\, ac + bd)$                                                      |
+
+Useful identities:
+
+| Identity                 | Use Case        | Formula                                     |
+|--------------------------|-----------------|---------------------------------------------|
+| Sine Difference Identity | Parallel Joints | \sin(A - B) = \sin A \cos B - \cos A \sin B |
+
 ### 4.1 Forward Displacement (FD)
 
 Also called Forward Kinematics, this problem determines the position and orientation of the
@@ -202,9 +239,76 @@ displacements for prismatic joints).
 Also called Inverse Kinematics, this problem determines the joint variables required to reach a
 desired end-effector position and orientation.
 
+In many manipulators, this involves solving nonlinear trigonometric equations that include multiple
+joint variables, such as terms like $\sin(\theta_2 + \theta_3)$ or $\cos\theta_2 \cos\theta_3$.
+
+To isolate one variable, we often use algebraic and trigonometric manipulation to remove extra
+variables:
+
+##### 4.2.1 Inverse of Transformation Equations
+
+Sometimes, the homogeneous transformation between frames is expressed as:
+
+$${}^0T_3 = {}^0T_1 \cdot {}^1T_2 \cdot {}^2T_3$$
+
+If you are trying to isolate a particular joint (for example, $\theta_2$), you can pre- or
+post-multiply by the inverse of one of the known transformations:
+
+$${}^1T_3 = ({}^0T_1)^{-1} \cdot {}^0T_3$$
+
+This helps move known terms to one side, reducing dimensionality and isolating the unknown joint.
+Conceptually, taking inverses "peels off" known links from the kinematic chain.
+
+##### 4.2.2 Square and Add Trigonometric Equations
+
+When equations involve both $\sin\theta$ and $\cos\theta$, squaring and adding them can eliminate
+one variable.
+Example:
+
+$$x = L_1\cos\theta + L_2\cos(\theta + \phi)$$
+$$y = L_1\sin\theta + L_2\sin(\theta + \phi)$$
+
+Squaring and adding gives:
+
+$$x^2 + y^2 = L_1^2 + L_2^2 + 2L_1L_2\cos\phi$$
+
+The variable $\theta$ cancels out, allowing you to solve directly for $\phi$ using the law of
+cosines. This trick is especially useful for planar 2R manipulators.
+
+##### 4.2.3 Trigonometric Identities to Simplify Coupled Terms
+
+Expand compound angle expressions to separate joint terms using:
+
+$$\sin(a + b) = \sin a \cos b + \cos a \sin b$$
+$$\cos(a + b) = \cos a \cos b - \sin a \sin b$$
+
+For example, $\sin_{2,3}$ and $\cos_{2,3}$ can be expanded
+into $\sin\theta_2$, $\cos\theta_2$, $\sin\theta_3$, and $\cos\theta_3$ terms, making it easier to
+isolate one joint variable at a time.
+
+##### 4.2.4 Tangent Half-Angle Substitution
+
+When both $\sin\theta$ and $\cos\theta$ appear in a single equation, substitute:
+
+$$t = \tan\frac{\theta}{2}, \quad \sin\theta = \frac{2t}{1+t^2}, \quad \cos\theta = \frac{1-t^2}{1+t^2}$$
+
+This converts trigonometric equations into rational polynomials, which can then be solved
+algebraically (often with the quadratic formula). This trick is powerful in 3D manipulator
+kinematics or for symbolic derivations.
+
+##### 4.2.5 Geometric Substitution or Projection
+
+Projecting the manipulator's geometry onto a plane (e.g., $xy$ or $xz$) allows geometric reasoning
+instead of heavy algebra. For example, by applying the law of cosines to a 2-link arm:
+
+$$\cos\phi = \frac{L_1^2 + L_2^2 - r^2}{2L_1L_2}, \quad r = \sqrt{x^2 + y^2}$$
+
+This approach replaces multiple trigonometric equations with a direct geometric relationship,
+simplifying the inverse problem significantly.
+
 ### 4.3 Forward Velocity (FV)
 
-Given the joint velocities, determine the end-effector’s linear and angular velocities.
+Given the joint velocities, determine the end-effector's linear and angular velocities.
 
 ### 4.4 Inverse Velocity (IV)
 

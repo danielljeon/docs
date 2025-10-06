@@ -17,11 +17,11 @@
   * [4 Basic Problems of Manipulators](#4-basic-problems-of-manipulators)
     * [4.1 Forward Displacement (FD)](#41-forward-displacement-fd)
     * [4.2 Inverse Displacement (ID)](#42-inverse-displacement-id)
-        * [4.2.1 Inverse of Transformation Equations](#421-inverse-of-transformation-equations)
-        * [4.2.2 Square and Add Trigonometric Equations](#422-square-and-add-trigonometric-equations)
-        * [4.2.3 Trigonometric Identities to Simplify Coupled Terms](#423-trigonometric-identities-to-simplify-coupled-terms)
-        * [4.2.4 Tangent Half-Angle Substitution](#424-tangent-half-angle-substitution)
-        * [4.2.5 Geometric Substitution or Projection](#425-geometric-substitution-or-projection)
+      * [4.2.1 Inverse of Transformation Equations](#421-inverse-of-transformation-equations)
+      * [4.2.2 Square and Add Trigonometric Equations](#422-square-and-add-trigonometric-equations)
+      * [4.2.3 Trigonometric Identities to Simplify Coupled Terms](#423-trigonometric-identities-to-simplify-coupled-terms)
+      * [4.2.4 Tangent Half-Angle Substitution](#424-tangent-half-angle-substitution)
+      * [4.2.5 Geometric Substitution or Projection](#425-geometric-substitution-or-projection)
     * [4.3 Forward Velocity (FV)](#43-forward-velocity-fv)
     * [4.4 Inverse Velocity (IV)](#44-inverse-velocity-iv)
     * [4.5 Forward Force (FF)](#45-forward-force-ff)
@@ -66,9 +66,9 @@ the actual multiplication is still right-to-left.
 ### 1.2 Quadrant-Aware Trigonometric Functions
 
 In robotics, special trigonometric functions like $\mathrm{Atan2}(y, x)$ are used instead of
-the standard one-argument versions (such as $\tan^{-1}(y/x)$). These functions are quadrant-aware,
-meaning they consider the signs of both x and y to determine the correct angle direction in the full
-360 degree plane.
+the standard one-argument versions, such as $\tan^{-1} \left( y / x \right)$. These functions are
+quadrant-aware, meaning they consider the signs of both x and y to determine the correct angle
+direction in the full 360 degree plane.
 
 This is important because robotic joints and end-effectors often move through multiple quadrants,
 and a normal arctangent function would lose that sign information, leading to incorrect angles or
@@ -144,7 +144,7 @@ $$
 These transforms assume a standard right hand rule and active rotation.
 
 - **Right-hand rule:** If your right-hand thumb is along the positive axis (say +z), then your
-  curled fingers indicate the positive rotation direction. So R_z(\theta) rotates a point in the
+  curled fingers indicate the positive rotation direction. So $R_z(\theta)$ rotates a point in the
   xy-plane counterclockwise when looking down the +z-axis.
 - **Active rotation:** The vector is rotated in a fixed coordinate frame.
 
@@ -168,11 +168,10 @@ Note: $a_i$ corresponds to the common normal distance between successive $z$-axe
 
 The 4 parameters are defined as:
 
-1. $a_{i-1}$ is the distance from $\hat{z}_{i-1}$ to $\hat{z}_i$ measured along $\hat{x}_{i-1}$.
-2. $\alpha_{i-1}$ is the angle between $\hat{z}_{i-1}$ and $\hat{z}_i$ measured
-   about $\hat{x}_{i-1}$.
-3. $d_i$ is the distance from $\hat{x}_{i-1}$ to $\hat{x}_i$ measured along $\hat{z}_i$.
-4. $\theta_i$ is the angle between $\hat{x}_{i-1}$ and $\hat{x}_i$ measured about $\hat{z}_i$.
+1. $a_{i-1}$ is the distance from $\hat z_{i-1}$ to $\hat z_i$ measured along $\hat x_{i-1}$.
+2. $\alpha_{i-1}$ is the angle between $\hat z_{i-1}$ and $\hat z_i$ measured about $\hat x_{i-1}$.
+3. $d_i$ is the distance from $\hat x_{i-1}$ to $\hat x_i$ measured along $\hat z_i$.
+4. $\theta_i$ is the angle between $\hat x_{i-1}$ and $\hat x_i$ measured about $\hat z_i$.
 
 ### 3.1 Zero Displacement Condition
 
@@ -214,19 +213,19 @@ $${}^{i-1}T_i =
 
 Useful conversions:
 
-| Formula                                                             | Result                                                                                       |
-|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
-| $\sin\theta = a$                                                    | $\theta = \mathrm{Atan2}\left(a, \pm\sqrt{1 - a^2}\right)$                                   |
-| $\cos\theta = b$                                                    | $\theta = \pm \mathrm{Atan2}\left(\sqrt{1 - b^2},\, b\right)$                                |
-| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \mathrm{Atan2}(a, -b)$ and $\theta = \mathrm{Atan2}(-a, b)$                        |
-| $a\cos\theta + b\sin\theta = c$                                     | $\theta = \mathrm{Atan2}(b, a) \pm \mathrm{Atan2}\!\left(\sqrt{a^2 + b^2 - c^2},\, c\right)$ |
-| $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ | $\theta = \mathrm{Atan2}(ad - bc,\, ac + bd)$                                                |
+| Formula                                                             | Result                                                                                   |
+|---------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| $\sin\theta = a$                                                    | $\theta = \mathrm{Atan2}\left(a, \pm\sqrt{1 - a^2}\right)$                               |
+| $\cos\theta = b$                                                    | $\theta = \pm \mathrm{Atan2}\left(\sqrt{1 - b^2}, b\right)$                              |
+| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \mathrm{Atan2}(a, -b)$ and $\theta = \mathrm{Atan2}(-a, b)$                    |
+| $a\cos\theta + b\sin\theta = c$                                     | $\theta = \mathrm{Atan2}(b, a) \pm \mathrm{Atan2}\left(\sqrt{a^2 + b^2 - c^2}, c\right)$ |
+| $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ | $\theta = \mathrm{Atan2}(ad - bc, ac + bd)$                                              |
 
 Useful identities:
 
-| Identity                 | Use Case        | Formula                                     |
-|--------------------------|-----------------|---------------------------------------------|
-| Sine Difference Identity | Parallel Joints | \sin(A - B) = \sin A \cos B - \cos A \sin B |
+| Identity                 | Use Case        | Formula                                       |
+|--------------------------|-----------------|-----------------------------------------------|
+| Sine Difference Identity | Parallel Joints | $\sin(A - B) = \sin A \cos B - \cos A \sin B$ |
 
 ### 4.1 Forward Displacement (FD)
 
@@ -245,7 +244,7 @@ joint variables, such as terms like $\sin(\theta_2 + \theta_3)$ or $\cos\theta_2
 To isolate one variable, we often use algebraic and trigonometric manipulation to remove extra
 variables:
 
-##### 4.2.1 Inverse of Transformation Equations
+#### 4.2.1 Inverse of Transformation Equations
 
 Sometimes, the homogeneous transformation between frames is expressed as:
 
@@ -259,7 +258,7 @@ $${}^1T_3 = ({}^0T_1)^{-1} \cdot {}^0T_3$$
 This helps move known terms to one side, reducing dimensionality and isolating the unknown joint.
 Conceptually, taking inverses "peels off" known links from the kinematic chain.
 
-##### 4.2.2 Square and Add Trigonometric Equations
+#### 4.2.2 Square and Add Trigonometric Equations
 
 When equations involve both $\sin\theta$ and $\cos\theta$, squaring and adding them can eliminate
 one variable.
@@ -275,7 +274,7 @@ $$x^2 + y^2 = L_1^2 + L_2^2 + 2L_1L_2\cos\phi$$
 The variable $\theta$ cancels out, allowing you to solve directly for $\phi$ using the law of
 cosines. This trick is especially useful for planar 2R manipulators.
 
-##### 4.2.3 Trigonometric Identities to Simplify Coupled Terms
+#### 4.2.3 Trigonometric Identities to Simplify Coupled Terms
 
 Expand compound angle expressions to separate joint terms using:
 
@@ -286,7 +285,7 @@ For example, $\sin_{2,3}$ and $\cos_{2,3}$ can be expanded
 into $\sin\theta_2$, $\cos\theta_2$, $\sin\theta_3$, and $\cos\theta_3$ terms, making it easier to
 isolate one joint variable at a time.
 
-##### 4.2.4 Tangent Half-Angle Substitution
+#### 4.2.4 Tangent Half-Angle Substitution
 
 When both $\sin\theta$ and $\cos\theta$ appear in a single equation, substitute:
 
@@ -296,7 +295,7 @@ This converts trigonometric equations into rational polynomials, which can then 
 algebraically (often with the quadratic formula). This trick is powerful in 3D manipulator
 kinematics or for symbolic derivations.
 
-##### 4.2.5 Geometric Substitution or Projection
+#### 4.2.5 Geometric Substitution or Projection
 
 Projecting the manipulator's geometry onto a plane (e.g., $xy$ or $xz$) allows geometric reasoning
 instead of heavy algebra. For example, by applying the law of cosines to a 2-link arm:

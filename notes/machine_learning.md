@@ -298,8 +298,9 @@ Process:
 
 1. Select an attribute to test, note that eventually all attributes must be tested.
 2. Identify possible splits between each data point ($n_{\mathrm{attributes}} - 1$).
-3. Calculate the averages of each sub-dataset formed by each split.
-   $$\hat{y}_{\tau} = \frac{1}{N_{\tau}} \sum_{x_n \in Y_{\tau}}^{N} t_n$$
+3. Calculate the averages of each sub-dataset formed by each split:
+
+   $$\hat y_{\tau} = \frac{1}{N_{\tau}} \sum_{x_n \in Y_{\tau}}^{N} t_n$$
 
    where:
 

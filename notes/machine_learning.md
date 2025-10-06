@@ -58,17 +58,23 @@ predicted outputs, providing the feedback signal that guides learning.
 
 ### 2.2 Gradient Descent
 
-Gradient descent is an iterative optimization algorithm that minimizes an objective function by
+Gradient descent is an iterative optimization algorithm that minimizes an cost function by
 moving the current guess down the slope (opposite to the gradient), taking small incremental steps.
 
 $$a_{n+1} = a_n - \eta_n \nabla f(a_n)$$
 
 where:
 
-- $a_{n+1}$: The next iterate after applying the gradient descent step.
 - $a_{n}$: The current iterate at iteration n.
+- $a_{n+1}$: The next iterate after applying the gradient descent step.
 - $\eta_n$: The learning rate or step size at iteration n.
-- $p_{n}$: The gradient of the cost function at the iteration n.
+- $\nabla f(a_n)$: The **gradient** or derivative of the cost function $f$ at $a_n$.
+
+Gradient descent can stop at the following general conditions:
+
+1. The change in the cost function is smaller than a chosen threshold.
+2. The magnitude of the gradient becomes very small (derivative/slope is near zero).
+3. The maximum number of iterations is reached.
 
 Heuristic optimization methods often incorporate randomization or other exploratory strategies to
 reduce the chance of getting trapped in local minima and to improve the likelihood of finding a
@@ -122,7 +128,7 @@ The objective function is the mathematical expression that should be minimized i
 best-fitting line (or hyperplane), in linear regression this is known as the Mean Squared Error
 (MSE):
 
-$$E(\omega) = \frac{1}{2} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
+$$E(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
 
 - $E(\omega)$: The error (loss) function, measures how well the model with parameters $\omega$ fits
   the data.
@@ -133,21 +139,22 @@ $$E(\omega) = \frac{1}{2} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
 - $f \left( x_n, \omega \right)$: The prediction (hypothesis output) of the model for input $x_n$
   using parameters $\omega$.
 - $t_n$: The target value (ground truth output) corresponding to input $x_n$.
-- $\left( t_n - f(x_n, \omega) \right)^2$: The squared error between the actual value and the
+- $\left( f(x_n, \omega) - t_n \right)^2$: The squared error between the actual value and the
   predicted value for the $n$-th example.
 - $\frac{1}{2}$: A scaling factor included for mathematical convenience, since it cancels the
   exponent when differentiating during gradient descent. (No effect on optimization result).
+- $\frac{1}{N}$: Averaging (mean) for all data points.
 
 #### 3.2.2 Normal Equation Approach
 
-The normal equation is a a direct algebraic solution for the model parameters (weights) without
+The normal equation is a direct algebraic solution for the model parameters (weights) without
 needing iterative updates like gradient descent.
 
 $$\omega = (X^T X)^{-1} X^T \hat{y}$$
 
-- $X$: the design matrix (rows = training examples, columns = features).
-- $\hat{y}$: the vector of target values.
-- $\omega$: the vector of model weights.
+- $X$: The design matrix (rows = training examples, columns = features).
+- $\hat{y}$: The vector of target values.
+- $\omega$: The vector of model weights.
 
 ### 3.3 Logistic Regression: Probability Based Classification
 
@@ -223,7 +230,7 @@ $$\ell_{log}(\omega) = \sum_{i=1}^N \Big[t^{(i)} \log p(t=1 \mid x^{(i)}; \omega
 
 ##### 3.3.3.2 Binary Cross Entropy (BCE)
 
-Real life optimizers that minimise the objective function typically use the inverse of the Maximum
+Real life optimizers that minimise the cost function typically use the inverse of the Maximum
 Log-Likelihood, known as the Binary Cross Entropy (BCE):
 
 $$J(\omega) = - \frac{1}{N} \ell_{log}(\omega)$$

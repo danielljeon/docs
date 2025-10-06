@@ -27,10 +27,13 @@
       * [3.4.1 Information Gain and Entropy](#341-information-gain-and-entropy)
         * [3.4.1.1 Overfitting and Pruning](#3411-overfitting-and-pruning)
       * [3.4.2 Gini Index and Weighted Sum](#342-gini-index-and-weighted-sum)
-    * [3.4.3 Decision Regression Trees](#343-decision-regression-trees)
-    * [3.4.4 Random Forest: Bagging](#344-random-forest-bagging)
-    * [3.4.5 Adaboost: Adaptive Boosting on Trees](#345-adaboost-adaptive-boosting-on-trees)
-    * [3.4.6 Adaboost and Random Forest](#346-adaboost-and-random-forest)
+      * [3.4.3 Decision Regression Trees](#343-decision-regression-trees)
+      * [3.4.4 Random Forest: Bagging](#344-random-forest-bagging)
+      * [3.4.5 Adaboost: Adaptive Boosting on Trees](#345-adaboost-adaptive-boosting-on-trees)
+      * [3.4.6 Adaboost and Random Forest](#346-adaboost-and-random-forest)
+    * [3.5 Support Vector Machines (SVM)](#35-support-vector-machines-svm)
+      * [3.5.1 Kernal](#351-kernal)
+    * [3.5.2 Slack Variables](#352-slack-variables)
   * [4 Unsupervised Prediction Models](#4-unsupervised-prediction-models)
     * [4.1 K-Means Clustering](#41-k-means-clustering)
       * [4.1.1 K-Nearest Neighbour: Hard Classification](#411-k-nearest-neighbour-hard-classification)
@@ -52,23 +55,23 @@
 
 ### 2.1 The Cost Function
 
-The cost function, also known as the loss function, measures how well a machine learning model's
-predictions match the actual target values. It quantifies the error between the expected and
-predicted outputs, providing the feedback signal that guides learning.
+The cost function, also known as the loss function (often written as the function $J$) measures how
+well a machine learning model's predictions match the actual target values. It quantifies the error
+between the expected and predicted outputs, providing the feedback signal that guides learning.
 
 ### 2.2 Gradient Descent
 
 Gradient descent is an iterative optimization algorithm that minimizes an cost function by
 moving the current guess down the slope (opposite to the gradient), taking small incremental steps.
 
-$$a_{n+1} = a_n - \eta_n \nabla f(a_n)$$
+$$a_{n+1} = a_n - \eta_n \nabla J(a_n)$$
 
 where:
 
 - $a_{n}$: The current iterate at iteration n.
 - $a_{n+1}$: The next iterate after applying the gradient descent step.
 - $\eta_n$: The learning rate or step size at iteration n.
-- $\nabla f(a_n)$: The **gradient** or derivative of the cost function $f$ at $a_n$.
+- $\nabla J(a_n)$: The **gradient** or derivative of the cost function $J$ at $a_n$.
 
 Gradient descent can stop at the following general conditions:
 
@@ -128,9 +131,9 @@ The objective function is the mathematical expression that should be minimized i
 best-fitting line (or hyperplane), in linear regression this is known as the Mean Squared Error
 (MSE):
 
-$$E(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
+$$J(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
 
-- $E(\omega)$: The error (loss) function, measures how well the model with parameters $\omega$ fits
+- $J(\omega)$: The error (cost) function, measures how well the model with parameters $\omega$ fits
   the data.
 - $\omega$: The parameter vector (weights) of the model.
     - These are what need to be optimized/solved for.
@@ -299,7 +302,7 @@ where:
 - $p_i$: The probability of class $i$.
 - $n$: The number of classes.
 
-### 3.4.3 Decision Regression Trees
+#### 3.4.3 Decision Regression Trees
 
 Process:
 
@@ -339,7 +342,7 @@ Process:
 5. Select the split with the least respective error.
 6. Repeat the steps for all attributes.
 
-### 3.4.4 Random Forest: Bagging
+#### 3.4.4 Random Forest: Bagging
 
 $$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{n=1}^{N} H_n(x)$$
 
@@ -355,7 +358,7 @@ Process:
 3. Use the forest to predict the target variable of test instances as the average of all trees in
    the forest.
 
-### 3.4.5 Adaboost: Adaptive Boosting on Trees
+#### 3.4.5 Adaboost: Adaptive Boosting on Trees
 
 1. Assign equal we.ights to the dataset.
 2. Select a stump.
@@ -383,7 +386,7 @@ Process:
 6. Make the newly formed dataset.
 7. Repeat steps with the new dataset.
 
-### 3.4.6 Adaboost and Random Forest
+#### 3.4.6 Adaboost and Random Forest
 
 $$\alpha = \tfrac{1}{2} \log_{e} \left( \frac{1 - \text{Total Error}}{\text{Total Error}} \right)$$
 
@@ -392,6 +395,85 @@ where:
 - $\alpha$: The weight assigned to a weak learner (in boosting).
 - $\text{Total Error}$: The weighted error rate of the weak learner (fraction of sample weights
   misclassified).
+
+### 3.5 Support Vector Machines (SVM)
+
+SVM tries to maximize the margin between two classes: the margin is the distance between the
+decision boundary and the closest data points from each class (called support vectors).
+
+Suppose you have two features, SVM finds a line that separates the classes:
+
+$$\omega^T x + b = 0$$
+
+where:
+
+- $\omega$: The weight vector (defines the orientation of the hyperplane).
+- $b$: The bias (defines the offset from origin).
+
+SVM solves an optimization problem to maximize the margin, which is equivalent to minimizing
+$|| \omega ||^2$, subject to all points being correctly classified (or mostly correct if
+soft-margin). In other words, find the flattest separating hyperplane (smallest $\omega$) that
+correctly divides the data, to maximize the margin between classes.
+
+The objective function is given by:
+
+$$J(\omega, b) = \frac{1}{2} \| \omega \|^2$$
+
+where:
+
+- $\min$: The optimization function, find $\omega$ and $b$ that minimize the following cost
+  function ($\omega$).
+- $\omega$: The weight vector.
+- $b$: The bias.
+- $|| \omega ||^2$: The squared magnitude of the weight vector.
+- $\frac{1}{2}$: The scaling factor simplifying differentiation.
+
+To optimize the SVM cost function, the lagrange duality can be used, giving a closed-form
+relationship at optimality:
+
+$$w = \sum^N_{i=1} \alpha_i y_i x_i$$
+
+where:
+
+- $x_i$: The input feature vector of the $i$-th data point.
+- $y_i$: The class or true label value of the $i$-th data point.
+- $\alpha_i$: The Lagrange Multiplier.
+    - Each $\alpha_i$ corresponds to one constraint: $y_i(\omega^T x_i + b) \ge 1$
+        - Conceptually, $\alpha_i$ represents how strongly each training point influences the
+          boundary.
+
+The classification decision is made by the sign of $\omega^T x + b$:
+
+$$
+\hat{y} = \begin{cases} +1, & \text{if } w^T x + b \geq 0 \\
+-1, & \text{if } w^T x + b < 0 \end{cases}
+$$
+
+#### 3.5.1 Kernal
+
+A kernel allows SVMs to draw curved, non-linear decision boundaries in the original feature space by
+performing a linear separation in a higher-dimensional (often implicit) feature space. This process
+is done efficiently using the kernel trick, which avoids explicitly computing the transformation
+into that higher-dimensional space.
+
+The kernal function $K(x_i, x_j)$ replaces the dot product between data points in the Lagrange dual
+formulation, resulting in the decision function:
+
+$$f(x) = \text{sign}\left( \sum_i \alpha_i y_i K(x_i, x) + b \right)$$
+
+### 3.5.2 Slack Variables
+
+The slack variable $\xi_i$ allows some points to violate the margin constraint, it measures how
+much each point breaks the rule. The SVM then balances two goals:
+
+1. Keep the margin as wide as possible.
+2. Keep total violations (sum of $\xi_i$) as small as possible.
+
+Thus, the soft-margin SVM optimization objective is expressed as:
+
+$$J(\omega, b, \xi) = \frac{1}{2}\|\omega\|^2 + C \sum_i \xi_i$$
+
+- Subject to: $y_i(\omega^T x_i + b) \ge 1 - \xi_i, \xi_i \ge 0$
 
 ---
 

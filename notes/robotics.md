@@ -65,7 +65,7 @@ the actual multiplication is still right-to-left.
 
 ### 1.2 Quadrant-Aware Trigonometric Functions
 
-In robotics, special trigonometric functions like $\operatorname{Atan2}(y, x)$ are used instead of
+In robotics, special trigonometric functions like $\mathrm{Atan2}(y, x)$ are used instead of
 the standard one-argument versions (such as $\tan^{-1}(y/x)$). These functions are quadrant-aware,
 meaning they consider the signs of both x and y to determine the correct angle direction in the full
 360 degree plane.
@@ -214,13 +214,13 @@ $${}^{i-1}T_i =
 
 Useful conversions:
 
-| Formula                                                             | Result                                                                                                   |
-|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| $\sin\theta = a$                                                    | $\theta = \operatorname{Atan2}\!\left(a, \pm\sqrt{1 - a^2}\right)$                                       |
-| $\cos\theta = b$                                                    | $\theta = \pm \operatorname{Atan2}\!\left(\sqrt{1 - b^2},\, b\right)$                                    |
-| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \operatorname{Atan2}(a, -b)$ and $\theta = \operatorname{Atan2}(-a, b)$                        |
-| $a\cos\theta + b\sin\theta = c$                                     | $\theta = \operatorname{Atan2}(b, a) \pm \operatorname{Atan2}\!\left(\sqrt{a^2 + b^2 - c^2},\, c\right)$ |
-| $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ | $\theta = \operatorname{Atan2}(ad - bc,\, ac + bd)$                                                      |
+| Formula                                                             | Result                                                                                       |
+|---------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| $\sin\theta = a$                                                    | $\theta = \mathrm{Atan2}\left(a, \pm\sqrt{1 - a^2}\right)$                                   |
+| $\cos\theta = b$                                                    | $\theta = \pm \mathrm{Atan2}\left(\sqrt{1 - b^2},\, b\right)$                                |
+| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \mathrm{Atan2}(a, -b)$ and $\theta = \mathrm{Atan2}(-a, b)$                        |
+| $a\cos\theta + b\sin\theta = c$                                     | $\theta = \mathrm{Atan2}(b, a) \pm \mathrm{Atan2}\!\left(\sqrt{a^2 + b^2 - c^2},\, c\right)$ |
+| $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ | $\theta = \mathrm{Atan2}(ad - bc,\, ac + bd)$                                                |
 
 Useful identities:
 

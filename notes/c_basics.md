@@ -307,6 +307,11 @@ Generally, tasks are either "periodic" or "aperiodic":
 2. **Aperiodic**:
     - Event-driven: Triggered be an event.
     - Deadlines: Either no deadlines or soft deadlines.
+3. **Sporadic**:
+    - Event-driven: see above.
+    - Hard deadlines: see above.
+    - Minimum interarrival time: A minimum shortest allowable time interval between two consecutive
+      releases of that task exists.
 
 Given task $T_i$:
 

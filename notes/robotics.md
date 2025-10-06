@@ -10,16 +10,16 @@
   * [1 Mathematical Conventions](#1-mathematical-conventions)
     * [1.1 Matrix Operations and Transforms](#11-matrix-operations-and-transforms)
   * [2 Homogenous Transformation Matrix Operator](#2-homogenous-transformation-matrix-operator)
-  * [3 Basic Problems of Manipulators](#3-basic-problems-of-manipulators)
-    * [3.1 FD: Forward Displacement](#31-fd-forward-displacement)
-    * [3.2 ID: Inverse Displacement](#32-id-inverse-displacement)
-    * [3.3 FV: Forward Velocity](#33-fv-forward-velocity)
-    * [3.4 IV: Inverse Velocity](#34-iv-inverse-velocity)
-    * [3.5 FF: Forward Force](#35-ff-forward-force)
-    * [3.6 IF: Inverse Force](#36-if-inverse-force)
-  * [4 Denavit-Hartenberg (D&H) Convention: Manipulator Representation](#4-denavit-hartenberg-dh-convention-manipulator-representation)
-    * [4.1 Zero Displacement Condition](#41-zero-displacement-condition)
-    * [4.2 Homogenous Transform Representation](#42-homogenous-transform-representation)
+  * [3 Denavit-Hartenberg (D&H) Convention: Manipulator Representation](#3-denavit-hartenberg-dh-convention-manipulator-representation)
+    * [3.1 Zero Displacement Condition](#31-zero-displacement-condition)
+    * [3.2 Homogenous Transform Representation](#32-homogenous-transform-representation)
+  * [4 Basic Problems of Manipulators](#4-basic-problems-of-manipulators)
+    * [4.1 Forward Displacement (FD)](#41-forward-displacement-fd)
+    * [4.2 Inverse Displacement (ID)](#42-inverse-displacement-id)
+    * [4.3 Forward Velocity (FV)](#43-forward-velocity-fv)
+    * [4.4 Inverse Velocity (IV)](#44-inverse-velocity-iv)
+    * [4.5 Forward Force (FF)](#45-forward-force-ff)
+    * [4.6 Inverse Force (IF)](#46-inverse-force-if)
 <!-- TOC -->
 
 </details>
@@ -129,23 +129,7 @@ These transforms assume a standard right hand rule and active rotation.
 
 ---
 
-## 3 Basic Problems of Manipulators
-
-### 3.1 FD: Forward Displacement
-
-### 3.2 ID: Inverse Displacement
-
-### 3.3 FV: Forward Velocity
-
-### 3.4 IV: Inverse Velocity
-
-### 3.5 FF: Forward Force
-
-### 3.6 IF: Inverse Force
-
----
-
-## 4 Denavit-Hartenberg (D&H) Convention: Manipulator Representation
+## 3 Denavit-Hartenberg (D&H) Convention: Manipulator Representation
 
 The D&H convention is a systematic recipe for assigning coordinate frames to robot links and joints
 to describe kinematics using 4 parameters. However, the D&H convention does not result in a single
@@ -169,14 +153,14 @@ The 4 parameters are defined as:
 3. $d_i$ is the distance from $\hat{x}_{i-1}$ to $\hat{x}_i$ measured along $\hat{z}_i$.
 4. $\theta_i$ is the angle between $\hat{x}_{i-1}$ and $\hat{x}_i$ measured about $\hat{z}_i$.
 
-### 4.1 Zero Displacement Condition
+### 3.1 Zero Displacement Condition
 
 In the D&H convention, the zero displacement condition specifies that each joint
 variable ($\theta_i$ for revolute or $d_i$ for prismatic) is measured relative to a reference
 configuration where the parameter equals zero. This anchors the D&H parameters to the robot's
 physical geometry.
 
-### 4.2 Homogenous Transform Representation
+### 3.2 Homogenous Transform Representation
 
 $${}^{i-1}T_i \;=\; R_{x_{i-1}}(\alpha_{i-1}) \, D_{x_{i-1}}(a_{i-1}) \, R_{z_i}(\theta_i) \, D_{z_i}(d_i)$$
 
@@ -193,3 +177,44 @@ $${}^{i-1}T_i =
 \sin(\theta_i) \sin(\alpha_{i-1}) & \cos(\theta_i) \sin(\alpha_{i-1}) & \cos(\alpha_{i-1}) & \cos(\alpha_{i-1}) d_i \\
 0 & 0 & 0 & 1
 \end{bmatrix}$$
+
+---
+
+## 4 Basic Problems of Manipulators
+
+| Problem                       | Known                   | Find                    | Equation                                | Field               |
+|-------------------------------|-------------------------|-------------------------|-----------------------------------------|---------------------|
+| **Forward Displacement (FD)** | Joint angles            | End-effector pose       | $X = f(\theta)$                         | Position kinematics |
+| **Inverse Displacement (ID)** | End-effector pose       | Joint angles            | $\theta = f^{-1}(X)$                    | Position kinematics |
+| **Forward Velocity (FV)**     | Joint velocities        | End-effector velocities | $\dot{X} = J(\theta) \dot{\theta}$      | Velocity kinematics |
+| **Inverse Velocity (IV)**     | End-effector velocities | Joint velocities        | $\dot{\theta} = J^{-1}(\theta) \dot{X}$ | Velocity kinematics |
+| **Forward Force (FF)**        | Joint torques           | End-effector forces     | $F = J^{-T}(\theta) \tau$               | Statics             |
+| **Inverse Force (IF)**        | End-effector forces     | Joint torques           | $\tau = J^{T}(\theta) F$                | Statics             |
+
+### 4.1 Forward Displacement (FD)
+
+Also called Forward Kinematics, this problem determines the position and orientation of the
+end-effector in Cartesian space given the known joint variables (angles for revolute joints,
+displacements for prismatic joints).
+
+### 4.2 Inverse Displacement (ID)
+
+Also called Inverse Kinematics, this problem determines the joint variables required to reach a
+desired end-effector position and orientation.
+
+### 4.3 Forward Velocity (FV)
+
+Given the joint velocities, determine the end-effector’s linear and angular velocities.
+
+### 4.4 Inverse Velocity (IV)
+
+Given the desired end-effector velocity, determine the required joint velocities.
+
+### 4.5 Forward Force (FF)
+
+Determine the forces and torques at the end-effector (in Cartesian space) that result from known
+joint torques.
+
+### 4.6 Inverse Force (IF)
+
+Determine the joint torques required to generate a desired end-effector force.

@@ -29,13 +29,13 @@
         * [3.3.3.1 Maximum Log-Likelihood](#3331-maximum-log-likelihood)
         * [3.3.3.2 Binary Cross Entropy (BCE)](#3332-binary-cross-entropy-bce)
     * [3.4 Decision Trees: Rules-based Hierarchical Splits](#34-decision-trees-rules-based-hierarchical-splits)
-      * [3.4.1 Information Gain and Entropy](#341-information-gain-and-entropy)
-        * [3.4.1.1 Overfitting and Pruning](#3411-overfitting-and-pruning)
-      * [3.4.2 Gini Index and Weighted Sum](#342-gini-index-and-weighted-sum)
-      * [3.4.3 Decision Regression Trees](#343-decision-regression-trees)
-      * [3.4.4 Random Forest: Bagging](#344-random-forest-bagging)
-      * [3.4.5 Adaboost: Adaptive Boosting on Trees](#345-adaboost-adaptive-boosting-on-trees)
-      * [3.4.6 Adaboost and Random Forest](#346-adaboost-and-random-forest)
+      * [3.4.1 Information Gain and Impurity](#341-information-gain-and-impurity)
+      * [3.4.2 Entropy](#342-entropy)
+      * [3.4.3 Gini Index and Weighted Sum](#343-gini-index-and-weighted-sum)
+      * [3.4.4 Overfitting and Pruning](#344-overfitting-and-pruning)
+      * [3.4.5 Decision Regression Trees](#345-decision-regression-trees)
+      * [3.4.6 Random Forest: Bagging](#346-random-forest-bagging)
+      * [3.4.7 Adaboost: Adaptive Boosting on Trees](#347-adaboost-adaptive-boosting-on-trees)
     * [3.5 Support Vector Machines (SVM)](#35-support-vector-machines-svm)
       * [3.5.1 Kernal](#351-kernal)
       * [3.5.2 Slack Variables](#352-slack-variables)
@@ -118,7 +118,7 @@ The SA algorithm searches for the global minimum of an objective function $J(x)$
 
 The change in the cost function is given by:
 
-$$\Delta E = J(x') − J(x)$$
+$$\Delta E = J(x') - J(x)$$
 
 The acceptance likelihood for the new solution is given by the following equation:
 
@@ -305,37 +305,57 @@ $$J(\omega) = - \frac{1}{N} \ell_{log}(\omega)$$
 
 ### 3.4 Decision Trees: Rules-based Hierarchical Splits
 
-Decision trees are prediction models that uses a series of simple yes/no rules to split data into
-branches, creating a hierarchical structure that ends in outcomes or predictions. Each split is
-based on a feature that best separates the data, making the model easy to interpret and visualize,
-like following a flowchart to reach a decision.
+In a decision tree, each node represents a subset of the training data.
 
-Process:
+At the root node, all data samples are present. As the tree grows and splits on feature thresholds,
+the dataset is divided into smaller subsets that pass down to the child nodes.
 
-1. Select an attribute as the start of the tree.
+Thus, the number of data points contained in each node decreases with depth, as each branching point
+partitions the data further.
+
+The impurity of a node measures how mixed or homogeneous the data is with respect to the target
+variable (class labels).
+
+- A pure node contains samples from only one class, resulting in zero impurity (e.g., entropy = 0,
+  Gini = 0).
+- An impure node contains samples from multiple classes, indicating greater uncertainty in
+  classification.
+
+The goal of a decision tree algorithm is to select splits that reduce impurity the most, producing
+child nodes that are more homogeneous than their parent. This reduction in impurity is quantified
+using measures such as Information Gain (based on entropy) or Gini Reduction (based on the Gini
+Index).
+
+Basic Process:
+
+1. Select the best feature to split the data based on an impurity measure.
     - Greedy search.
-    - Information Gain and Entropy.
+    - Information Gain with entropy.
     - Gini Index and Weighted Sum.
-2. Split the Data.
-3. Check the homogeneity of new splits.
-4. Branch out or terminate with a leaf (terminate on zero entropy/uncertainty attributes).
+2. Split the dataset into subsets according to the selected feature's values.
+3. Evaluate purity of resulting nodes (check if all samples belong to one class).
+4. Repeat recursively for each subset until:
+    1. Nodes are pure meaning zero impurity/uncertainty, training data memorization **(bad)**.
+    2. Stopping condition is met (e.g., max depth, min samples per leaf)
 
-#### 3.4.1 Information Gain and Entropy
+#### 3.4.1 Information Gain and Impurity
 
-Is a measure used in decision trees to decide which attribute to split on at each step. It
-quantifies how much "uncertainty" (entropy) in the dataset is reduced after splitting the data based
-on a given attribute.
+Information Gain (IG) is a measure used in decision trees to decide which attribute to split on at
+each step. It quantifies how much "impurity" in the dataset can be reduced after splitting the data
+based on a given attribute.
 
-$$IG(S, A) = H(S) - \sum_{v \in V(A)} \frac{|S_v|}{|S|} H(S_v)$$
+$$IG = I_{parent} - \sum_{i \in V(A)} \frac{N_i}{N} I_i$$
 
 where:
 
-- $H(S)$: The entropy of the full dataset.
-- $S$: The entire dataset (or the subset of data currently at a node in the decision tree).
-- $S_v$: The subset after splitting on value $v$.
+- $I$: The impurity measure (entropy or Gini index).
 - $V(A)$: The set of possible values of attribute $A$.
-- $\sum_{v \in V(A)} \frac{|S_v|}{|S|} H(S_v)$: is the weighted average entropyof the subsets after
-  splitting on attribute $A$.
+- $N_i$: The number of samples in the child node $i$.
+- $N$: The total number of samples in the parent node.
+- $\sum_{i \in V(A)} \frac{N_i}{N}$: The weighted average impurity of child nodes after splitting on
+  attribute $A$.
+
+#### 3.4.2 Entropy
 
 The entropy or uncertainty is calculated as follows:
 
@@ -346,7 +366,20 @@ where:
 - $p(+)$: Is the probability of positive examples.
 - $p(-)$: Is the probability of negative examples.
 
-##### 3.4.1.1 Overfitting and Pruning
+#### 3.4.3 Gini Index and Weighted Sum
+
+The Gini Index is another common impurity measure used in decision trees. It quantifies how often a
+randomly chosen sample from the dataset would be incorrectly labeled if it were randomly assigned a
+label according to the distribution of labels in that node.
+
+$$Gini = 1 - \sum_{i=1}^{n} p_i^2$$
+
+where:
+
+- $p_i$: The probability (proportion) of samples belonging to class $i$ in the node.
+- $n$: The number of possible classes.
+
+#### 3.4.4 Overfitting and Pruning
 
 By nature, decision trees tend to be low bias and overfit, meaning they often capture very specific
 noise or learn the training data outright. When a decision tree overfits, pruning is used to
@@ -361,35 +394,31 @@ This greatly slightly increases bias while greatly reducing variance.
 
 - Sometimes helps to split data into 3: training, testing and pruning.
 
-#### 3.4.2 Gini Index and Weighted Sum
+#### 3.4.5 Decision Regression Trees
 
-$$Gini = 1 - \sum_{i=1}^{n} p_i^2$$
-
-where:
-
-- $p_i$: The probability of class $i$.
-- $n$: The number of classes.
-
-#### 3.4.3 Decision Regression Trees
+A Regression Tree predicts continuous target values by recursively splitting the data into regions
+(nodes) that minimize prediction error (variance) within each subset.
 
 Process:
 
-1. Select an attribute to test, note that eventually all attributes must be tested.
-2. Identify possible splits between each data point ($n_{\mathrm{attributes}} - 1$).
-3. Calculate the averages of each sub-dataset formed by each split:
-
+1. Select an attribute (feature) to test.
+    - Eventually, all attributes may be considered as potential split candidates.
+    - The selection uses a greedy search for the split that minimizes prediction error.
+2. Identify possible split points for each continuous attribute:
+   $$n_{\mathrm{samples}} - 1$$
+    - Typically, the midpoints between sorted values.
+3. Compute the mean target value for each subset formed by a split:
    $$\hat y_{\tau} = \frac{1}{N_{\tau}} \sum_{x_n \in Y_{\tau}}^{N} t_n$$
 
    where:
 
-    - $\hat{y}_{\tau}$: The predicted/estimated output for subset $\tau$.
+    - $\hat{y}_{\tau}$: The predicted output for subset (leaf) $\tau$.
     - $N_{\tau}$: The number of samples in subset $Y_{\tau}$.
     - $t_n$: The target value (label/output) for sample $x_n$.
     - $x_n$: A single data sample/observation.
     - $Y_{\tau}$: The subset of data samples belonging to region/leaf $\tau$.
     - $N$: The total number of samples in the dataset.
-4. Calculate the error of each subset for every split and add them together.
-   The error for each subset is given by:
+4. Calculate the error (Sum of Squared Residuals) for each subset:
 
    $$E_{\tau} = \sum_{i=1}^{N} \left( y_{(i)} - \hat{y}_{\tau} \right)^2$$
 
@@ -401,16 +430,20 @@ Process:
 
    The total error for each split is given by:
 
-   $$E = \sum_{\tau=1}^{\tau} E_{\tau}$$
+   $$E = \sum_{\tau=1}^{T} E_{\tau}$$
 
    where:
 
     - $E$: The total error across all subsets.
     - $\tau$: The index of the subset (e.g., a region, cluster, or leaf in a tree).
-5. Select the split with the least respective error.
-6. Repeat the steps for all attributes.
+5. Select the split that yields the lowest total error.
+6. Repeat recursively for each new subset until a stopping criterion is met.
 
-#### 3.4.4 Random Forest: Bagging
+#### 3.4.6 Random Forest: Bagging
+
+A Random Forest is an ensemble of decision trees trained on random subsets of the data and/or
+features. Each tree acts as an independent predictor, and the final prediction is the average
+(for regression) or majority vote (for classification) of all trees.
 
 $$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{n=1}^{N} H_n(x)$$
 
@@ -421,48 +454,43 @@ $$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{n=1}^{N} H_n(x)$$
 Process:
 
 1. Divide the training data set into N random subsets.
-2. Build $N$ trees to generate multiple hypothesis $Hn(x)$
-    - Randomly overwrite the entropy decision and force data splits throughout the forest
+2. Build $N$ trees to generate multiple hypothesis $Hn(x)$.
+    - Consider only a random subset of features at each split throughout the forest.
 3. Use the forest to predict the target variable of test instances as the average of all trees in
    the forest.
 
-#### 3.4.5 Adaboost: Adaptive Boosting on Trees
+#### 3.4.7 Adaboost: Adaptive Boosting on Trees
 
-1. Assign equal we.ights to the dataset.
-2. Select a stump.
-3. Calculate the importance factor $\alpha$, for each data point factor.
-   $$\alpha = \tfrac{1}{2} \log_{e} \left( \frac{1 - \text{Total Error}}{\text{Total Error}} \right)$$
+1. Assign equal weights to the dataset for all $i$.
+   $$\omega_i = \frac{1}{N}$$
+2. Train a weak learner (e.g., a decision stump).
+3. Calculate the learner's weighted error:
+   $$Error = \frac{\sum_i \omega_i I \left( y_i \ne h_i(x_i)\right)}{\sum_i \omega_i}$$
+4. Calculate the importance factor $\alpha$, for each data point factor.
+   $$\alpha = \frac{1}{2} \ln \left( \frac{1 - \text{Error}}{\text{Error}} \right)$$
 
    where:
 
     - $\alpha$: The weight assigned to a weak learner (in boosting).
     - $\text{Total Error}$: The weighted error rate of the weak learner.
         - For example: the sum of misclassified sample weights divided by the total.
-4. Reweight the data points with the calculated importance factors.
-    - Correct sample: $\omega_{(i)} \leftarrow \omega_{(i)} e^{-\alpha}$.
-    - Incorrect sample: $\omega_{(i)} \leftarrow \omega_{(i)} e^{\alpha}$.
+5. Reweight the data points with the calculated importance factors.
+    - Correct sample: $\omega_{i} \leftarrow \omega_{i} e^{-\alpha}$.
+    - Incorrect sample: $\omega_{i} \leftarrow \omega_{i} e^{\alpha}$.
 
    where:
 
-    - $\omega_{(i)}$: weight (importance factor) of the $i$-th training sample
-5. Normalize the new weights.
-   $$\omega_{(i)} \leftarrow \frac{\omega_{(i)}}{\sum_{i=1}^{N} \omega_{(i)}}$$
+    - $\omega_{(i)}$: The weight (importance factor) of the $i$-th training sample
+6. Normalize the new weights.
+   $$\omega_{i} \leftarrow \frac{\omega_{i}}{\sum_{i=1}^{N} \omega_{i}}$$
 
    where:
 
     - $\sum_{i=1}^{N} \omega_{(i)}$: Is the normalization constant, it ensures all weights sum to 1.
-6. Make the newly formed dataset.
-7. Repeat steps with the new dataset.
+7. Repeat the process for several rounds to build multiple weak learners.
+8. Final prediction:
 
-#### 3.4.6 Adaboost and Random Forest
-
-$$\alpha = \tfrac{1}{2} \log_{e} \left( \frac{1 - \text{Total Error}}{\text{Total Error}} \right)$$
-
-where:
-
-- $\alpha$: The weight assigned to a weak learner (in boosting).
-- $\text{Total Error}$: The weighted error rate of the weak learner (fraction of sample weights
-  misclassified).
+$$H(x) = \text{sign} \left( \sum_t \alpha_t h_t (x) \right)$$
 
 ### 3.5 Support Vector Machines (SVM)
 

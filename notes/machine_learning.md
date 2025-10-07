@@ -151,8 +151,8 @@ model memorizes the training data instead of learning general rules**.
 #### 3.1.2 Regularization
 
 Regularization adds a penalty for model complexity to prevent overfitting. It keeps the model
-simple, stable, and better at generalizing to new data. With regularization, a model The model
-accepts small errors, ensuring a smoother and more robust decision boundary.
+simple, stable, and better at generalizing to new data. With regularization, the model accepts small
+errors, ensuring a smoother and more robust decision boundary.
 
 #### 3.1.3 Bias
 
@@ -224,11 +224,18 @@ $$\omega = (X^T X)^{-1} X^T \hat{y}$$
 
 ### 3.3 Logistic Regression: Probability Based Classification
 
-Logistic regression is a method used to predict the probability of a binary outcome by applying the
-sigmoid function to a weighted sum of input features. Instead of fitting the data with the least
-squares (like linear regression), it uses maximum likelihood estimation (MLE) to find the weights
-that make the observed labels most probable. This means the model parameters are chosen to maximize
-how well the predicted probabilities match the actual outcomes.
+Logistic regression predicts the probability of a binary outcome by applying the sigmoid function to
+a linear combination of input features.
+
+Instead of minimizing squared error (as in linear regression), logistic regression uses maximum
+likelihood estimation (MLE) to find the model parameters that make the observed labels most probable
+under the model. In other words, it adjusts the weights to maximize how well the predicted
+probabilities align with the actual outcomes.
+
+Although logistic regression produces nonlinear (S-shaped) sigmoid outputs, it remains a linear
+model at its core, the decision boundary is defined by a linear equation of the input features. The
+sigmoid function simply transforms this linear relationship into a continuous probability between 0
+and 1, enabling the model to perform smooth, probabilistic classification.
 
 #### 3.3.1 Sigmoid
 

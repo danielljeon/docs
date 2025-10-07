@@ -10,7 +10,10 @@
   * [1 Intro and Data](#1-intro-and-data)
   * [2 Optimization](#2-optimization)
     * [2.1 The Cost Function](#21-the-cost-function)
-    * [2.2 Gradient Descent](#22-gradient-descent)
+    * [2.2 Local Optimization](#22-local-optimization)
+      * [2.2.1 Gradient Descent](#221-gradient-descent)
+    * [2.3 Global Optimization](#23-global-optimization)
+      * [2.3.1 Simulated Annealing (SA)](#231-simulated-annealing-sa)
   * [3 Supervised Prediction Models](#3-supervised-prediction-models)
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
@@ -60,7 +63,11 @@ The cost function, also known as the loss function (often written as the functio
 well a machine learning model's predictions match the actual target values. It quantifies the error
 between the expected and predicted outputs, providing the feedback signal that guides learning.
 
-### 2.2 Gradient Descent
+### 2.2 Local Optimization
+
+Finds the nearby most optimal solution (but might not be the global optimal solution).
+
+#### 2.2.1 Gradient Descent
 
 Gradient descent is an iterative optimization algorithm that minimizes an cost function by
 moving the current guess down the slope (opposite to the gradient), taking small incremental steps.
@@ -86,6 +93,47 @@ global minimum.
 
 YouTube,
 3Blue1Brown: [Gradient descent, how neural networks learn | Deep Learning Chapter 2](https://youtu.be/IHZwWFHWa-w)
+
+### 2.3 Global Optimization
+
+Finds the absolute best solution across the entire problem space, not just the nearest one.
+
+- Often uses stochastic, population-based, or probabilistic methods to escape local traps and
+  explore broadly.
+
+#### 2.3.1 Simulated Annealing (SA)
+
+> **Background**: The term "annealing" comes from metallurgy: the process of heating a metal and
+> then cooling it slowly so that its atoms settle into a low-energy (stable) crystalline structure.
+> - Cool too quickly = atoms "freeze" in random positions maintaining defects.
+> - Cool slowly = atoms can rearrange to a lower total energy (optimal structure).
+
+The SA algorithm searches for the global minimum of an objective function $J(x)$ by:
+
+1. Start at a random point $x_0$.
+2. Make small random moves.
+3. Accept not only the model improvements, but sometimes even worse moves.
+4. Gradually reduce the probability of accepting worse moves over time.
+
+The change in the cost function is given by:
+
+$$\Delta E = J(x') − J(x)$$
+
+The acceptance likelihood for the new solution is given by the following equation:
+
+$$P = e^{-\Delta E/T}$$
+
+where:
+
+- $\Delta E$: The simulated annealing energy, or change in the cost function.
+    - If $\Delta E < 0$: Accept the new solution (it's better).
+    - If $\Delta E > 0$: Accept with probability.
+- $J(x)$: The current cost.
+- $J(x')$: The new cost.
+- $T$: The simulated current annealing temperature, or probability factor for acceptance.
+    - In the probability function $P$:
+        - Higher $T$ = likely accepted.
+        - Lower $T$ = less likely to be accepted.
 
 ---
 

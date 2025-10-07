@@ -18,6 +18,7 @@
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
       * [3.1.2 Regularization](#312-regularization)
+      * [3.1.3 Bias](#313-bias)
     * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
       * [3.2.1 Gradient Descent Approach: Mean Squared Error (MSE)](#321-gradient-descent-approach-mean-squared-error-mse)
       * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
@@ -152,6 +153,13 @@ model memorizes the training data instead of learning general rules**.
 Regularization adds a penalty for model complexity to prevent overfitting. It keeps the model
 simple, stable, and better at generalizing to new data. With regularization, a model The model
 accepts small errors, ensuring a smoother and more robust decision boundary.
+
+#### 3.1.3 Bias
+
+Bias is the error due to overly simplistic assumptions about the data.
+
+- A high-bias model underfits, it is too simple it misses on capturing complex relationships.
+- A low-bias model overfits, it is too complex it captures noise and exact training data.
 
 ### 3.2 Linear Regression: Continuous Outcome Prediction
 
@@ -340,11 +348,16 @@ where:
 
 ##### 3.4.1.1 Overfitting and Pruning
 
-When a decision tree overfits, pruning is used to simplify it. The idea is to replace certain
-subtrees with leaf nodes that predict the majority class. This is tested on a validation set
-(separate from the training and test sets). If accuracy improves or stays the same, the prune is
-kept; if not, it's reverted. This prevents the model from memorizing noise and helps it generalize
-better.
+By nature, decision trees tend to be low bias and overfit, meaning they often capture very specific
+noise or learn the training data outright. When a decision tree overfits, pruning is used to
+simplify it.
+
+The idea is to replace certain unnecessary subtrees with leaf nodes that predict the majority class.
+This is tested on a validation set (separate from the training and test sets). If accuracy improves
+or stays the same, the prune is kept; if not, it's reverted. This prevents the model from memorizing
+noise and helps it generalize better.
+
+This greatly slightly increases bias while greatly reducing variance.
 
 - Sometimes helps to split data into 3: training, testing and pruning.
 

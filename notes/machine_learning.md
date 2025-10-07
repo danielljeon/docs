@@ -38,13 +38,13 @@
       * [3.4.6 Adaboost and Random Forest](#346-adaboost-and-random-forest)
     * [3.5 Support Vector Machines (SVM)](#35-support-vector-machines-svm)
       * [3.5.1 Kernal](#351-kernal)
-    * [3.5.2 Slack Variables](#352-slack-variables)
+      * [3.5.2 Slack Variables](#352-slack-variables)
+    * [4.6 K-Nearest Neighbour (KNN): Hard Classification and Regression](#46-k-nearest-neighbour-knn-hard-classification-and-regression)
+      * [4.6.1 Distance Measurements](#461-distance-measurements)
+      * [4.6.2 Weighted K-Nearest Neighbour](#462-weighted-k-nearest-neighbour)
   * [4 Unsupervised Prediction Models](#4-unsupervised-prediction-models)
-    * [4.1 K-Means Clustering](#41-k-means-clustering)
-      * [4.1.1 K-Nearest Neighbour: Hard Classification](#411-k-nearest-neighbour-hard-classification)
-        * [4.1.1.1 Distance Measurements](#4111-distance-measurements)
-        * [4.1.1.2 Standardization and Normalization](#4112-standardization-and-normalization)
-        * [4.1.1.3 Weighted K-Nearest Neighbour](#4113-weighted-k-nearest-neighbour)
+    * [4.1 K-Means Clustering: Hard Clustering](#41-k-means-clustering-hard-clustering)
+      * [4.1.2 Standardization and Normalization](#412-standardization-and-normalization)
     * [4.2 Gaussian Mixture Models (GMM): Soft Classification](#42-gaussian-mixture-models-gmm-soft-classification)
 <!-- TOC -->
 
@@ -430,7 +430,7 @@ Process:
 
 1. Assign equal we.ights to the dataset.
 2. Select a stump.
-3. Calculate the importance factor $\alpha$, for each datapoint factor.
+3. Calculate the importance factor $\alpha$, for each data point factor.
    $$\alpha = \tfrac{1}{2} \log_{e} \left( \frac{1 - \text{Total Error}}{\text{Total Error}} \right)$$
 
    where:
@@ -485,7 +485,7 @@ correctly divides the data, to maximize the margin between classes.
 
 The objective function is given by:
 
-$$J(\omega, b) = \frac{1}{2} \| \omega \|^2$$
+$$J(\omega, b) = \frac{1}{2} || \omega ||^2$$
 
 where:
 
@@ -529,7 +529,7 @@ formulation, resulting in the decision function:
 
 $$f(x) = \text{sign}\left( \sum_i \alpha_i y_i K(x_i, x) + b \right)$$
 
-### 3.5.2 Slack Variables
+#### 3.5.2 Slack Variables
 
 The slack variable $\xi_i$ allows some points to violate the margin constraint, it measures how
 much each point breaks the rule. The SVM then balances two goals:
@@ -539,41 +539,104 @@ much each point breaks the rule. The SVM then balances two goals:
 
 Thus, the soft-margin SVM optimization objective is expressed as:
 
-$$J(\omega, b, \xi) = \frac{1}{2}\|\omega\|^2 + C \sum_i \xi_i$$
+$$J(\omega, b, \xi) = \frac{1}{2}||\omega||^2 + C \sum_i \xi_i$$
 
 - Subject to: $y_i(\omega^T x_i + b) \ge 1 - \xi_i, \xi_i \ge 0$
+
+### 4.6 K-Nearest Neighbour (KNN): Hard Classification and Regression
+
+K-Nearest Neighbours (KNN) is a supervised learning algorithm used for classification or regression.
+However, unlike other prediction models, KNN does not train a model, it just lazily stores the
+training data and uses it directly to make predictions.
+
+1. Store the training data.
+2. Select a number of neighbours to consider $k$.
+3. When a new data point comes in, measure its distance to all training points.
+4. Make a prediction:
+    1. **Classification**: Vote within the labels of the $k$ nearest neighbours of the new data
+       point, and whichever label appears most often "wins."
+    2. **Regression**: Compute the average (or sometimes weighted average) of the values from
+       the $k$ nearest neighbours.
+
+#### 4.6.1 Distance Measurements
+
+**Euclidian Distance:** essentially by using a summed pythagorean theorem the distance between
+points can be found.
+
+$$D(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}$$
+
+where:
+
+- $x$: The first data point (in an n-dimensional vector).
+- $y$: The second data point (in an equal n-dimensional vector).
+
+**Hamming Distance:** Finding the difference between binary numbers, for example:
+
+```
+D(0b100011, 0b110110)
+= ones_count(0b100011 XOR 0b110110)
+= ones_count(0b010101)
+= 3
+```
+
+**Cosine Distance:** Calculating the cos of the angle between points to measure the distance.
+
+$$D(x, y) = 1 - \frac{x \cdot y}{||x|| ||y||}$$
+
+where:
+
+- $x$: The first data vector.
+- $y$: The second data vector.
+- $x \cdot y$: The dot product of vectors $x$ and $y$ given by $\sum_i x_i y_i$.
+- $||x||$: The Euclidean norm (magnitude) of vector x, given by $\sqrt{\sum_i x_i^2}$
+
+#### 4.6.2 Weighted K-Nearest Neighbour
+
+In Weighted KNN, not all neighbours are treated equally. Closer neighbours are assumed to be more
+relevant to the prediction than farther ones. So, each neighbour is assigned a weight based on its
+distance to the query point.
+
+Various weighting functions exist, for example the inverse distance weighting is given by:
+
+$$w_i = \frac{1}{D(x_i, y_i)}$$
 
 ---
 
 ## 4 Unsupervised Prediction Models
 
-### 4.1 K-Means Clustering
+### 4.1 K-Means Clustering: Hard Clustering
 
-#### 4.1.1 K-Nearest Neighbour: Hard Classification
+Unlike KNN, K-Means Clustering is an unsupervised prediction method, working to find natural groups
+in unlabeled data.
 
 Decision boundaries are made separating points (or feature values) into zones for prediction.
 
 By calculating the distance between each feature and cutting the distance line
 equidistant, perpendicular splits are created known as a Voronoi Diagram.
 
-##### 4.1.1.1 Distance Measurements
+Process:
 
-**Euclidian Distance:** essentially by using a summed pythagorean theorem the distance between
-points can be found.
+1. Select a number of clusters or groups $k$.
+2. Plot the cluster centroids randomly in the problem space.
+3. Calculate the distance between each feature data point to each cluster centroid.
+    - See KNN distance measurement notes.
+4. Assign each feature data point to its respective shortest distance cluster.
+5. Update the cluster centroids to the mean (average) of all the points assigned to that cluster.
 
-$$\mathrm{ED} = \left\lVert x^{(a)} - x^{(b)} \right\rVert = \sqrt{ \sum_{j=1}^{d} \left( x_j^{(a)} - x_j^{(b)} \right)^2 }$$
+Thus, the cost function defined by:
+
+$$J ( C_i, \mu_i ) = \sum_{i=1}^{k} \sum_{x_j \in C_i} || x_j - \mu_i ||^2$$
 
 where:
 
-- $d$: The number of points (features in machine learning).
+- $k$: The number of clusters.
+- $C_i$: The set of points assigned to cluster $i$.
+- $\mu_i$: The centroid (mean) of cluster $i$.
+- $x_j$: The data point.
+- $|| x_j - \mu_i ||^2$: The euclidian distance (can be swapped for other distance measurement
+  functions used in KNN).
 
-**Hamming Distance:** Finding the difference between binary numbers, for example:
-
-`100011 XOR 110110 = 010101 -> 3 ones`
-
-**Cosine Distance:** Calculating the cos of the angle between points to measure the distance.
-
-##### 4.1.1.2 Standardization and Normalization
+#### 4.1.2 Standardization and Normalization
 
 In cases for datasets or applications with various features with large differences in units of
 measure, the data can be preprocessed for a better distance comparison.
@@ -584,10 +647,6 @@ Values can also be standardized by scaling each feature's values ensuring a mean
 variance of $\sigma^2 = 1$.
 
 $$\sigma^2 = \frac{\sum (x_i - \mu)^2}{N} = 1$$
-
-##### 4.1.1.3 Weighted K-Nearest Neighbour
-
-$$w_i = \frac{1}{\mathrm{ED}_i}$$
 
 ### 4.2 Gaussian Mixture Models (GMM): Soft Classification
 

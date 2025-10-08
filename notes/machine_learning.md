@@ -156,7 +156,7 @@ L1 penalty term:
 $$R_{L1}(\omega) = \sum_{j=1}^{M} |\omega_j| = ||\omega||_1$$
 
 L1 regularized cost function (component form):
-$$J_{L1}(\omega) = \frac{1}{2N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} |\omega_j|$$
+$$J_{L1}(\omega) = \frac{1}{2N} \sum_{i=1}^{N} (y_i - \hat y_i)^2 + \lambda \sum_{j=1}^{M} |\omega_j|$$
 
 L1 regularized cost function (vector form):
 $$J_{L1}(\omega) = \frac{1}{2N} ||y - X\omega||_2^2 + \lambda ||\omega||_1$$
@@ -171,7 +171,7 @@ L2 penalty term:
 $$R_{L2}(\omega) = \sum_{j=1}^{M} \omega_j^2 = ||\omega||_2^2$$
 
 L2 regularized cost function (component form):
-$$J_{L2}(\omega) = \frac{1}{2N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} \omega_j^2$$
+$$J_{L2}(\omega) = \frac{1}{2N} \sum_{i=1}^{N} (y_i - \hat y_i)^2 + \lambda \sum_{j=1}^{M} \omega_j^2$$
 
 L2 regularized cost function (vector form):
 $$J_{L2}(\omega) = \frac{1}{2N} ||y - X\omega||_2^2 + \lambda ||\omega||_2^2$$

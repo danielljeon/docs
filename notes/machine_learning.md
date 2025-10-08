@@ -66,6 +66,9 @@ The cost function, also known as the loss function (often written as the functio
 well a machine learning model's predictions match the actual target values. It quantifies the error
 between the expected and predicted outputs, providing the feedback signal that guides learning.
 
+In essence, the objective is to minimize the cost function, allowing the model to achieve the most
+accurate and generalizable predictions possible.
+
 ### 2.2 Local Optimization
 
 Finds the nearby most optimal solution (but might not be the global optimal solution).
@@ -307,15 +310,15 @@ $$\omega_0 + \omega^T x = 0$$
 Maximum Likelihood Estimation (MLE) chooses the parameter values that make an observed data set most
 likely under the model.
 
-$$max_{\omega} L(\omega) = \max_{\omega} \prod_{i=1}^N p(t=1 \mid x^{(i)}; \omega)^{t^{(i)}}$$
-$$\Big(1 - p(t=1 \mid x^{(i)}; \omega)\Big)^{1 - t^{(i)}}$$
+$$\max_{\omega} L(\omega) = \max_{\omega} \prod_{i=1}^N p(t=1 \mid x_i; \omega)^{t_i}$$
+$$\Big(1 - p(t=1 \mid x_i; \omega)\Big)^{1 - t_i}$$
 
 where:
 
 - $N$: number of training samples.
-- $x^{(i)}$: feature vector for the i-th sample.
-- $t^{(i)}$: the true label for sample $i$, which is binary (either 0 or 1).
-- $p(t=1 \mid x^{(i)}; \omega)$: the probability, predicted by the model with parameters $\omega$,
+- $x_i$: feature vector for the i-th sample.
+- $t_i$: the true label for sample $i$, which is binary (either 0 or 1).
+- $p(t=1 \mid x_i; \omega)$: the probability, predicted by the model with parameters $\omega$,
   that sample $i$ belongs to class 1.
 
 ##### 3.3.3.1 Maximum Log-Likelihood
@@ -324,10 +327,10 @@ In order to make finding the maximum likelihood easier, the log can be taken, co
 over $N$ samples to a sum. This allows the maximum log-likelihood to be used as the objective
 function with gradient accent/decent.
 
-$$\ell_{log}(\omega) = \sum_{i=1}^N \Big[t^{(i)} \log p(t=1 \mid x^{(i)}; \omega) +(1 - t^{(i)}) \log \big(1 - p(t=1 \mid x^{(i)}; \omega)\big)\Big]$$
+$$\ell_{log}(\omega) = \sum_{i=1}^N \Big[t_i \log p(t=1 \mid x_i; \omega) +(1 - t_i) \log \big(1 - p(t=1 \mid x_i; \omega)\big)\Big]$$
 
-- If $t^{(i)} = 1$, only the first term remains: $\log p(t=1 \mid x^{(i)}; \omega)$.
-- If $t^{(i)} = 0$, only the second term remains: $\log (1 - p(t=1 \mid x^{(i)}; \omega))$.
+- If $t_i = 1$, only the first term remains: $\log p(t=1 \mid x_i; \omega)$.
+- If $t_i = 0$, only the second term remains: $\log (1 - p(t=1 \mid x_i; \omega))$.
 - So, for each data point, the function rewards the model if it assigns high probability to the
   correct label.
 - Note: the log-likelihood $\ell(\omega)$ is concave in $\omega$.
@@ -434,8 +437,19 @@ This greatly slightly increases bias while greatly reducing variance.
 
 #### 3.4.5 Decision Regression Trees
 
-A Regression Tree predicts continuous target values by recursively splitting the data into regions
-(nodes) that minimize prediction error (variance) within each subset.
+A Regression Tree is a type of decision tree designed for predicting continuous target values.
+Unlike classical decision trees, which are generally used for categorical outcomes, regression trees
+recursively split the data into regions (nodes) that minimize prediction error-typically measured by
+variance within each subset. Here, variance serves as the analogue of "impurity" in classification
+trees.
+
+The objective is to create leaf nodes that represent smaller, more homogeneous ranges of the overall
+continuous target space, ensuring that each leaf provides a good local approximation of the target
+value.
+
+When regression trees talk about variance, they're not referring to the "spread of the input
+feature values (x)" - they're referring to the spread of the target values (y or t) within that node
+around their mean prediction.
 
 Process:
 
@@ -458,13 +472,13 @@ Process:
     - $N$: The total number of samples in the dataset.
 4. Calculate the error (Sum of Squared Residuals) for each subset:
 
-   $$E_{\tau} = \sum_{i=1}^{N} \left( y_{(i)} - \hat{y}_{\tau} \right)^2$$
+   $$E_{\tau} = \sum_{i=1}^{N} \left( y_i - \hat{y}_{\tau} \right)^2$$
 
    where:
 
     - $E_{\tau}$: The total squared error for subset $\tau$.
-    - $y_{(i)}$: The observed/true value of the i-th sample.
-    - $i$: The index running over the samples in the dataset (from 1 to $N$).
+    - $y_i$: The observed/true value of the i-th sample.
+    - $i$: The index running over the samples in the dataset (from 1 to N).
 
    The total error for each split is given by:
 
@@ -518,13 +532,13 @@ Process:
 
    where:
 
-    - $\omega_{(i)}$: The weight (importance factor) of the $i$-th training sample
+    - $\omega_i$: The weight (importance factor) of the $i$-th training sample
 6. Normalize the new weights.
    $$\omega_{i} \leftarrow \frac{\omega_{i}}{\sum_{i=1}^{N} \omega_{i}}$$
 
    where:
 
-    - $\sum_{i=1}^{N} \omega_{(i)}$: Is the normalization constant, it ensures all weights sum to 1.
+    - $\sum_{i=1}^{N} \omega_i$: Is the normalization constant, it ensures all weights sum to 1.
 7. Repeat the process for several rounds to build multiple weak learners.
 8. Final prediction:
 
@@ -555,8 +569,6 @@ $$J(\omega, b) = \frac{1}{2} || \omega ||^2$$
 
 where:
 
-- $\min$: The optimization function, find $\omega$ and $b$ that minimize the following cost
-  function ($\omega$).
 - $\omega$: The weight vector.
 - $b$: The bias.
 - $|| \omega ||^2$: The squared magnitude of the weight vector.
@@ -724,3 +736,20 @@ while k-means only captures spherical clusters of equal variance. In short, GMM 
 more general version of clustering compared to k-means.
 
 $$p(X \mid \mu, \Sigma) = \frac{1}{\sqrt{(2 \pi)^d \lvert \Sigma \rvert}} \, e^{-\tfrac{1}{2} (X - \mu)^{T} \Sigma^{-1} (X - \mu)}$$
+
+where:
+
+- $X$: The data point (a $d$-dimensional feature vector).
+- $\mu$: The mean vector, representing the center (expected value) of the distribution.
+- $\Sigma$: The covariance matrix, capturing the spread and correlation between features.
+- $|\Sigma|$: The determinant of the covariance matrix, representing the volume (overall variance)
+  of the distribution.
+- $\Sigma^{-1}$: The inverse of the covariance matrix, used to scale distances according to feature
+  correlations.
+- $d$: The number of dimensions or features in $X$.
+- $(X - \mu)^T \Sigma^{-1} (X - \mu)$: The squared Mahalanobis distance, a generalized distance
+  measure accounting for correlations.
+- $(2\pi)^{d/2} |\Sigma|^{1/2}$: The normalization constant ensuring the total probability
+  integrates to 1.
+- $p(X \mid \mu, \Sigma)$: The probability density of observing data point $X$ given
+  parameters $\mu$ and $\Sigma$.

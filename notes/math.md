@@ -260,8 +260,8 @@ Standard deviation:
 
 $$\sigma = \sqrt{\sigma^2}$$
 
-**Central limit theorem**: A random variable trends toward a normal distribution when 30 samples are
-reached ($n \geq 30$).
+**Central limit theorem**: A random variable trends toward a normal distribution
+when 30 samples are reached ($n \geq 30$).
 
 #### 5.2.2 Binomial Distribution
 

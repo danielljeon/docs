@@ -63,7 +63,8 @@ A set of elements of the same data type stored contiguously in memory.
 
 ### 2.2 Linked Lists
 
-Pairs forming nodes where each node has a data element and a pointer to the next node.
+Pairs forming nodes where each node has a data element and a pointer to the next
+node.
 
 - Advantages:
     - Insertions and deletions at the head is efficient at O(1) complexity.
@@ -74,14 +75,16 @@ Pairs forming nodes where each node has a data element and a pointer to the next
 
 ### 2.3 Stacks
 
-A linear data structure following LIFO (last in, first out), either an array or linked list.
+A linear data structure following LIFO (last in, first out), either an array or
+linked list.
 
 - Push: add an element to the top of the stack.
 - Pop: remove an element from the top of the stack.
 
 ### 2.4 Queues
 
-A linear data structure following FIFO (first in, first out), either an array or linked list.
+A linear data structure following FIFO (first in, first out), either an array or
+linked list.
 
 - Enqueue: add an element to the end of the queue.
 - Dequeue: remove an element from the front of the queue.
@@ -255,25 +258,30 @@ uint8_t result = (value << 3) | (value >> (8 - 3)); // result = 0b10110110.
 
 1. **Offboard**: Inspecting compiled assembly code.
     - Tooling: `objdump`, CMake post-build disassembly, ELF/map analysis.
-    - Purpose: Verify what the compiler actually emitted (instruction count, inlining, branches).
-    - Limitation: Can't capture runtime effects (interrupts, caches, bus contention).
+    - Purpose: Verify what the compiler actually emitted (instruction count,
+      inlining, branches).
+    - Limitation: Can't capture runtime effects (interrupts, caches, bus
+      contention).
     - Example ARM GCC toolchain `CMakeLists.txt` segment:
         ```cmake
         add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
                 COMMAND arm-none-eabi-objdump -d -S $<TARGET_FILE:${CMAKE_PROJECT_NAME}>
                 > ${CMAKE_PROJECT_NAME}.disasm)
         ```
-        - Every CMake build automatically produces a human-readable assembly listing of the
-          firmware, with C source lines interleaved (when built with debug info enabled, e.g. `-g`),
-          for inspection and debugging.
+        - Every CMake build automatically produces a human-readable assembly
+          listing of the firmware, with C source lines interleaved (when built
+          with debug info enabled, e.g. `-g`), for inspection and debugging.
 2. **Onboard (external)**: Using an oscilloscope/logic analyzer.
     - Tooling: GPIO pulse instrumentation + scope/logic analyzer.
-    - Purpose: Hard real-time observation of latencies, jitter, ISR execution windows.
-    - Limitation: Only shows what you toggle, coarse system visibility unless heavily instrumented.
+    - Purpose: Hard real-time observation of latencies, jitter, ISR execution
+      windows.
+    - Limitation: Only shows what you toggle, coarse system visibility unless
+      heavily instrumented.
 3. **Onboard (internal)**: Using timer/counter peripherals.
-    - Tooling: Data Watchpoint and Trace unit (DWT) Cycle Counter Register (CYCCNT), SysTick,
-      general timers.
-    - Purpose: Cycle-accurate, low-overhead measurement of function/runtime sections.
+    - Tooling: Data Watchpoint and Trace unit (DWT) Cycle Counter Register
+      (CYCCNT), SysTick, general timers.
+    - Purpose: Cycle-accurate, low-overhead measurement of function/runtime
+      sections.
     - Limitation: Measures only where you target, unknown system-wide activity.
 
 ---
@@ -282,15 +290,18 @@ uint8_t result = (value << 3) | (value >> (8 - 3)); // result = 0b10110110.
 
 ### 5.1 Threads and Processes
 
-A **process** is an independent program running on your computer, with its own memory and resources
-managed by the operating system. Each process operates in isolation, meaning one process can't
-directly access another's memory, which makes them stable, but slower to communicate. Starting a new
-process is relatively expensive since the system must allocate separate memory and resources for it.
+A **process** is an independent program running on your computer, with its own
+memory and resources managed by the operating system. Each process operates in
+isolation, meaning one process can't directly access another's memory, which
+makes them stable, but slower to communicate. Starting a new process is
+relatively expensive since the system must allocate separate memory and
+resources for it.
 
-A **thread**, on the other hand, is a smaller unit of execution within a process. Multiple threads
-can run at the same time within the same program, sharing the same memory space and data. This makes
-threads faster and more efficient for multitasking, but also more prone to errors like race
-conditions if they try to access shared data at the same time without proper coordination.
+A **thread**, on the other hand, is a smaller unit of execution within a
+process. Multiple threads can run at the same time within the same program,
+sharing the same memory space and data. This makes threads faster and more
+efficient for multitasking, but also more prone to errors like race conditions
+if they try to access shared data at the same time without proper coordination.
 
 ---
 
@@ -302,24 +313,27 @@ Generally, tasks are either "periodic" or "aperiodic":
 
 1. **Periodic**:
     - Cyclic execution: Repeats at specific frequency.
-    - Hard deadlines: Each instance must complete execution prior to the next instance starting to
-      prevent backlogs.
+    - Hard deadlines: Each instance must complete execution prior to the next
+      instance starting to prevent backlogs.
 2. **Aperiodic**:
     - Event-driven: Triggered be an event.
     - Deadlines: Either no deadlines or soft deadlines.
 3. **Sporadic**:
     - Event-driven: see above.
     - Hard deadlines: see above.
-    - Minimum interarrival time: A minimum shortest allowable time interval between two consecutive
-      releases of that task exists.
+    - Minimum interarrival time: A minimum shortest allowable time interval
+      between two consecutive releases of that task exists.
 
 Given task $T_i$:
 
-- $r_i$: The **release time**, or time a task takes to become available for execution.
-    - The response time is the time between a task being released and finishing its execution.
+- $r_i$: The **release time**, or time a task takes to become available for
+  execution.
+    - The response time is the time between a task being released and finishing
+      its execution.
 - $e_i$: The **execution time** of a task.
 - $D_i$: The **relative deadline**, or the maximum allowable response time.
-- $p_i$: The **period**, the time between the release times of two consecutive instances.
+- $p_i$: The **period**, the time between the release times of two consecutive
+  instances.
 - $\phi_i$: The **phase** or release time of the task's first instance.
 - $u_i$: The **utilization** ratio of a task's execution time over its period:
   $$u_i = \frac{e_i}{p_i}$$
@@ -330,12 +344,16 @@ There are 3 general states for a given task:
 
 1. **Ready**: Ready to execute.
 2. **Running**: Actively executing.
-3. **Blocked**: Awaiting an external event or prerequisite conditions before executing.
+3. **Blocked**: Awaiting an external event or prerequisite conditions before
+   executing.
 
 #### 6.1.2 Preemption
 
-Preemption is the act of temporarily interrupting a running task to run a higher priority task.
+Preemption is the act of temporarily interrupting a running task to run a higher
+priority task.
 
 - **Preemptable**: preemption is possible for a given task.
-- **Nonpreemptable**: preemption is not possible (no interruption) for a given task.
-- **Partially preemptable**: certain parts of a task are not allowed to be interrupted.
+- **Nonpreemptable**: preemption is not possible (no interruption) for a given
+  task.
+- **Partially preemptable**: certain parts of a task are not allowed to be
+  interrupted.

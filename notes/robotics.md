@@ -36,9 +36,11 @@
 
 ### 1.1 Matrix Operations and Transforms
 
-In pure linear algebra, matrix operations/composition is conducted right to left.
+In pure linear algebra, matrix operations/composition is conducted right to
+left.
 
-In robotics applications, homogeneous transforms encode the relative pose between coordinate frames.
+In robotics applications, homogeneous transforms encode the relative pose
+between coordinate frames.
 
 Suppose we have:
 
@@ -48,35 +50,38 @@ Suppose we have:
 
 We define transforms:
 
-- ${}^0T_1$: transform that expresses coordinates of a vector in frame {1} with respect to frame
-  {0}.
-- ${}^1T_2$: transform that expresses coordinates of a vector in frame {2} with respect to frame
-  {1}.
+- ${}^0T_1$: transform that expresses coordinates of a vector in frame {1} with
+  respect to frame {0}.
+- ${}^1T_2$: transform that expresses coordinates of a vector in frame {2} with
+  respect to frame {1}.
 
-If we want the transform from {2} to {0}, we write: ${}^0T_2 = {}^0T_1 \, {}^1T_2$
+If we want the transform from {2} to {0}, we
+write: ${}^0T_2 = {}^0T_1 \, {}^1T_2$
 
-This appears as left-to-right chaining, mirroring the physical kinematic chain (base to joint 1 to
-joint 2). But when applied to a vector:
+This appears as left-to-right chaining, mirroring the physical kinematic chain
+(base to joint 1 to joint 2). But when applied to a vector:
 $$\mathbf{p}_0 = {}^0T_1 \big( {}^1T_2 \, \mathbf{p}_2 \big)$$
 
 the actual multiplication is still right-to-left.
 
-**Notation is read logically left to right, mathematical calculations are done right to left.**
+**Notation is read logically left to right, mathematical calculations are done
+right to left.**
 
 ### 1.2 Quadrant-Aware Trigonometric Functions
 
-In robotics, special trigonometric functions like $\mathrm{Atan2}(y, x)$ are used instead of
-the standard one-argument versions, such as $\tan^{-1} \left( y / x \right)$. These functions are
-quadrant-aware, meaning they consider the signs of both x and y to determine the correct angle
-direction in the full 360 degree plane.
+In robotics, special trigonometric functions like $\mathrm{Atan2}(y, x)$ are
+used instead of the standard one-argument versions, such
+as $\tan^{-1} \left( y / x \right)$. These functions are quadrant-aware, meaning
+they consider the signs of both x and y to determine the correct angle direction
+in the full 360 degree plane.
 
-This is important because robotic joints and end-effectors often move through multiple quadrants,
-and a normal arctangent function would lose that sign information, leading to incorrect angles or
-sudden jumps in orientation.
+This is important because robotic joints and end-effectors often move through
+multiple quadrants, and a normal arctangent function would lose that sign
+information, leading to incorrect angles or sudden jumps in orientation.
 
-Functions like `atan2` ensure that the calculated joint or tool angles always match the true
-geometric direction of motion, which is essential for accurate positioning, smooth control, and
-avoiding discontinuities in inverse kinematics.
+Functions like `atan2` ensure that the calculated joint or tool angles always
+match the true geometric direction of motion, which is essential for accurate
+positioning, smooth control, and avoiding discontinuities in inverse kinematics.
 
 ---
 
@@ -128,8 +133,9 @@ k_x k_z (1 - \cos\theta) - k_y \sin\theta & k_z k_y (1 - \cos\theta) + k_x \sin\
 \end{bmatrix}
 $$
 
-- The axis vector $\mathbf{k} = [k_x, k_y, k_z]^T$ must be normalized such that $| k | = 1$.
-  Otherwise, $R_k(\theta)$ will not be a pure rotation (it will scale as well as rotate).
+- The axis vector $\mathbf{k} = [k_x, k_y, k_z]^T$ must be normalized such
+  that $| k | = 1$. Otherwise, $R_k(\theta)$ will not be a pure rotation (it
+  will scale as well as rotate).
 
 $$
 T =
@@ -143,42 +149,48 @@ $$
 
 These transforms assume a standard right hand rule and active rotation.
 
-- **Right-hand rule:** If your right-hand thumb is along the positive axis (say +z), then your
-  curled fingers indicate the positive rotation direction. So $R_z(\theta)$ rotates a point in the
-  xy-plane counterclockwise when looking down the +z-axis.
+- **Right-hand rule:** If your right-hand thumb is along the positive axis (say
+  +z), then your curled fingers indicate the positive rotation direction.
+  So $R_z(\theta)$ rotates a point in the xy-plane counterclockwise when looking
+  down the +z-axis.
 - **Active rotation:** The vector is rotated in a fixed coordinate frame.
 
 ---
 
 ## 3 Denavit-Hartenberg (D&H) Convention: Manipulator Representation
 
-The D&H convention is a systematic recipe for assigning coordinate frames to robot links and joints
-to describe kinematics using 4 parameters. However, the D&H convention does not result in a single
-unique coordinate frame representation for a given system, since multiple equally valid frame
+The D&H convention is a systematic recipe for assigning coordinate frames to
+robot links and joints to describe kinematics using 4 parameters. However, the
+D&H convention does not result in a single unique coordinate frame
+representation for a given system, since multiple equally valid frame
 attachments may exist.
 
 When attaching frames under the D&H convention:
 
 - The $z_i$ axis is aligned with the $i^{th}$ joint axis.
-- The $x_i$ axis is directed along the common normal between $z_i$ and $z_{i+1}$ (or, if the axes
-  intersect, chosen perpendicular to $z_i$).
+- The $x_i$ axis is directed along the common normal between $z_i$
+  and $z_{i+1}$ (or, if the axes intersect, chosen perpendicular to $z_i$).
 - The $y_i$ axis is chosen to complete a right-handed coordinate system.
 
-Note: $a_i$ corresponds to the common normal distance between successive $z$-axes.
+Note: $a_i$ corresponds to the common normal distance between successive z-axes.
 
 The 4 parameters are defined as:
 
-1. $a_{i-1}$ is the distance from $\hat z_{i-1}$ to $\hat z_i$ measured along $\hat x_{i-1}$.
-2. $\alpha_{i-1}$ is the angle between $\hat z_{i-1}$ and $\hat z_i$ measured about $\hat x_{i-1}$.
-3. $d_i$ is the distance from $\hat x_{i-1}$ to $\hat x_i$ measured along $\hat z_i$.
-4. $\theta_i$ is the angle between $\hat x_{i-1}$ and $\hat x_i$ measured about $\hat z_i$.
+1. $a_{i-1}$ is the distance from $\hat z_{i-1}$ to $\hat z_i$ measured
+   along $\hat x_{i-1}$.
+2. $\alpha_{i-1}$ is the angle between $\hat z_{i-1}$ and $\hat z_i$ measured
+   about $\hat x_{i-1}$.
+3. $d_i$ is the distance from $\hat x_{i-1}$ to $\hat x_i$ measured
+   along $\hat z_i$.
+4. $\theta_i$ is the angle between $\hat x_{i-1}$ and $\hat x_i$ measured
+   about $\hat z_i$.
 
 ### 3.1 Zero Displacement Condition
 
 In the D&H convention, the zero displacement condition specifies that each joint
-variable ($\theta_i$ for revolute or $d_i$ for prismatic) is measured relative to a reference
-configuration where the parameter equals zero. This anchors the D&H parameters to the robot's
-physical geometry.
+variable ($\theta_i$ for revolute or $d_i$ for prismatic) is measured relative
+to a reference configuration where the parameter equals zero. This anchors the
+D&H parameters to the robot's physical geometry.
 
 ### 3.2 Homogenous Transform Representation
 
@@ -229,20 +241,21 @@ Useful identities:
 
 ### 4.1 Forward Displacement (FD)
 
-Also called Forward Kinematics, this problem determines the position and orientation of the
-end-effector in Cartesian space given the known joint variables (angles for revolute joints,
-displacements for prismatic joints).
+Also called Forward Kinematics, this problem determines the position and
+orientation of the end-effector in Cartesian space given the known joint
+variables (angles for revolute joints, displacements for prismatic joints).
 
 ### 4.2 Inverse Displacement (ID)
 
-Also called Inverse Kinematics, this problem determines the joint variables required to reach a
-desired end-effector position and orientation.
+Also called Inverse Kinematics, this problem determines the joint variables
+required to reach a desired end-effector position and orientation.
 
-In many manipulators, this involves solving nonlinear trigonometric equations that include multiple
-joint variables, such as terms like $\sin(\theta_2 + \theta_3)$ or $\cos\theta_2 \cos\theta_3$.
+In many manipulators, this involves solving nonlinear trigonometric equations
+that include multiple joint variables, such as terms
+like $\sin(\theta_2 + \theta_3)$ or $\cos\theta_2 \cos\theta_3$.
 
-To isolate one variable, we often use algebraic and trigonometric manipulation to remove extra
-variables:
+To isolate one variable, we often use algebraic and trigonometric manipulation
+to remove extra variables:
 
 #### 4.2.1 Inverse of Transformation Equations
 
@@ -250,19 +263,19 @@ Sometimes, the homogeneous transformation between frames is expressed as:
 
 $${}^0T_3 = {}^0T_1 \cdot {}^1T_2 \cdot {}^2T_3$$
 
-If you are trying to isolate a particular joint (for example, $\theta_2$), you can pre- or
-post-multiply by the inverse of one of the known transformations:
+If you are trying to isolate a particular joint (for example, $\theta_2$), you
+can pre- or post-multiply by the inverse of one of the known transformations:
 
 $${}^1T_3 = ({}^0T_1)^{-1} \cdot {}^0T_3$$
 
-This helps move known terms to one side, reducing dimensionality and isolating the unknown joint.
-Conceptually, taking inverses "peels off" known links from the kinematic chain.
+This helps move known terms to one side, reducing dimensionality and isolating
+the unknown joint. Conceptually, taking inverses "peels off" known links from
+the kinematic chain.
 
 #### 4.2.2 Square and Add Trigonometric Equations
 
-When equations involve both $\sin\theta$ and $\cos\theta$, squaring and adding them can eliminate
-one variable.
-Example:
+When equations involve both $\sin\theta$ and $\cos\theta$, squaring and adding
+them can eliminate one variable. Example:
 
 $$x = L_1\cos\theta + L_2\cos(\theta + \phi)$$
 $$y = L_1\sin\theta + L_2\sin(\theta + \phi)$$
@@ -271,8 +284,9 @@ Squaring and adding gives:
 
 $$x^2 + y^2 = L_1^2 + L_2^2 + 2L_1L_2\cos\phi$$
 
-The variable $\theta$ cancels out, allowing you to solve directly for $\phi$ using the law of
-cosines. This trick is especially useful for planar 2R manipulators.
+The variable $\theta$ cancels out, allowing you to solve directly for $\phi$
+using the law of cosines. This trick is especially useful for planar 2R
+manipulators.
 
 #### 4.2.3 Trigonometric Identities to Simplify Coupled Terms
 
@@ -282,8 +296,8 @@ $$\sin(a + b) = \sin a \cos b + \cos a \sin b$$
 $$\cos(a + b) = \cos a \cos b - \sin a \sin b$$
 
 For example, $\sin_{2,3}$ and $\cos_{2,3}$ can be expanded
-into $\sin\theta_2$, $\cos\theta_2$, $\sin\theta_3$, and $\cos\theta_3$ terms, making it easier to
-isolate one joint variable at a time.
+into $\sin\theta_2$, $\cos\theta_2$, $\sin\theta_3$, and $\cos\theta_3$ terms,
+making it easier to isolate one joint variable at a time.
 
 #### 4.2.4 Tangent Half-Angle Substitution
 
@@ -291,32 +305,35 @@ When both $\sin\theta$ and $\cos\theta$ appear in a single equation, substitute:
 
 $$t = \tan\frac{\theta}{2}, \quad \sin\theta = \frac{2t}{1+t^2}, \quad \cos\theta = \frac{1-t^2}{1+t^2}$$
 
-This converts trigonometric equations into rational polynomials, which can then be solved
-algebraically (often with the quadratic formula). This trick is powerful in 3D manipulator
-kinematics or for symbolic derivations.
+This converts trigonometric equations into rational polynomials, which can then
+be solved algebraically (often with the quadratic formula). This trick is
+powerful in 3D manipulator kinematics or for symbolic derivations.
 
 #### 4.2.5 Geometric Substitution or Projection
 
-Projecting the manipulator's geometry onto a plane (e.g., $xy$ or $xz$) allows geometric reasoning
-instead of heavy algebra. For example, by applying the law of cosines to a 2-link arm:
+Projecting the manipulator's geometry onto a plane (e.g., $xy$ or $xz$) allows
+geometric reasoning instead of heavy algebra. For example, by applying the law
+of cosines to a 2-link arm:
 
 $$\cos\phi = \frac{L_1^2 + L_2^2 - r^2}{2L_1L_2}, \quad r = \sqrt{x^2 + y^2}$$
 
-This approach replaces multiple trigonometric equations with a direct geometric relationship,
-simplifying the inverse problem significantly.
+This approach replaces multiple trigonometric equations with a direct geometric
+relationship, simplifying the inverse problem significantly.
 
 ### 4.3 Forward Velocity (FV)
 
-Given the joint velocities, determine the end-effector's linear and angular velocities.
+Given the joint velocities, determine the end-effector's linear and angular
+velocities.
 
 ### 4.4 Inverse Velocity (IV)
 
-Given the desired end-effector velocity, determine the required joint velocities.
+Given the desired end-effector velocity, determine the required joint
+velocities.
 
 ### 4.5 Forward Force (FF)
 
-Determine the forces and torques at the end-effector (in Cartesian space) that result from known
-joint torques.
+Determine the forces and torques at the end-effector (in Cartesian space) that
+result from known joint torques.
 
 ### 4.6 Inverse Force (IF)
 

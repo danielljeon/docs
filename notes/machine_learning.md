@@ -20,8 +20,7 @@
   * [3 Supervised Prediction Models](#3-supervised-prediction-models)
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
-      * [3.1.2 Regularization](#312-regularization)
-      * [3.1.3 Bias](#313-bias)
+      * [3.1.2 Bias](#312-bias)
     * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
       * [3.2.1 Gradient Descent Approach: Mean Squared Error (MSE)](#321-gradient-descent-approach-mean-squared-error-mse)
       * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
@@ -186,13 +185,7 @@ Overfitting happens when a prediction model captures noise or random fluctuation
 data instead of the underlying patterns that generalize to unseen data. Or in other words, **the
 model memorizes the training data instead of learning general rules**.
 
-#### 3.1.2 Regularization
-
-Regularization adds a penalty for model complexity to prevent overfitting. It keeps the model
-simple, stable, and better at generalizing to new data. With regularization, the model accepts small
-errors, ensuring a smoother and more robust decision boundary.
-
-#### 3.1.3 Bias
+#### 3.1.2 Bias
 
 Bias is the error due to overly simplistic assumptions about the data.
 

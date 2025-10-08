@@ -236,7 +236,7 @@ The objective function is the mathematical expression that should be minimized i
 best-fitting line (or hyperplane), in linear regression this is known as the Mean Squared Error
 (MSE):
 
-$$J(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2$$
+$$J(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( h(x_n, \omega) - t_n \right)^2$$
 
 - $J(\omega)$: The error (cost) function, measures how well the model with parameters $\omega$ fits
   the data.
@@ -244,7 +244,7 @@ $$J(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( f(x_n, \omega) - t_n \right)^2
     - These are what need to be optimized/solved for.
 - $N$: The number of training examples (data points).
 - $x_n$: The input feature vector for the $n$-th training example.
-- $f \left( x_n, \omega \right)$: The prediction (hypothesis output) of the model for input $x_n$
+- $h \left( x_n, \omega \right)$: The prediction (hypothesis output) of the model for input $x_n$
   using parameters $\omega$.
 - $t_n$: The target value (ground truth output) corresponding to input $x_n$.
 - $\left( f(x_n, \omega) - t_n \right)^2$: The squared error between the actual value and the
@@ -455,6 +455,9 @@ The objective is to create leaf nodes that represent smaller, more homogeneous r
 continuous target space, ensuring that each leaf provides a good local approximation of the target
 value.
 
+Decision tree splits occur in the input (x) feature space, but the choice of the best split is
+always determined by how much it improves purity or reduces variance in the output (y) space.
+
 When regression trees talk about variance, they're not referring to the "spread of the input
 feature values (x)" - they're referring to the spread of the target values (y or t) within that node
 around their mean prediction.
@@ -532,7 +535,7 @@ Process:
    where:
 
     - $\alpha$: The weight assigned to a weak learner (in boosting).
-    - $\text{Total Error}$: The weighted error rate of the weak learner.
+    - $\text{Error}$: The weighted error rate of the weak learner.
         - For example: the sum of misclassified sample weights divided by the total.
 5. Reweight the data points with the calculated importance factors.
     - Correct sample: $\omega_{i} \leftarrow \omega_{i} e^{-\alpha}$.

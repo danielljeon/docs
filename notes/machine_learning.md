@@ -48,6 +48,7 @@
       * [3.6.2 Weighted K-Nearest Neighbour](#362-weighted-k-nearest-neighbour)
   * [4 Unsupervised Prediction Models](#4-unsupervised-prediction-models)
     * [4.1 K-Means Clustering: Hard Clustering](#41-k-means-clustering-hard-clustering)
+      * [4.1.1 Coordinate Descent: Lloyd's Algorithm](#411-coordinate-descent-lloyds-algorithm)
       * [4.1.2 Standardization and Normalization](#412-standardization-and-normalization)
     * [4.2 Gaussian Mixture Models (GMM): Soft Classification](#42-gaussian-mixture-models-gmm-soft-classification)
 <!-- TOC -->
@@ -817,6 +818,27 @@ where:
 - $x_j$: The data point.
 - $|| x_j - \mu_i ||^2$: The euclidian distance (can be swapped for other
   distance measurement functions used in KNN).
+
+#### 4.1.1 Coordinate Descent: Lloyd's Algorithm
+
+The cost function for K-Means Clustering is optimized for by coordinate descent.
+This effectively alternates between optimizing 2 variables:
+
+1. Cluster assignments $C_i$ which cluster each point belongs to.
+2. Centroids $\mu_i$ the cluster centers.
+
+To do this Lloyd's algorithm is used:
+
+1. Assignment step:
+   $$C_i^{(t+1)} = \arg\min_i \|x_j - \mu_i^{(t)}\|^2$$
+2. Update step:
+   $$\mu_i^{(t+1)} = \frac{1}{|C_i^{(t+1)}|} \sum_{x_j \in C_i^{(t+1)}} x_j$$
+
+Each iteration strictly reduces $J$ (or leaves it unchanged), so the algorithm
+converges to a local minimum. Unlike gradient descent, small steps were
+modulated by the learning rate. In K-Means, infinitely long gradient steps are
+taken in one variable by directly
+solving $\frac{\partial J}{\partial \mu_i} = 0$, then locked.
 
 #### 4.1.2 Standardization and Normalization
 

@@ -40,10 +40,10 @@
       * [3.4.7 Adaboost: Adaptive Boosting on Trees](#347-adaboost-adaptive-boosting-on-trees)
     * [3.5 Support Vector Machines (SVM)](#35-support-vector-machines-svm)
       * [3.5.1 Kernal](#351-kernal)
-      * [3.5.2 Slack Variables](#352-slack-variables)
-    * [4.6 K-Nearest Neighbour (KNN): Hard Classification and Regression](#46-k-nearest-neighbour-knn-hard-classification-and-regression)
-      * [4.6.1 Distance Measurements](#461-distance-measurements)
-      * [4.6.2 Weighted K-Nearest Neighbour](#462-weighted-k-nearest-neighbour)
+      * [3.5.2 Slack Variables: Regularization Effect](#352-slack-variables-regularization-effect)
+    * [3.6 K-Nearest Neighbour (KNN): Hard Classification and Regression](#36-k-nearest-neighbour-knn-hard-classification-and-regression)
+      * [3.6.1 Distance Measurements](#361-distance-measurements)
+      * [3.6.2 Weighted K-Nearest Neighbour](#362-weighted-k-nearest-neighbour)
   * [4 Unsupervised Prediction Models](#4-unsupervised-prediction-models)
     * [4.1 K-Means Clustering: Hard Clustering](#41-k-means-clustering-hard-clustering)
       * [4.1.2 Standardization and Normalization](#412-standardization-and-normalization)
@@ -588,7 +588,7 @@ where:
         - Conceptually, $\alpha_i$ represents how strongly each training point influences the
           boundary.
 
-The classification decision is made by the sign of $\omega^T x + b$:
+The classification decision is made by the $\text{sign}$ of $\omega^T x + b$:
 
 $$
 \hat{y} = \begin{cases} +1, & \text{if } w^T x + b \geq 0 \\
@@ -607,10 +607,10 @@ formulation, resulting in the decision function:
 
 $$f(x) = \text{sign}\left( \sum_i \alpha_i y_i K(x_i, x) + b \right)$$
 
-#### 3.5.2 Slack Variables
+#### 3.5.2 Slack Variables: Regularization Effect
 
 The slack variable $\xi_i$ allows some points to violate the margin constraint, it measures how
-much each point breaks the rule. The SVM then balances two goals:
+much each point breaks the rule. The SVM then balances two competing goals:
 
 1. Keep the margin as wide as possible.
 2. Keep total violations (sum of $\xi_i$) as small as possible.
@@ -621,7 +621,7 @@ $$J(\omega, b, \xi) = \frac{1}{2}||\omega||^2 + C \sum_i \xi_i$$
 
 - Subject to: $y_i(\omega^T x_i + b) \ge 1 - \xi_i, \xi_i \ge 0$
 
-### 4.6 K-Nearest Neighbour (KNN): Hard Classification and Regression
+### 3.6 K-Nearest Neighbour (KNN): Hard Classification and Regression
 
 K-Nearest Neighbours (KNN) is a supervised learning algorithm used for classification or regression.
 However, unlike other prediction models, KNN does not train a model, it just lazily stores the
@@ -636,7 +636,7 @@ training data and uses it directly to make predictions.
     2. **Regression**: Compute the average (or sometimes weighted average) of the values from
        the $k$ nearest neighbours.
 
-#### 4.6.1 Distance Measurements
+#### 3.6.1 Distance Measurements
 
 **Euclidian Distance:** essentially by using a summed pythagorean theorem the distance between
 points can be found.
@@ -668,7 +668,7 @@ where:
 - $x \cdot y$: The dot product of vectors $x$ and $y$ given by $\sum_i x_i y_i$.
 - $||x||$: The Euclidean norm (magnitude) of vector x, given by $\sqrt{\sum_i x_i^2}$
 
-#### 4.6.2 Weighted K-Nearest Neighbour
+#### 3.6.2 Weighted K-Nearest Neighbour
 
 In Weighted KNN, not all neighbours are treated equally. Closer neighbours are assumed to be more
 relevant to the prediction than farther ones. So, each neighbour is assigned a weight based on its

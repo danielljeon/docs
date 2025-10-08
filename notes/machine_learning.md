@@ -703,6 +703,14 @@ competing goals:
 1. Keep the margin as wide as possible.
 2. Keep total violations (sum of $\xi_i$) as small as possible.
 
+$$\xi_i = \max\left(0,1 - y_i(\omega^T x_i + b)\right)$$
+
+| $\xi_i$         | Meaning                           | Classification    |
+|-----------------|-----------------------------------|-------------------|
+| $\xi_i = 0$     | Perfectly outside margin          | Correct           |
+| $0 < \xi_i < 1$ | Inside margin but on correct side | Correct but close |
+| $1 < \xi_i$     | Crossed margin/on wrong side      | Misclassified     |
+
 Thus, the soft-margin SVM optimization objective is expressed as:
 
 $$J(\omega, b, \xi) = \frac{1}{2}||\omega||^2 + C \sum_i \xi_i$$

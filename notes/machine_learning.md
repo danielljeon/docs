@@ -212,7 +212,7 @@ equation) or using gradient descent to iteratively adjust parameters.
 
 Linear:
 
-$$h(x, \omega) = \omega_0 + \omega_1 x + \omega_2 x^2 + \cdots + \omega_M x^M \\ = \omega_0 + \sum_{j=0}^{M} \omega_j x^j$$
+$$h(x, \omega) = \omega_0 + \omega_1 x + \omega_2 x^2 + \cdots + \omega_M x^M = \omega_0 + \sum_{j=0}^{M} \omega_j x^j$$
 
 Higher order polynomial:
 
@@ -510,27 +510,38 @@ A Random Forest is an ensemble of decision trees trained on random subsets of th
 features. Each tree acts as an independent predictor, and the final prediction is the average
 (for regression) or majority vote (for classification) of all trees.
 
-$$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{i=1}^{N} H_i(x)$$
+$$\hat{h}_{bag}(x) = \frac{1}{N_{trees}} \sum^{N_{trees}}_{i=1} h_i(x)$$
 
-- $\hat{H}_{bag}(x)$: The bagged (averaged) predictor output for input $x$.
-- $H_i(x)$: The prediction made by the $i$-th model (or learner) on input $x$.
+- $\hat{h}_{bag}(x)$: The bagged (averaged) predictor/hypothesis output for input $x$.
+- $h_i(x)$: The prediction made by the $i$-th model (or learner) on input $x$.
 - $x$: The input sample or data point.
 
 Process:
 
 1. Divide the training data set into N random subsets.
-2. Build $N$ trees to generate multiple hypothesis $Hn(x)$.
+2. Build $N_{stump}$ trees to generate multiple hypothesis $h_i(x)$.
     - Consider only a random subset of features at each split throughout the forest.
 3. Use the forest to predict the target variable of test instances as the average of all trees in
    the forest.
 
 #### 3.4.7 Adaboost: Adaptive Boosting on Trees
 
+> **Note**: $I$ is the iverson bracket (also known as the indicator function):
+>
+> $$
+> I(\text{condition}) = \begin{cases} 1, & \text{if condition is true, misclassified} \\
+> 0, & \text{if condition is false, classified correctly} \end{cases}
+> $$
+
 1. Assign equal weights to the dataset for all $i$.
    $$\omega_i = \frac{1}{N}$$
 2. Train a weak learner (e.g., a decision stump).
 3. Calculate the learner's weighted error:
-   $$Error = \frac{\sum_i \omega_i I \left( y_i \ne h_i(x_i)\right)}{\sum_i \omega_i}$$
+   $$\text{Error} = \frac{\sum_i \omega_i I \left( y_i \ne h_i(x_i)\right)}{\sum_i \omega_i}$$
+
+   where:
+
+    - $I$: The iverson bracket.
 4. Calculate the importance factor $\alpha$, for each data point factor.
    $$\alpha = \frac{1}{2} \ln \left( \frac{1 - \text{Error}}{\text{Error}} \right)$$
 
@@ -555,7 +566,7 @@ Process:
 7. Repeat the process for several rounds to build multiple weak learners.
 8. Final prediction:
 
-$$H(x) = \text{sign} \left( \sum_t \alpha_t h_t (x) \right)$$
+$$h(x) = \text{sign} \left( \sum^{N_{stumps}}_{i=1} \alpha_i h_i (x) \right)$$
 
 ### 3.5 Support Vector Machines (SVM)
 

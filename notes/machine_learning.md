@@ -85,7 +85,7 @@ where:
 
 - $a_{n}$: The current iterate at iteration n.
 - $a_{n+1}$: The next iterate after applying the gradient descent step.
-- $\eta_n$: The learning rate or step size at iteration n.
+- $\eta_n$: The learning rate or step size at iteration $n$.
 - $\nabla J(a_n)$: The **gradient** or derivative of the cost function $J$ at $a_n$.
 
 Gradient descent can stop at the following general conditions:
@@ -216,12 +216,12 @@ $$h(x, \omega) = \omega_0 + \omega_1 x + \omega_2 x^2 + \cdots + \omega_M x^M \\
 
 Higher order polynomial:
 
-$$h \left( x_n, \omega \right) = \sum_{j=0}^M \omega_j x_n^j$$
+$$h \left( x_i, \omega \right) = \sum_{j=0}^M \omega_j x_i^j$$
 
 where:
 
 - $h$: Is the hypothesis that predicts the output given input data points $x$.
-- $x$: The input variable (aka feature or predictor).
+- $x$: The $i$-th input training variable (aka feature or predictor).
 - $\omega$: The set of model parameters (weights).
 - $\omega_0$: The intercept (bias term), representing the predicted value when $x = 0$.
 - $\omega_j$: The coefficient (weight) for the $j$-th power of $x$.
@@ -236,18 +236,18 @@ The objective function is the mathematical expression that should be minimized i
 best-fitting line (or hyperplane), in linear regression this is known as the Mean Squared Error
 (MSE):
 
-$$J(\omega) = \frac{1}{2 N} \sum_{n=1}^{N} \left( h(x_n, \omega) - t_n \right)^2$$
+$$J(\omega) = \frac{1}{2 N} \sum_{i=1}^{N} \left( h(x_i, \omega) - t_i \right)^2$$
 
 - $J(\omega)$: The error (cost) function, measures how well the model with parameters $\omega$ fits
   the data.
 - $\omega$: The parameter vector (weights) of the model.
     - These are what need to be optimized/solved for.
 - $N$: The number of training examples (data points).
-- $x_n$: The input feature vector for the $n$-th training example.
-- $h \left( x_n, \omega \right)$: The prediction (hypothesis output) of the model for input $x_n$
+- $x_i$: The input feature vector for the $i$-th training example.
+- $h \left( x_i, \omega \right)$: The prediction (hypothesis output) of the model for input $x_i$
   using parameters $\omega$.
-- $t_n$: The target value (ground truth output) corresponding to input $x_n$.
-- $\left( f(x_n, \omega) - t_n \right)^2$: The squared error between the actual value and the
+- $t_i$: The target value (ground truth output) corresponding to input $x_i$.
+- $\left( f(x_i, \omega) - t_i \right)^2$: The squared error between the actual value and the
   predicted value for the $n$-th example.
 - $\frac{1}{2}$: A scaling factor included for mathematical convenience, since it cancels the
   exponent when differentiating during gradient descent. (No effect on optimization result).
@@ -471,14 +471,14 @@ Process:
    $$n_{\mathrm{samples}} - 1$$
     - Typically, the midpoints between sorted values.
 3. Compute the mean target value for each subset formed by a split:
-   $$\hat y_{\tau} = \frac{1}{N_{\tau}} \sum_{x_n \in Y_{\tau}}^{N} t_n$$
+   $$\hat y_{\tau} = \frac{1}{N_{\tau}} \sum_{x_i \in Y_{\tau}}^{N} t_i$$
 
    where:
 
     - $\hat{y}_{\tau}$: The predicted output for subset (leaf) $\tau$.
     - $N_{\tau}$: The number of samples in subset $Y_{\tau}$.
-    - $t_n$: The target value (label/output) for sample $x_n$.
-    - $x_n$: A single data sample/observation.
+    - $t_i$: The target value (label/output) for sample point $x_i$.
+    - $x_i$: A single data sample/observation.
     - $Y_{\tau}$: The subset of data samples belonging to region/leaf $\tau$.
     - $N$: The total number of samples in the dataset.
 4. Calculate the error (Sum of Squared Residuals) for each subset:
@@ -508,10 +508,10 @@ A Random Forest is an ensemble of decision trees trained on random subsets of th
 features. Each tree acts as an independent predictor, and the final prediction is the average
 (for regression) or majority vote (for classification) of all trees.
 
-$$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{n=1}^{N} H_n(x)$$
+$$\hat{H}_{bag}(x) = \frac{1}{N} \sum_{i=1}^{N} H_i(x)$$
 
 - $\hat{H}_{bag}(x)$: The bagged (averaged) predictor output for input $x$.
-- $H_n(x)$: The prediction made by the $n$-th model (or learner) on input $x$.
+- $H_i(x)$: The prediction made by the $i$-th model (or learner) on input $x$.
 - $x$: The input sample or data point.
 
 Process:

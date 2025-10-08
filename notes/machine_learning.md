@@ -377,10 +377,12 @@ Index).
 
 Basic Process:
 
-1. Select the best feature to split the data based on an impurity measure.
-    - Greedy search.
-    - Information Gain with entropy.
-    - Gini Index and Weighted Sum.
+1. Determine the best feature and split threshold using a greedy search algorithm.
+    - For each feature, trial all possible splits (thresholds or category partitions).
+    - Evaluate each candidate split using an impurity measure:
+        - Information Gain with entropy
+        - Information Gain Gini Index and Weighted Sum
+    - Select the split that maximizes Information Gain (reduces impurity the most).
 2. Split the dataset into subsets according to the selected feature's values.
 3. Evaluate purity of resulting nodes (check if all samples belong to one class).
 4. Repeat recursively for each subset until:

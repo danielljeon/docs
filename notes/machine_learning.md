@@ -21,6 +21,7 @@
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
       * [3.1.2 Bias](#312-bias)
+      * [3.1.3 Variance](#313-variance)
     * [3.2 Linear Regression: Continuous Outcome Prediction](#32-linear-regression-continuous-outcome-prediction)
       * [3.2.1 Gradient Descent Approach: Mean Squared Error (MSE)](#321-gradient-descent-approach-mean-squared-error-mse)
       * [3.2.2 Normal Equation Approach](#322-normal-equation-approach)
@@ -192,8 +193,15 @@ model memorizes the training data instead of learning general rules**.
 
 Bias is the error due to overly simplistic assumptions about the data.
 
-- A high-bias model underfits, it is too simple it misses on capturing complex relationships.
-- A low-bias model overfits, it is too complex it captures noise and exact training data.
+- A **high bias model underfits**, it is too simple it misses on capturing complex relationships.
+- A **low bias model overfits**, it is too complex it memorizes the training data (overfitting).
+
+#### 3.1.3 Variance
+
+Variance measures how much the model's predictions change if trained it on a different dataset.
+
+- A **high variance model is too sensitive** to small fluctuations in training data (overfitting).
+- A **low variance model is too rigid** and gives similar predictions even if data changes.
 
 ### 3.2 Linear Regression: Continuous Outcome Prediction
 

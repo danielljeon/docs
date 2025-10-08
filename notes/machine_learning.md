@@ -14,6 +14,9 @@
       * [2.2.1 Gradient Descent](#221-gradient-descent)
     * [2.3 Global Optimization](#23-global-optimization)
       * [2.3.1 Simulated Annealing (SA)](#231-simulated-annealing-sa)
+    * [2.4 Regularization](#24-regularization)
+      * [2.4.1 L1 Lasso Regression](#241-l1-lasso-regression)
+      * [2.4.2 L2 Ridge Regression](#242-l2-ridge-regression)
   * [3 Supervised Prediction Models](#3-supervised-prediction-models)
     * [3.1 Overview](#31-overview)
       * [3.1.1 Overfitting and Overtraining](#311-overfitting-and-overtraining)
@@ -135,6 +138,41 @@ where:
     - In the probability function $P$:
         - Higher $T$ = likely accepted.
         - Lower $T$ = less likely to be accepted.
+
+### 2.4 Regularization
+
+Regularization adds a penalty term to the cost function to discourage overly complex models (large
+weights). This prevents overfitting and encourages generalization.
+
+#### 2.4.1 L1 Lasso Regression
+
+L1 regularization (Lasso) adds a penalty equal to the sum of the absolute values of the model
+weights. This encourages sparsity by pushing some coefficients exactly to zero, effectively
+performing feature selection and simplifying the model.
+
+L1 penalty term:
+$$R_{L1}(\omega) = \sum_{j=1}^{M} |\omega_j| = ||\omega||_1$$
+
+L1 regularized cost function (component form):
+$$J_{L1}(\omega) = \frac{1}{2N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} |\omega_j|$$
+
+L1 regularized cost function (vector form):
+$$J_{L1}(\omega) = \frac{1}{2N} ||y - X\omega||_2^2 + \lambda ||\omega||_1$$
+
+#### 2.4.2 L2 Ridge Regression
+
+L2 regularization (Ridge) adds a penalty equal to the sum of the squared weights, shrinking all
+coefficients smoothly toward zero without eliminating them. This prevents large weights, stabilizes
+learning, and reduces overfitting while maintaining all features' contributions.
+
+L2 penalty term:
+$$R_{L2}(\omega) = \sum_{j=1}^{M} \omega_j^2 = ||\omega||_2^2$$
+
+L2 regularized cost function (component form):
+$$J_{L2}(\omega) = \frac{1}{2N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} \omega_j^2$$
+
+L2 regularized cost function (vector form):
+$$J_{L2}(\omega) = \frac{1}{2N} ||y - X\omega||_2^2 + \lambda ||\omega||_2^2$$
 
 ---
 

@@ -39,6 +39,7 @@
       * [3.4.5 Decision Regression Trees](#345-decision-regression-trees)
       * [3.4.6 Random Forest: Bagging](#346-random-forest-bagging)
       * [3.4.7 Adaboost: Adaptive Boosting on Trees](#347-adaboost-adaptive-boosting-on-trees)
+        * [3.4.7.1 Iverson Bracket and Signum Operator](#3471-iverson-bracket-and-signum-operator)
     * [3.5 Support Vector Machines (SVM)](#35-support-vector-machines-svm)
       * [3.5.1 Kernal](#351-kernal)
       * [3.5.2 Slack Variables: Regularization Effect](#352-slack-variables-regularization-effect)
@@ -572,13 +573,6 @@ Process:
 
 #### 3.4.7 Adaboost: Adaptive Boosting on Trees
 
-> **Note**: $I$ is the iverson bracket (also known as the indicator function):
->
-> $$
-> I(\text{condition}) = \begin{cases} 1, & \text{if condition is true, misclassified} \\
-> 0, & \text{if condition is false, classified correctly} \end{cases}
-> $$
-
 1. Assign equal weights to the dataset for all $i$.
    $$\omega_i = \frac{1}{N}$$
 2. Train a weak learner (e.g., a decision stump).
@@ -587,7 +581,7 @@ Process:
 
    where:
 
-    - $I$: The iverson bracket.
+    - $I$: The iverson bracket (also known as the indicator function).
 4. Calculate the importance factor $\alpha$, for each data point factor.
    $$\alpha = \frac{1}{2} \ln \left( \frac{1 - \text{Error}}{\text{Error}} \right)$$
 
@@ -615,6 +609,23 @@ Process:
 8. Final prediction:
 
 $$h(x) = \text{sign} \left( \sum^{N_{stumps}}_{i=1} \alpha_i h_i (x) \right)$$
+
+where:
+
+- $\text{sign}$: The signum operator.
+
+##### 3.4.7.1 Iverson Bracket and Signum Operator
+
+$$
+I(\text{condition}) = \begin{cases} 1, & \text{if condition is true, misclassified} \\
+0, & \text{if condition is false, classified correctly} \end{cases}
+$$
+
+$$
+\text{sign}(x) = \begin{cases} +1, & \text{if } x > 0 \\
+0, & \text{if } x = 0 \\
+-1, & \text{if } x < 0 \end{cases}
+$$
 
 ### 3.5 Support Vector Machines (SVM)
 

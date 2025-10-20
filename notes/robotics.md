@@ -24,6 +24,7 @@
       * [4.2.5 Geometric Substitution or Projection](#425-geometric-substitution-or-projection)
     * [4.3 Forward Velocity (FV)](#43-forward-velocity-fv)
     * [4.4 Inverse Velocity (IV)](#44-inverse-velocity-iv)
+      * [4.4.1 Jacobian Matrix](#441-jacobian-matrix)
     * [4.5 Forward Force (FF)](#45-forward-force-ff)
     * [4.6 Inverse Force (IF)](#46-inverse-force-if)
 <!-- TOC -->
@@ -329,6 +330,36 @@ velocities.
 
 Given the desired end-effector velocity, determine the required joint
 velocities.
+
+#### 4.4.1 Jacobian Matrix
+
+Following the derivative method velocity is with the Jacobian matrix given by:
+
+$$\dot{x} = J(q), \dot{q}$$
+
+$$
+J(q) = \begin{bmatrix} \frac{\partial x}{\partial q_1} & \cdots & \frac{\partial x}{\partial q_n} \\
+\frac{\partial y}{\partial q_1} & \cdots & \frac{\partial y}{\partial q_n} \\
+\frac{\partial z}{\partial q_1} & \cdots & \frac{\partial z}{\partial q_n} \\
+\frac{\partial \phi}{\partial q_1} & \cdots & \frac{\partial \phi}{\partial q_n} \\
+\frac{\partial \theta}{\partial q_1} & \cdots & \frac{\partial \theta}{\partial q_n} \\
+\frac{\partial \psi}{\partial q_1} & \cdots & \frac{\partial \psi}{\partial q_n} \end{bmatrix}
+$$
+
+or using the cross product method:
+
+$$\dot{x} = \begin{bmatrix} v \\ \omega \end{bmatrix} = J(q), \dot{q}$$
+
+$$
+J(q) = \begin{bmatrix} J_{v_1} & J_{v_2} & \cdots & J_{v_n} \\
+J_{\omega_1} & J_{\omega_2} & \cdots & J_{\omega_n} \end{bmatrix}
+$$
+
+where:
+
+- $p_i$ is the position of joint $i$ in the base frame.
+- $p_e$ is the end-effector position in the base frame.
+- $z_i$ is the joint axis direction in the base frame.
 
 ### 4.5 Forward Force (FF)
 

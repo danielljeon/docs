@@ -51,6 +51,10 @@
       * [4.1.1 Coordinate Descent: Lloyd's Algorithm](#411-coordinate-descent-lloyds-algorithm)
       * [4.1.2 Standardization and Normalization](#412-standardization-and-normalization)
     * [4.2 Gaussian Mixture Models (GMM): Soft Classification](#42-gaussian-mixture-models-gmm-soft-classification)
+  * [5 Probabilistic Inferencing](#5-probabilistic-inferencing)
+    * [5.1 Bayesian Model](#51-bayesian-model)
+      * [5.1.1 Naive Bayes Classifier: Supervised Classification Model](#511-naive-bayes-classifier-supervised-classification-model)
+      * [5.1.2 Bayesian Belief Network (BBN)](#512-bayesian-belief-network-bbn)
 <!-- TOC -->
 
 </details>
@@ -884,3 +888,81 @@ where:
   probability integrates to 1.
 - $p(X \mid \mu, \Sigma)$: The probability density of observing data point $X$
   given parameters $\mu$ and $\Sigma$.
+
+---
+
+## 5 Probabilistic Inferencing
+
+### 5.1 Bayesian Model
+
+A Bayesian model is a probabilistic approach to modeling and learning that uses
+Bayes' theorem to update beliefs about unknown quantities (like parameters or
+hypotheses) as new data becomes available.
+
+Instead of producing fixed parameter values (like traditional models), Bayesian
+models treat parameters and predictions as probability distributions, which
+express both estimates and uncertainty.
+
+Bayes' Theorem is a rule for updating a belief about something (a hypothesis)
+after observing new evidence. Bayes theorem is given by:
+
+$$P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)}$$
+
+where:
+
+- $P(A)$: The prior probability.
+- $P(B \mid A)$: The Likelihood of seeing this evidence if the hypothesis were
+  true.
+- $P(B)$: The Evidence (normalizer), how likely this evidence is under all
+  possible hypotheses.
+- $P(A \mid B)$: The posterior probability, the updated belief after seeing
+  evidence.
+
+#### 5.1.1 Naive Bayes Classifier: Supervised Classification Model
+
+The Naive Bayes classifier is a supervised learning model based on Bayes'
+theorem. It predicts the probability that a given data point belongs to a
+particular class, assuming that all features are conditionally independent given
+the class label.
+
+Bayes' theorem core equation:
+
+$$P(C_k \mid x_1, x_2, \ldots, x_n) = \frac{P(C_k) \, P(x_1, x_2, \ldots, x_n \mid C_k)}{P(x_1, x_2, \ldots, x_n)}$$
+
+Naive independence assumption:
+
+$$P(x_1, x_2, \ldots, x_n \mid C_k) = \prod_{i=1}^{n} P(x_i \mid C_k)$$
+
+Simplified Naive Bayes formula:
+
+$$P(C_k \mid x_1, x_2, \ldots, x_n) \propto P(C_k) \, \prod_{i=1}^{n} P(x_i \mid C_k)$$
+
+- This assumption simplifies computation by treating each feature $x_i$ as
+  independent of the others, given the class $C_k$.
+
+Classification decision rule:
+
+$$\hat{C} = \arg\max_{C_k} P(C_k) \, \prod_{i=1}^{n} P(x_i \mid C_k)$$
+
+- $C_k$: A possible class label (e.g., spam, not spam).
+- $x_i$: A feature (e.g., word frequency, pixel value, etc).
+- $P(C_k)$: The prior probability of class $C_k$.
+- $P(x_i \mid C_k)$: The likelihood of feature $x_i$ given class $C_k$.
+- $\hat{C}$: The predicted class with the highest posterior probability.
+
+#### 5.1.2 Bayesian Belief Network (BBN)
+
+A Bayesian Belief Network (aka a Bayesian Network or Bayes Net) is a graphical
+model that represents probabilistic relationships among a set of variables. It's
+basically a visual and mathematical way to represent how different variables
+influence each other under uncertainty using Bayes' theorem to compute
+probabilities.
+
+A Bayesian Network represents the joint probability distribution over all
+variables as a product of conditional probabilities:
+
+$$P(X_1, X_2, \ldots, X_n) = \prod_{i=1}^{n} P(X_i \mid \text{Parents}(X_i))$$
+
+- $P(X_1, X_2, \ldots, X_n)$: The full joint probability distribution.
+- $X_i$: A variable (node in the network).
+- $\text{Parents}(X_i)$: The direct causes or influences of $X_i$ in the graph.

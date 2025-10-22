@@ -55,6 +55,11 @@
     * [5.1 Bayesian Model](#51-bayesian-model)
       * [5.1.1 Naive Bayes Classifier: Supervised Classification Model](#511-naive-bayes-classifier-supervised-classification-model)
       * [5.1.2 Bayesian Belief Network (BBN)](#512-bayesian-belief-network-bbn)
+  * [6 Artificial Neural Network (ANN)](#6-artificial-neural-network-ann)
+    * [6.1 Perceptron](#61-perceptron)
+      * [6.1.1 Adaptive Linear Neuron (Adaline)](#611-adaptive-linear-neuron-adaline)
+    * [6.2 Multilayer ANN](#62-multilayer-ann)
+      * [6.2.1 Backpropagation](#621-backpropagation)
 <!-- TOC -->
 
 </details>
@@ -966,3 +971,110 @@ $$P(X_1, X_2, \ldots, X_n) = \prod_{i=1}^{n} P(X_i \mid \text{Parents}(X_i))$$
 - $P(X_1, X_2, \ldots, X_n)$: The full joint probability distribution.
 - $X_i$: A variable (node in the network).
 - $\text{Parents}(X_i)$: The direct causes or influences of $X_i$ in the graph.
+
+---
+
+## 6 Artificial Neural Network (ANN)
+
+YouTube,
+3Blue1Brown: [But what is a neural network? | Deep learning chapter 1](https://youtu.be/aircAruvnKk)
+
+### 6.1 Perceptron
+
+A perceptron is defined as:
+
+$$y = f(\mathbf{w} \cdot \mathbf{x} + b)$$
+
+where:
+
+- $\mathbf{w}$: The weight vector.
+- $\mathbf{x}$: The input vector.
+- $b$: The bias term.
+- $f$: The step activation.
+
+The Learning Rule (Perceptron Rule) is given as:
+
+$$\Delta w_i = \eta (t - y)x_i$$
+
+where:
+
+- $\eta$: The learning rate.
+- $t$: The target output.
+- $y$: The predicted output.
+
+The limitation with the learning rule is that it **only works for linearly
+separable datasets**.
+
+#### 6.1.1 Adaptive Linear Neuron (Adaline)
+
+Adaline is a single-layer neural network. It uses a linear activation function
+and learns weights through the Least Mean Squares (LMS), also known as the Delta
+Rule to minimize prediction error.
+
+To minimize error, Adaline updates weights in the direction opposite to the
+gradient:
+
+$$\Delta w_i = -\eta \frac{\partial E}{\partial w_i}$$
+
+$$\frac{\partial E}{\partial w_i} = \sum_{d \in D} (t_d - y_d)x_{d,i}$$
+
+The update rule then becomes:
+
+$$\Delta w_i = \eta (t - y)x_i$$
+
+$$w_i^{\text{new}} = w_i^{\text{old}} + \eta (t - y)x_i$$
+
+### 6.2 Multilayer ANN
+
+Multilayer ANNs extend single-layer models by adding one or more hidden layers,
+enabling them to learn **nonlinear** relationships. They are formed of 3 main
+parts:
+
+1. **Input Layer:** Receives feature data.
+2. **Hidden Layers:** Perform nonlinear transformations via weighted sums and
+   activation functions.
+3. **Output Layer:** Produces final predictions or class probabilities.
+
+#### 6.2.1 Backpropagation
+
+Backpropagation is the core learning algorithm for multilayer neural networks.
+By extending the Delta Rule by using gradient descent to adjust weights in all
+layers based on how much each weight contributed to the total error.
+
+$$y_j = f\left(\sum_i w_{ji} x_i + b_j\right)$$
+
+To compute the error at output layer, measure the difference between target and
+predicted outputs:
+
+$$E = \frac{1}{2}\sum_k (t_k - y_k)^2$$
+
+For an output neuron $k$:
+
+1. **Output layer error term:**
+
+   $$\delta_k = (t_k - y_k) f'(z_k)$$
+
+   where:
+
+    - $t_k$: The target output.
+    - $y_k$: The predicted output.
+    - $f'(z_k)$: The derivative of activation function.
+
+2. **Hidden Layer Error Term:**
+
+    - For a hidden neuron $j$:
+
+      $$\delta_j = f'(z_j) \sum_k w_{kj} \delta_k$$
+
+      This sums the weighted downstream errors from the next layer.
+
+3. **Update weights:**
+
+   $$w_{ji}^{\text{new}} = w_{ji}^{\text{old}} + \Delta w_{ji}$$
+   $$\Delta w_{ji} = \eta \delta_j x_i$$
+
+   where:
+
+    - $\eta$: The learning rate.
+    - $\delta_j$: The local error for neuron $j$.
+    - $x_i$: The input to neuron $j$.

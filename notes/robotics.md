@@ -14,7 +14,7 @@
   * [3 Denavit-Hartenberg (D&H) Convention: Manipulator Representation](#3-denavit-hartenberg-dh-convention-manipulator-representation)
     * [3.1 Zero Displacement Condition](#31-zero-displacement-condition)
     * [3.2 Homogenous Transform Representation](#32-homogenous-transform-representation)
-  * [4 Basic Problems of Manipulators](#4-basic-problems-of-manipulators)
+  * [4 Basic Problems of Manipulators with (D&H) Convention](#4-basic-problems-of-manipulators-with-dh-convention)
     * [4.1 Forward Displacement (FD)](#41-forward-displacement-fd)
     * [4.2 Inverse Displacement (ID)](#42-inverse-displacement-id)
       * [4.2.1 Inverse of Transformation Equations](#421-inverse-of-transformation-equations)
@@ -213,7 +213,7 @@ $${}^{i-1}T_i =
 
 ---
 
-## 4 Basic Problems of Manipulators
+## 4 Basic Problems of Manipulators with (D&H) Convention
 
 | Problem                       | Known                   | Find                    | Equation                                | Field               |
 |-------------------------------|-------------------------|-------------------------|-----------------------------------------|---------------------|
@@ -242,11 +242,15 @@ Useful identities:
 
 ### 4.1 Forward Displacement (FD)
 
+$$X = f(\theta)$$
+
 Also called Forward Kinematics, this problem determines the position and
 orientation of the end-effector in Cartesian space given the known joint
 variables (angles for revolute joints, displacements for prismatic joints).
 
 ### 4.2 Inverse Displacement (ID)
+
+$$\theta = f^{-1}(X)$$
 
 Also called Inverse Kinematics, this problem determines the joint variables
 required to reach a desired end-effector position and orientation.
@@ -323,10 +327,14 @@ relationship, simplifying the inverse problem significantly.
 
 ### 4.3 Forward Velocity (FV)
 
+$$\dot{X} = J(\theta) \dot{\theta}$$
+
 Given the joint velocities, determine the end-effector's linear and angular
 velocities.
 
 ### 4.4 Inverse Velocity (IV)
+
+$$\dot{\theta} = J^{-1}(\theta) \dot{X}$$
 
 Given the desired end-effector velocity, determine the required joint
 velocities.
@@ -335,7 +343,7 @@ velocities.
 
 Following the derivative method velocity is with the Jacobian matrix given by:
 
-$$\dot{x} = J(q), \dot{q}$$
+$$\dot{X} = J(\theta) \dot{\theta}$$
 
 $$
 J(q) = \begin{bmatrix} \frac{\partial x}{\partial q_1} & \cdots & \frac{\partial x}{\partial q_n} \\
@@ -348,7 +356,8 @@ $$
 
 or using the cross product method:
 
-$$\dot{x} = \begin{bmatrix} v \\ \omega \end{bmatrix} = J(q), \dot{q}$$
+$$\dot{X} = \begin{bmatrix} v \\
+\omega \end{bmatrix} = J(\theta) \dot{\theta}$$
 
 $$
 J(q) = \begin{bmatrix} J_{v_1} & J_{v_2} & \cdots & J_{v_n} \\
@@ -363,9 +372,13 @@ where:
 
 ### 4.5 Forward Force (FF)
 
+$$F = J^{-T}(\theta) \tau$$
+
 Determine the forces and torques at the end-effector (in Cartesian space) that
 result from known joint torques.
 
 ### 4.6 Inverse Force (IF)
+
+$$\tau = J^{T}(\theta) F$$
 
 Determine the joint torques required to generate a desired end-effector force.

@@ -283,6 +283,32 @@ This helps move known terms to one side, reducing dimensionality and isolating
 the unknown joint. Conceptually, taking inverses "peels off" known links from
 the kinematic chain.
 
+If you have a homogeneous transformation matrix ${}^{A}_{B}T$ that describes the
+pose of **frame B** relative to **frame A**, then the transformation of **frame
+A** relative to **frame B** is simply its inverse:
+
+$${}^{B}_{A}T = ({}^{A}_{B}T)^{-1}$$
+
+$$
+{}^{A}_{B}T = \begin{bmatrix} R & p \\
+0 & 1 \end{bmatrix}
+$$
+
+where:
+
+- $R \in SO(3)$: rotation matrix.
+- $p \in \mathbb{R}^3$: position of the origin of frame B expressed in frame A.
+
+The inverse is given by:
+
+$$
+{}^{B}_{A}T = \begin{bmatrix} R^T & -R^T p \\
+0 & 1 \end{bmatrix}
+$$
+
+- $R^{-1} = R^T$ (rotation matrices are orthogonal).
+- The translation component reverses and rotates back into the new frame.
+
 #### 4.2.2 Square and Add Trigonometric Equations
 
 When equations involve both $\sin\theta$ and $\cos\theta$, squaring and adding
@@ -423,7 +449,7 @@ transformation encoded by $A$.
 
 - $A$ often represents an **infinitesimal generator** of motion (e.g., angular
   velocity, twist, or system dynamics).
-- $e^{A}$ gives the **finite transformation** obtained by “integrating” that
+- $e^{A}$ gives the **finite transformation** obtained by "integrating" that
   motion.
 
 In other words, $e^{A}$ converts **local motion** to **global transformations**.

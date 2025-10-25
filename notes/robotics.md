@@ -27,6 +27,12 @@
       * [4.4.1 Jacobian Matrix](#441-jacobian-matrix)
     * [4.5 Forward Force (FF)](#45-forward-force-ff)
     * [4.6 Inverse Force (IF)](#46-inverse-force-if)
+  * [5 Product of Exponentials (POE) Formulation](#5-product-of-exponentials-poe-formulation)
+    * [5.1 Core Idea](#51-core-idea)
+    * [5.2 Twist Representation](#52-twist-representation)
+    * [5.3 Exponential Map](#53-exponential-map)
+    * [5.4 Forward Kinematics Summary](#54-forward-kinematics-summary)
+    * [5.5 Body Frame Form](#55-body-frame-form)
 <!-- TOC -->
 
 </details>
@@ -382,3 +388,107 @@ result from known joint torques.
 $$\tau = J^{T}(\theta) F$$
 
 Determine the joint torques required to generate a desired end-effector force.
+
+---
+
+## 5 Product of Exponentials (POE) Formulation
+
+The **Product of Exponentials (POE)** approach provides a compact and
+coordinate-free method to describe the forward kinematics of a robotic
+manipulator using the tools of **screw theory** and **matrix exponentials**.
+
+The advantages are:
+
+- Coordinate-free, compact, and elegant.
+- Compatible with modern Lie group formulations.
+- Easily differentiable for velocity and Jacobian computations.
+- Suitable for numerical methods and control formulations.
+
+### 5.1 Core Idea
+
+In the POE formulation, the pose of the end-effector is expressed as a product
+of exponentials of **twists**, each representing a joint's motion, applied to
+the **home configuration** of the robot.
+
+If the manipulator has $n$ joints, then the forward kinematics are given by:
+
+$$
+T(\theta) = e^{[\xi_1]\theta_1} e^{[\xi_2]\theta_2} \cdots e^{[\xi_n]\theta_n} M
+$$
+
+where:
+
+- $T(\theta) \in SE(3)$: Homogeneous transformation of the end-effector frame
+  relative to the base.
+- $M \in SE(3)$: Home configuration (pose when all joint variables are zero).
+- $[\xi_i] \in \mathfrak{se}(3)$: Twist of joint $i$ expressed in the base
+  frame.
+- $\theta_i$: Joint variable (angle for revolute, displacement for prismatic).
+
+### 5.2 Twist Representation
+
+Each **twist** $\xi_i$ represents the instantaneous motion of a joint as a 6D
+vector:
+
+$$
+\xi_i = \begin{bmatrix} \omega_i \\
+v_i \end{bmatrix}
+$$
+
+where:
+
+- $\omega_i$: Angular velocity vector (axis of rotation).
+- $v_i = -\omega_i \times q_i$ for revolute joints, with $q_i$ being a point on
+  the axis.
+
+The twist is represented as a **4 x 4 matrix** in the Lie
+algebra $\mathfrak{se}(3)$:
+
+$$
+[\xi_i] = \begin{bmatrix} [\omega_i] & v_i \\
+0 & 0 \end{bmatrix}
+$$
+
+where $[\omega_i]$ is the skew-symmetric matrix:
+
+$$
+[\omega_i] = \begin{bmatrix} 0 & -\omega_{i,z} & \omega_{i,y} \\
+\omega_{i,z} & 0 & -\omega_{i,x} \\
+-\omega_{i,y} & \omega_{i,x} & 0 \end{bmatrix}
+$$
+
+### 5.3 Exponential Map
+
+The exponential of a twist produces a rigid-body transformation in $SE(3)$:
+
+$$
+e^{[\xi]\theta} = \begin{bmatrix} e^{[\omega]\theta} & (I - e^{[\omega]\theta})(\omega \times v) + \omega \omega^T v \theta \\
+0 & 1 \end{bmatrix}
+$$
+
+If the joint is **prismatic**, $\omega = 0$, and the exponential simplifies
+to:
+
+$$
+e^{[\xi]\theta} = \begin{bmatrix} I & v \theta \\
+0 & 1 \end{bmatrix}
+$$
+
+### 5.4 Forward Kinematics Summary
+
+Combining all exponentials gives the end-effector transformation:
+
+$$T(\theta) = e^{[\xi_1]\theta_1} e^{[\xi_2]\theta_2} \cdots e^{[\xi_n]\theta_n} M$$
+
+This formulation naturally handles both revolute and prismatic joints and
+provides a smooth mapping from joint space to Cartesian space.
+
+### 5.5 Body Frame Form
+
+Alternatively, the POE can be expressed in the **body frame** (expressed at the
+end-effector):
+
+$$T(\theta) = M e^{[\xi_1^B]\theta_1} e^{[\xi_2^B]\theta_2} \cdots e^{[\xi_n^B]\theta_n}$$
+
+where $[\xi_i^B]$ are twists expressed in the body frame rather than the space
+frame.

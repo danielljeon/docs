@@ -410,6 +410,24 @@ In the POE formulation, the pose of the end-effector is expressed as a product
 of exponentials of **twists**, each representing a joint's motion, applied to
 the **home configuration** of the robot.
 
+A **matrix exponential** generalizes the scalar exponential function to
+matrices. It provides a powerful way to represent continuous transformations
+such as rotations, translations, and dynamic system evolution.
+
+For any square matrix $A$, the exponential is defined by the power series:
+
+$$e^{A} = I + A + \frac{A^2}{2!} + \frac{A^3}{3!} + \cdots$$
+
+This series always converges. Each term represents higher-order effects of the
+transformation encoded by $A$.
+
+- $A$ often represents an **infinitesimal generator** of motion (e.g., angular
+  velocity, twist, or system dynamics).
+- $e^{A}$ gives the **finite transformation** obtained by “integrating” that
+  motion.
+
+In other words, $e^{A}$ converts **local motion** to **global transformations**.
+
 If the manipulator has $n$ joints, then the forward kinematics are given by:
 
 $$

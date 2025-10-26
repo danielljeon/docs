@@ -237,9 +237,10 @@ Useful conversions:
 
 | Formula                                                             | Result                                                                                   |
 |---------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| $\sin \theta = a$ and $\cos \theta = b$                             | $\theta = \mathrm{Atan2}\left(a, b \right)$                                              |
 | $\sin\theta = a$                                                    | $\theta = \mathrm{Atan2}\left(a, \pm\sqrt{1 - a^2}\right)$                               |
 | $\cos\theta = b$                                                    | $\theta = \pm \mathrm{Atan2}\left(\sqrt{1 - b^2}, b\right)$                              |
-| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \mathrm{Atan2}(a, -b)$ and $\theta = \mathrm{Atan2}(-a, b)$                    |
+| $a\cos\theta + b\sin\theta = 0$                                     | $\theta = \mathrm{Atan2}(a, -b) = \mathrm{Atan2}(-a, b)$                                 |
 | $a\cos\theta + b\sin\theta = c$                                     | $\theta = \mathrm{Atan2}(b, a) \pm \mathrm{Atan2}\left(\sqrt{a^2 + b^2 - c^2}, c\right)$ |
 | $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ | $\theta = \mathrm{Atan2}(ad - bc, ac + bd)$                                              |
 

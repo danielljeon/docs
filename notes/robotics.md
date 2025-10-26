@@ -192,6 +192,12 @@ The 4 parameters are defined as:
 4. $\theta_i$ is the angle between $\hat x_{i-1}$ and $\hat x_i$ measured
    about $\hat z_i$.
 
+This forms the D&H table:
+
+| $F_{i-1}$ | $a_{i-1}$ | $\alpha_{i-1}$ | $d_i$ | $\theta_i$ | $F_i$ |
+|:---------:|:---------:|:--------------:|:-----:|:----------:|:-----:|
+|    ...    |    ...    |      ...       |  ...  |    ...     |  ...  |
+
 ### 3.1 Zero Displacement Condition
 
 In the D&H convention, the zero displacement condition specifies that each joint
@@ -201,21 +207,18 @@ D&H parameters to the robot's physical geometry.
 
 ### 3.2 Homogenous Transform Representation
 
-$${}^{i-1}T_i \;=\; R_{x_{i-1}}(\alpha_{i-1}) \, D_{x_{i-1}}(a_{i-1}) \, R_{z_i}(\theta_i) \, D_{z_i}(d_i)$$
+As each row in the D&H table now represents a transform, each row can be
+expressed as a homogenous transformation matrix:
 
-or
-
-$${}^{i-1}T_i \;=\; D_{x_{i-1}}(a_{i-1}) \, R_{x_{i-1}}(\alpha_{i-1}) \, D_{z_i}(d_i) \, R_{z_i}(\theta_i)$$
-
-When expanded into the full matrix from, this is represented as:
-
-$${}^{i-1}T_i =
+$$
+{}^{i-1}T_i =
 \begin{bmatrix}
-\cos(\theta_i) & -\sin(\theta_i) & 0 & a_{i-1} \\
-\sin(\theta_i) \cos(\alpha_{i-1}) & \cos(\theta_i) \cos(\alpha_{i-1}) & -\sin(\alpha_{i-1}) & -\sin(\alpha_{i-1}) d_i \\
-\sin(\theta_i) \sin(\alpha_{i-1}) & \cos(\theta_i) \sin(\alpha_{i-1}) & \cos(\alpha_{i-1}) & \cos(\alpha_{i-1}) d_i \\
+\cos\theta_i & -\sin\theta_i\cos\alpha_{i-1} & \sin\theta_i\sin\alpha_{i-1} & a_{i-1}\cos\theta_i \\
+\sin\theta_i & \cos\theta_i\cos\alpha_{i-1} & -\cos\theta_i\sin\alpha_{i-1} & a_{i-1}\sin\theta_i \\
+0 & \sin\alpha_{i-1} & \cos\alpha_{i-1} & d_i \\
 0 & 0 & 0 & 1
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 ---
 
@@ -287,10 +290,8 @@ If you have a homogeneous transformation matrix ${}^{A}_{B}T$ that describes the
 pose of **frame B** relative to **frame A**, then the transformation of **frame
 A** relative to **frame B** is simply its inverse:
 
-$${}^{B}_{A}T = ({}^{A}_{B}T)^{-1}$$
-
 $$
-{}^{A}_{B}T = \begin{bmatrix} R & p \\
+{}^{0}T_{1} = \begin{bmatrix} R & p \\
 0 & 1 \end{bmatrix}
 $$
 
@@ -302,7 +303,7 @@ where:
 The inverse is given by:
 
 $$
-{}^{B}_{A}T = \begin{bmatrix} R^T & -R^T p \\
+{}^{1}T_{0} = ({}^{0}T_{1})^{-1} = \begin{bmatrix} R^T & -R^T p \\
 0 & 1 \end{bmatrix}
 $$
 

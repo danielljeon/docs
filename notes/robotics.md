@@ -27,12 +27,19 @@
       * [4.4.1 Jacobian Matrix](#441-jacobian-matrix)
     * [4.5 Forward Force (FF)](#45-forward-force-ff)
     * [4.6 Inverse Force (IF)](#46-inverse-force-if)
-  * [5 Product of Exponentials (POE) Formulation](#5-product-of-exponentials-poe-formulation)
-    * [5.1 Core Idea](#51-core-idea)
-    * [5.2 Twist Representation](#52-twist-representation)
-    * [5.3 Exponential Map](#53-exponential-map)
-    * [5.4 Forward Kinematics Summary](#54-forward-kinematics-summary)
-    * [5.5 Body Frame Form](#55-body-frame-form)
+  * [5 Rigid Body Dynamics](#5-rigid-body-dynamics)
+    * [5.1 The Inertia Tensor](#51-the-inertia-tensor)
+    * [5.2 Manipulator Dynamic Equations](#52-manipulator-dynamic-equations)
+    * [5.3 Newton-Euler (Force Balance) Approach](#53-newton-euler-force-balance-approach)
+      * [5.3.1 Forward Recursion: Compute Velocities and Accelerations](#531-forward-recursion-compute-velocities-and-accelerations)
+      * [5.3.2 Backward Recursion: Compute Forces and Torques](#532-backward-recursion-compute-forces-and-torques)
+    * [5.4 Lagrangian (Energy-Based) Approach](#54-lagrangian-energy-based-approach)
+  * [6 Product of Exponentials (POE) Formulation](#6-product-of-exponentials-poe-formulation)
+    * [6.1 Core Idea](#61-core-idea)
+    * [6.2 Twist Representation](#62-twist-representation)
+    * [6.3 Exponential Map](#63-exponential-map)
+    * [6.4 Forward Kinematics Summary](#64-forward-kinematics-summary)
+    * [6.5 Body Frame Form](#65-body-frame-form)
 <!-- TOC -->
 
 </details>
@@ -63,11 +70,11 @@ We define transforms:
   respect to frame {1}.
 
 If we want the transform from {2} to {0}, we
-write: ${}^0T_2 = {}^0T_1 \, {}^1T_2$
+write: ${}^0T_2 = {}^0T_1 {}^1T_2$
 
 This appears as left-to-right chaining, mirroring the physical kinematic chain
 (base to joint 1 to joint 2). But when applied to a vector:
-$$\mathbf{p}_0 = {}^0T_1 \big( {}^1T_2 \, \mathbf{p}_2 \big)$$
+$$\mathbf{p}_0 = {}^0T_1 \big( {}^1T_2 \mathbf{p}_2 \big)$$
 
 the actual multiplication is still right-to-left.
 
@@ -419,7 +426,189 @@ Determine the joint torques required to generate a desired end-effector force.
 
 ---
 
-## 5 Product of Exponentials (POE) Formulation
+## 5 Rigid Body Dynamics
+
+### 5.1 The Inertia Tensor
+
+The **moment of inertia tensor** expresses how mass is distributed relative to
+an axis of rotation. It determines the resistance of a rigid body to angular
+acceleration about any axis through a point (usually the center of mass).
+
+$$
+\mathbf{I} =
+\begin{bmatrix}
+I_{xx} & -I_{xy} & -I_{xz} \\
+-I_{yx} & I_{yy} & -I_{yz} \\
+-I_{zx} & -I_{zy} & I_{zz}
+\end{bmatrix}
+= \begin{bmatrix}
+\frac{1}{3} m (l^2 + h^2) & -\frac{1}{4} m w l & -\frac{1}{4} m w h \\
+-\frac{1}{4} m w l & \frac{1}{3} m (w^2 + h^2) & -\frac{1}{4} m l h \\
+-\frac{1}{4} m w h & -\frac{1}{4} m l h & \frac{1}{3} m (l^2 + w^2)
+\end{bmatrix}
+$$
+
+This is a **symmetric 3 x 3 matrix** (since $I_{xy} = I_{yx}$, etc.),
+representing how the object's mass is distributed in 3D.
+
+Each component is defined by integrating over the body's volume $B_i$:
+
+Mass moment of inertia:
+
+$$
+I_{xx} = \int_{B_i} (y^2 + z^2) dV
+\quad\quad
+I_{yy} = \int_{B_i} (z^2 + x^2) dV
+\quad\quad
+I_{zz} = \int_{B_i} (x^2 + y^2) dV
+$$
+
+Off-diagonal terms (products of inertia):
+
+$$
+I_{xy} = I_{yx} = \int_{B_i} xy dV
+\quad\quad
+I_{xz} = I_{zx} = \int_{B_i} xz dV
+\quad\quad
+I_{yz} = I_{zy} = \int_{B_i} yz dV
+$$
+
+- **Diagonal terms**: ($I_{xx}, I_{yy}, I_{zz}$) represent resistance to
+  rotation about the x, y, and z axes, respectively.
+- **Off-diagonal terms**: (e.g. $I_{xy}$ ) couple rotations between axes and
+  describe how mass is distributed off the principal axes.
+- The **tensor form**: allows expressing angular momentum and torque compactly:
+  $$\mathbf{L} = \mathbf{I} \omega$$
+  where $\mathbf{L}$ is angular momentum and $\omega$ is angular velocity.
+
+Key Properties:
+
+- **Symmetric:** $I_{ij} = I_{ji}$
+- **Positive definite:** all principal moments $> 0$ for real mass distributions
+- **Diagonalizable:** there exist **principal axes** where the inertia tensor
+  becomes diagonal, simplifying rotation analysis.
+
+The **parallel axis theorem** allows us to find the moment of inertia about any
+axis
+that is *parallel* to one passing through the **center of mass (C.M.)**.
+
+Mass moment of inertia:
+
+$$
+I_{xx}^A = I_{xx}^C + m (y_c^2 + z_c^2)
+\quad\quad
+I_{yy}^A = I_{yy}^C + m (x_c^2 + z_c^2)
+\quad\quad
+I_{zz}^A = I_{zz}^C + m (x_c^2 + y_c^2)
+$$
+
+Off-diagonal terms (products of inertia):
+
+$$
+I_{xy}^A = I_{xy}^C + m x_c y_c
+\quad\quad
+I_{xz}^A = I_{xz}^C + m x_c z_c
+\quad\quad
+I_{yz}^A = I_{yz}^C + m y_c z_c
+$$
+
+where:
+
+- $x_c$, $y_c$, $z_c$: The coordinates of the centroid (center of mass) measured
+  from the new reference point. For a uniform rectangular solid where the
+  reference is at one corner, these correspond to the coordinates of the
+  geometric center:
+    - $x_c = \frac{l}{2}$, $y_c = \frac{w}{2}$, $z_c = \frac{h}{2}$.
+
+### 5.2 Manipulator Dynamic Equations
+
+Manipulator dynamics equations have the general form:
+
+$$M(\theta),\ddot{\theta} + V(\theta, \dot{\theta}) + G(\theta) = \phi$$
+
+where:
+
+- $M(\theta)\ddot{\theta}$: The **inertial torque** term, represents the torque
+  required to produce the desired joint accelerations given the current
+  configuration (depends on the manipulator's mass distribution).
+- $V(\theta, \dot{\theta})$: The **Coriolis and centrifugal torque** term,
+  accounts for dynamic coupling effects between joints that arise when multiple
+  joints move simultaneously.
+- $G(\theta)$: The **gravitational torque** term, represents the torque needed
+  to hold the manipulator stationary against gravity.
+- $\phi$: The **generalized actuator torque (or force) vector**, the total
+  effort supplied by the actuators, in other words the control input that
+  balances all dynamic effects.
+
+### 5.3 Newton-Euler (Force Balance) Approach
+
+The Newton-Euler method derives the equations of motion by applying
+**Newton's second law** (linear and rotational) to each link of the manipulator
+separately.
+
+For each link $i$:
+
+$$\mathbf{F}_i = m_i \mathbf{a}_{c_i}$$
+
+$$\tau_i = I_i \alpha_i + \omega_i \times (I_i \omega_i)$$
+
+where
+
+- $\mathbf{F}_i$: The net external force acting on link $i$.
+- $m_i$: The mass of link $i$.
+- $\mathbf{a}_{c_i}$: The acceleration of the link's center of mass.
+- $\tau_i$: The net torque acting on link $i$.
+- $\alpha_i$: The angular acceleration.
+- $\omega_i$: The angular velocity.
+- $I_i$: The inertia tensor about the center of mass.
+
+The Recursive Newton-Euler Algorithm proceeds **recursively** along the
+manipulator chain:
+
+#### 5.3.1 Forward Recursion: Compute Velocities and Accelerations
+
+Starting from the base (link 0):
+
+$$
+\omega_i = {}^{i}R_{i-1}\, \omega_{i-1} + \dot{\theta}_i\, z_i
+$$
+
+$$
+\alpha_i = {}^{i}R_{i-1}\, \alpha_{i-1} + \ddot{\theta}_i\, z_i + \omega_i \times (\dot{\theta}_i\, z_i)
+$$
+
+Then compute the linear acceleration of each link's center of mass:
+
+$$
+\mathbf{a}_{c_i} = {}^{i}R_{i-1}\left(\mathbf{a}_{c_{i-1}} + \alpha_{i-1}\times \mathbf{r}_{i-1,i} + \omega_{i-1}\times(\omega_{i-1}\times \mathbf{r}_{i-1,i})\right)
+$$
+
+#### 5.3.2 Backward Recursion: Compute Forces and Torques
+
+Starting from the end effector (link $n$):
+
+$$\mathbf{f}_i = {}^{i}R_{i+1}\, \mathbf{f}_{i+1} + m_i \mathbf{a}_{c_i}$$
+
+$$\tau_i = {}^{i}R_{i+1}\, \tau_{i+1} + \mathbf{r}_{c_i} \times (m_i \mathbf{a}_{c_i}) + \mathbf{r}_{i,i+1} \times ({}^{i}R_{i+1}\, \mathbf{f}_{i+1}) + \mathbf{I}_i \alpha_i + \omega_i \times (\mathbf{I}_i \omega_i)$$
+
+Finally, the **joint torque** at joint $i$ is:
+
+$$\phi_i = \tau_i^T z_i$$
+
+This gives the torque/force required at each joint to produce the desired
+motion.
+
+---
+
+### 5.4 Lagrangian (Energy-Based) Approach
+
+The Lagrangian approach uses an **energy formulation** (kinetic - potential
+energy), the Newton-Euler approach uses **force and moment balance** for each
+rigid body.
+
+---
+
+## 6 Product of Exponentials (POE) Formulation
 
 The **Product of Exponentials (POE)** approach provides a compact and
 coordinate-free method to describe the forward kinematics of a robotic
@@ -432,7 +621,7 @@ The advantages are:
 - Easily differentiable for velocity and Jacobian computations.
 - Suitable for numerical methods and control formulations.
 
-### 5.1 Core Idea
+### 6.1 Core Idea
 
 In the POE formulation, the pose of the end-effector is expressed as a product
 of exponentials of **twists**, each representing a joint's motion, applied to
@@ -471,7 +660,7 @@ where:
   frame.
 - $\theta_i$: Joint variable (angle for revolute, displacement for prismatic).
 
-### 5.2 Twist Representation
+### 6.2 Twist Representation
 
 Each **twist** $\xi_i$ represents the instantaneous motion of a joint as a 6D
 vector:
@@ -503,7 +692,7 @@ $$
 -\omega_{i,y} & \omega_{i,x} & 0 \end{bmatrix}
 $$
 
-### 5.3 Exponential Map
+### 6.3 Exponential Map
 
 The exponential of a twist produces a rigid-body transformation in $SE(3)$:
 
@@ -520,7 +709,7 @@ e^{[\xi]\theta} = \begin{bmatrix} I & v \theta \\
 0 & 1 \end{bmatrix}
 $$
 
-### 5.4 Forward Kinematics Summary
+### 6.4 Forward Kinematics Summary
 
 Combining all exponentials gives the end-effector transformation:
 
@@ -529,7 +718,7 @@ $$T(\theta) = e^{[\xi_1]\theta_1} e^{[\xi_2]\theta_2} \cdots e^{[\xi_n]\theta_n}
 This formulation naturally handles both revolute and prismatic joints and
 provides a smooth mapping from joint space to Cartesian space.
 
-### 5.5 Body Frame Form
+### 6.5 Body Frame Form
 
 Alternatively, the POE can be expressed in the **body frame** (expressed at the
 end-effector):

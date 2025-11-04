@@ -60,6 +60,7 @@
       * [6.1.1 Adaptive Linear Neuron (Adaline)](#611-adaptive-linear-neuron-adaline)
     * [6.2 Multilayer ANN](#62-multilayer-ann)
       * [6.2.1 Backpropagation](#621-backpropagation)
+  * [7 Summary of Prediction Models](#7-summary-of-prediction-models)
 <!-- TOC -->
 
 </details>
@@ -908,6 +909,15 @@ Instead of producing fixed parameter values (like traditional models), Bayesian
 models treat parameters and predictions as probability distributions, which
 express both estimates and uncertainty.
 
+In essence, Bayesian learning combines:
+
+- Prior knowledge (what we believed before seeing data).
+- Observed evidence (new data or measurements).
+
+This is used to produce:
+
+- Posterior knowledge (updated beliefs).
+
 Bayes' Theorem is a rule for updating a belief about something (a hypothesis)
 after observing new evidence. Bayes theorem is given by:
 
@@ -1078,3 +1088,20 @@ For an output neuron $k$:
     - $\eta$: The learning rate.
     - $\delta_j$: The local error for neuron $j$.
     - $x_i$: The input to neuron $j$.
+
+---
+
+## 7 Summary of Prediction Models
+
+| Model                           | Inputs                                                       | Known                                        | Outputs                                                  | High-Level Logic                                                                                                                                           |
+|---------------------------------|--------------------------------------------------------------|----------------------------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Linear Regression               | Continuous/numeric features $x_1, x_2, \ldots, x_n$          | Continuous target $y$                        | Predicted numeric value $\hat{y}$                        | Fits a straight line (or hyperplane) that minimizes squared error between predictions and true values.                                                     |
+| Logistic Regression             | Continuous or categorical features                           | Binary or categorical class labels           | Probability of class membership $P(y=1 \mid x)$          | Uses a logistic (sigmoid) function to map a linear combination of inputs to a probability between 0 and 1.                                                 |
+| Decision Tree (Classification)  | Categorical or numeric features                              | Class labels (supervised)                    | Predicted class                                          | Recursively splits data into branches based on feature thresholds that maximize class purity (e.g., via Gini or entropy).                                  |
+| Regression Decision Tree        | Categorical or numeric features                              | Continuous target (supervised)               | Predicted numeric value                                  | Same logic as a classification tree, but uses mean-squared error to predict continuous outputs at leaf nodes.                                              |
+| Support Vector Machine (SVM)    | Numeric features                                             | Class labels (supervised)                    | Class or decision boundary                               | Finds the optimal separating hyperplane that maximizes the margin between classes (can use kernels for nonlinear data).                                    |
+| K-Nearest Neighbors (KNN)       | Feature vectors                                              | Labeled samples (supervised)                 | Class or numeric prediction                              | Compares a test datapoint to its *k* closest training datapoints and predicts by majority vote (classification) or mean (regression).                      |
+| K-Means Clustering              | Feature vectors                                              | Number of clusters $k$ (unsupervised)        | Cluster assignments and centroids                        | Iteratively assigns datapoints to nearest cluster centers and updates centers to minimize within-cluster distance.                                         |
+| Gaussian Mixture Model (GMM)    | Feature vectors                                              | Number of Gaussian components (unsupervised) | Soft cluster memberships and parameters of each Gaussian | Models data as a mixture of multiple Gaussian distributions, uses Expectation-Maximization (EM) to estimate parameters.                                    |
+| Bayesian Belief Network (BBN)   | Variables (nodes) and conditional relationships              | Structure and conditional probability tables | Updated probability distributions                        | Represents probabilistic dependencies among variables, updates beliefs using Bayes' theorem when new evidence is observed.                                 |
+| Artificial Neural Network (ANN) | Numeric or encoded features (can include images, text, etc.) | Labeled samples (supervised)                 | Predicted numeric value or class probabilities           | Composed of interconnected layers of nodes ("neurons") that learn nonlinear mappings from input to output through backpropagation and weight optimization. |

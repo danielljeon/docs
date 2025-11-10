@@ -614,6 +614,9 @@ The **Product of Exponentials (POE)** approach provides a compact and
 coordinate-free method to describe the forward kinematics of a robotic
 manipulator using the tools of **screw theory** and **matrix exponentials**.
 
+- Note: $SE(3)$ stands for the Special Euclidean group in 3D, 4x4 matrix of
+  rotations and translations.
+
 The advantages are:
 
 - Coordinate-free, compact, and elegant.
@@ -647,26 +650,23 @@ In other words, $e^{A}$ converts **local motion** to **global transformations**.
 
 If the manipulator has $n$ joints, then the forward kinematics are given by:
 
-$$
-T(\theta) = e^{[\xi_1]\theta_1} e^{[\xi_2]\theta_2} \cdots e^{[\xi_n]\theta_n} M
-$$
+$$T(q) = e^{[S_1]q_1} e^{[S_2]q_2} \cdots e^{[S_n]q_n} M$$
 
 where:
 
-- $T(\theta) \in SE(3)$: Homogeneous transformation of the end-effector frame
+- $T(q) \in SE(3)$: Homogeneous transformation of the end-effector frame
   relative to the base.
 - $M \in SE(3)$: Home configuration (pose when all joint variables are zero).
-- $[\xi_i] \in \mathfrak{se}(3)$: Twist of joint $i$ expressed in the base
-  frame.
-- $\theta_i$: Joint variable (angle for revolute, displacement for prismatic).
+- $[S_i] \in \mathfrak{se}(3)$: Twist of joint $i$ expressed in the base frame.
+- $q_i$: Joint variable (angle for revolute, displacement for prismatic).
 
 ### 6.2 Twist Representation
 
-Each **twist** $\xi_i$ represents the instantaneous motion of a joint as a 6D
+Each **twist** $S_i$ represents the instantaneous motion of a joint as a 6D
 vector:
 
 $$
-\xi_i = \begin{bmatrix} \omega_i \\
+S_i = \begin{bmatrix} \omega_i \\
 v_i \end{bmatrix}
 $$
 
@@ -680,7 +680,7 @@ The twist is represented as a **4 x 4 matrix** in the Lie
 algebra $\mathfrak{se}(3)$:
 
 $$
-[\xi_i] = \begin{bmatrix} [\omega_i] & v_i \\
+[S_i] = \begin{bmatrix} [\omega_i] & v_i \\
 0 & 0 \end{bmatrix}
 $$
 
@@ -697,7 +697,7 @@ $$
 The exponential of a twist produces a rigid-body transformation in $SE(3)$:
 
 $$
-e^{[\xi]\theta} = \begin{bmatrix} e^{[\omega]\theta} & (I - e^{[\omega]\theta})(\omega \times v) + \omega \omega^T v \theta \\
+e^{[S]q} = \begin{bmatrix} e^{[\omega]q} & (I - e^{[\omega]q})(\omega \times v) + \omega \omega^T v q \\
 0 & 1 \end{bmatrix}
 $$
 
@@ -705,7 +705,18 @@ If the joint is **prismatic**, $\omega = 0$, and the exponential simplifies
 to:
 
 $$
-e^{[\xi]\theta} = \begin{bmatrix} I & v \theta \\
+e^{[S]q} = \begin{bmatrix} I & v q \\
+0 & 1 \end{bmatrix}
+$$
+
+The rotation matrix corresponding to $e^{[\omega]q}$ simplifies to:
+
+$$e^{[\omega]q} = I + \sin(q)[\omega] + (1 - \cos(q))[\omega]^2$$
+
+And thus the final power exponent is computed as:
+
+$$
+e^{[S]q} = \begin{bmatrix} R(q) & p(q) \\
 0 & 1 \end{bmatrix}
 $$
 
@@ -713,7 +724,7 @@ $$
 
 Combining all exponentials gives the end-effector transformation:
 
-$$T(\theta) = e^{[\xi_1]\theta_1} e^{[\xi_2]\theta_2} \cdots e^{[\xi_n]\theta_n} M$$
+$$T(q) = e^{[S_1]q_1} e^{[S_2]q_2} \cdots e^{[S_n]q_n} M$$
 
 This formulation naturally handles both revolute and prismatic joints and
 provides a smooth mapping from joint space to Cartesian space.
@@ -723,7 +734,7 @@ provides a smooth mapping from joint space to Cartesian space.
 Alternatively, the POE can be expressed in the **body frame** (expressed at the
 end-effector):
 
-$$T(\theta) = M e^{[\xi_1^B]\theta_1} e^{[\xi_2^B]\theta_2} \cdots e^{[\xi_n^B]\theta_n}$$
+$$T(q) = M e^{[S_1^B]q_1} e^{[S_2^B]q_2} \cdots e^{[S_n^B]q_n}$$
 
-where $[\xi_i^B]$ are twists expressed in the body frame rather than the space
+where $[S_i^B]$ are twists expressed in the body frame rather than the space
 frame.

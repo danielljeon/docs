@@ -37,9 +37,10 @@
   * [6 Product of Exponentials (POE) Formulation](#6-product-of-exponentials-poe-formulation)
     * [6.1 Core Idea](#61-core-idea)
     * [6.2 Twist Representation](#62-twist-representation)
-    * [6.3 Exponential Map](#63-exponential-map)
+    * [6.3 Exponential Map to the Homogenous Transform](#63-exponential-map-to-the-homogenous-transform)
     * [6.4 Forward Kinematics Summary](#64-forward-kinematics-summary)
     * [6.5 Body Frame Form](#65-body-frame-form)
+    * [6.6 Jacobian Matrix](#66-jacobian-matrix)
 <!-- TOC -->
 
 </details>
@@ -382,34 +383,24 @@ velocities.
 
 #### 4.4.1 Jacobian Matrix
 
-Following the derivative method velocity is with the Jacobian matrix given by:
-
-$$\dot{X} = J(\theta) \dot{\theta}$$
-
-$$
-J(q) = \begin{bmatrix} \frac{\partial x}{\partial q_1} & \cdots & \frac{\partial x}{\partial q_n} \\
-\frac{\partial y}{\partial q_1} & \cdots & \frac{\partial y}{\partial q_n} \\
-\frac{\partial z}{\partial q_1} & \cdots & \frac{\partial z}{\partial q_n} \\
-\frac{\partial \phi}{\partial q_1} & \cdots & \frac{\partial \phi}{\partial q_n} \\
-\frac{\partial \theta}{\partial q_1} & \cdots & \frac{\partial \theta}{\partial q_n} \\
-\frac{\partial \psi}{\partial q_1} & \cdots & \frac{\partial \psi}{\partial q_n} \end{bmatrix}
-$$
-
-or using the cross product method:
+The Jacobian matrix relates the speed of the end effector (vector) with the
+joint angle rates (vector).
 
 $$\dot{X} = \begin{bmatrix} v \\
 \omega \end{bmatrix} = J(\theta) \dot{\theta}$$
 
-$$
-J(q) = \begin{bmatrix} J_{v_1} & J_{v_2} & \cdots & J_{v_n} \\
-J_{\omega_1} & J_{\omega_2} & \cdots & J_{\omega_n} \end{bmatrix}
-$$
+Thus, the Jacobian can be solved by taking the derivative of the homogenous
+transform, effectively relating the derivative of the position vector and
+derivative of the joint angles:
 
-where:
-
-- $p_i$ is the position of joint $i$ in the base frame.
-- $p_e$ is the end-effector position in the base frame.
-- $z_i$ is the joint axis direction in the base frame.
+$$
+J(\theta) = \begin{bmatrix} \frac{\partial x}{\partial \theta_1} & \cdots & \frac{\partial x}{\partial \theta_n} \\
+\frac{\partial y}{\partial \theta_1} & \cdots & \frac{\partial y}{\partial \theta_n} \\
+\frac{\partial z}{\partial \theta_1} & \cdots & \frac{\partial z}{\partial \theta_n} \\
+\frac{\partial \phi}{\partial \theta_1} & \cdots & \frac{\partial \phi}{\partial \theta_n} \\
+\frac{\partial \theta}{\partial \theta_1} & \cdots & \frac{\partial \theta}{\partial \theta_n} \\
+\frac{\partial \psi}{\partial \theta_1} & \cdots & \frac{\partial \psi}{\partial \theta_n} \end{bmatrix}
+$$
 
 ### 4.5 Forward Force (FF)
 
@@ -692,7 +683,7 @@ $$
 -\omega_{i,y} & \omega_{i,x} & 0 \end{bmatrix}
 $$
 
-### 6.3 Exponential Map
+### 6.3 Exponential Map to the Homogenous Transform
 
 The exponential of a twist produces a rigid-body transformation in $SE(3)$:
 
@@ -738,3 +729,58 @@ $$T(q) = M e^{[S_1^B]q_1} e^{[S_2^B]q_2} \cdots e^{[S_n^B]q_n}$$
 
 where $[S_i^B]$ are twists expressed in the body frame rather than the space
 frame.
+
+### 6.6 Jacobian Matrix
+
+Recall the Jacobian matrix relates the speed of the end effector (vector) with
+the joint angle rates (vector).
+
+Recall given the twist vector:
+
+$$
+\xi = \begin{bmatrix} \omega \\
+v \end{bmatrix}
+$$
+
+$$v = -\omega \times q$$
+
+With the POE method the Jacobianis represented as:
+
+$$g(\theta) = e^{\hat{\xi}_1 \theta_1} e^{\hat{\xi}_2 \theta_2} \cdots e^{\hat{\xi}_n \theta_n} g_0$$
+
+$$
+J_s(\theta) = \begin{bmatrix}
+\xi_1 &
+\operatorname{Ad}\big(e^{\hat{\xi}_1\theta_1}\big)\xi_2 &
+\operatorname{Ad}\big(e^{\hat{\xi}_1\theta_1}e^{\hat{\xi}_2\theta_2}\big)\xi_3 &
+\cdots &
+\operatorname{Ad}\big(e^{\hat{\xi}_1\theta_1}\cdots e^{\hat{\xi}_{n-1}\theta_{n-1}}\big)\xi_n
+\end{bmatrix}
+$$
+
+Or alternatively:
+
+$$
+J_b(\theta) = \begin{bmatrix}
+\operatorname{Ad}\!\left(e^{-\hat{\xi}_n\theta_n} \cdots e^{-\hat{\xi}_2\theta_2}\right)\xi_1 &
+\operatorname{Ad}\!\left(e^{-\hat{\xi}_n\theta_n} \cdots e^{-\hat{\xi}_3\theta_3}\right)\xi_2 &
+\cdots &
+\xi_n
+\end{bmatrix}
+$$
+
+Where the adjoint operator transforms screw axes through space, rotating the
+angular component and rotating/shifts linear component.
+
+$$
+\operatorname{Ad}(g) = \begin{bmatrix} R & 0 \\
+[p]_\times R & R \end{bmatrix}
+\quad
+\text{for } g = \begin{bmatrix} R & p \\ 0 & 1 \end{bmatrix}
+$$
+
+where:
+
+- $R$: The 3x3 rotation matrix extracted from the homogeneous transform.
+- $p$: The 3 element translation vector extracted from the homogeneous
+  transform.

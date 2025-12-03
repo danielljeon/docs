@@ -594,8 +594,23 @@ motion.
 ### 5.4 Lagrangian (Energy-Based) Approach
 
 The Lagrangian approach uses an **energy formulation** (kinetic - potential
-energy), the Newton-Euler approach uses **force and moment balance** for each
-rigid body.
+energy).
+
+$$\mathcal{L}(\theta,\dot{\theta}) = K(\theta,\dot{\theta}) - U(\theta)$$
+
+where:
+
+- $K$: The kinematic energy.
+- $U$: The potential energy.
+
+The Lagrangian equation of motion is given by:
+
+$$\tau = \frac{d}{dt} \frac{\partial L}{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta}$$
+$$\tau_i = \frac{d}{dt} \frac{\partial L}{\partial \dot{\theta}_i} - \frac{\partial L}{\partial \theta_i}$$
+
+where:
+
+- $\tau$: The joint forces and torques.
 
 ---
 

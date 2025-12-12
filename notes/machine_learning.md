@@ -60,7 +60,8 @@
       * [6.1.1 Adaptive Linear Neuron (Adaline)](#611-adaptive-linear-neuron-adaline)
     * [6.2 Multilayer ANN](#62-multilayer-ann)
       * [6.2.1 Backpropagation](#621-backpropagation)
-  * [7 Summary of Prediction Models](#7-summary-of-prediction-models)
+  * [7 Reinforcement Learning](#7-reinforcement-learning)
+  * [8 Summary of Supervised and Unsupervised Prediction Models](#8-summary-of-supervised-and-unsupervised-prediction-models)
 <!-- TOC -->
 
 </details>
@@ -1091,17 +1092,38 @@ For an output neuron $k$:
 
 ---
 
-## 7 Summary of Prediction Models
+## 7 Reinforcement Learning
 
-| Model                           | Inputs                                                       | Known                                        | Outputs                                                  | High-Level Logic                                                                                                                                           |
-|---------------------------------|--------------------------------------------------------------|----------------------------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Linear Regression               | Continuous/numeric features $x_1, x_2, \ldots, x_n$          | Continuous target $y$                        | Predicted numeric value $\hat{y}$                        | Fits a straight line (or hyperplane) that minimizes squared error between predictions and true values.                                                     |
-| Logistic Regression             | Continuous or categorical features                           | Binary or categorical class labels           | Probability of class membership $P(y=1 \mid x)$          | Uses a logistic (sigmoid) function to map a linear combination of inputs to a probability between 0 and 1.                                                 |
-| Decision Tree (Classification)  | Categorical or numeric features                              | Class labels (supervised)                    | Predicted class                                          | Recursively splits data into branches based on feature thresholds that maximize class purity (e.g., via Gini or entropy).                                  |
-| Regression Decision Tree        | Categorical or numeric features                              | Continuous target (supervised)               | Predicted numeric value                                  | Same logic as a classification tree, but uses mean-squared error to predict continuous outputs at leaf nodes.                                              |
-| Support Vector Machine (SVM)    | Numeric features                                             | Class labels (supervised)                    | Class or decision boundary                               | Finds the optimal separating hyperplane that maximizes the margin between classes (can use kernels for nonlinear data).                                    |
-| K-Nearest Neighbors (KNN)       | Feature vectors                                              | Labeled samples (supervised)                 | Class or numeric prediction                              | Compares a test datapoint to its *k* closest training datapoints and predicts by majority vote (classification) or mean (regression).                      |
-| K-Means Clustering              | Feature vectors                                              | Number of clusters $k$ (unsupervised)        | Cluster assignments and centroids                        | Iteratively assigns datapoints to nearest cluster centers and updates centers to minimize within-cluster distance.                                         |
-| Gaussian Mixture Model (GMM)    | Feature vectors                                              | Number of Gaussian components (unsupervised) | Soft cluster memberships and parameters of each Gaussian | Models data as a mixture of multiple Gaussian distributions, uses Expectation-Maximization (EM) to estimate parameters.                                    |
-| Bayesian Belief Network (BBN)   | Variables (nodes) and conditional relationships              | Structure and conditional probability tables | Updated probability distributions                        | Represents probabilistic dependencies among variables, updates beliefs using Bayes' theorem when new evidence is observed.                                 |
-| Artificial Neural Network (ANN) | Numeric or encoded features (can include images, text, etc.) | Labeled samples (supervised)                 | Predicted numeric value or class probabilities           | Composed of interconnected layers of nodes ("neurons") that learn nonlinear mappings from input to output through backpropagation and weight optimization. |
+Learning by trial and error with delayed feedback.
+
+- The agent tries an action.
+- The environment/world responds with a result (states).
+- The agent gets rewarded or penalized for the result.
+- The agent adapts to do better next time (.
+
+YouTube, Mutual Information:
+
+1. [Reinforcement Learning, by the Book](https://youtu.be/NFo9v_yKQXA)
+2. [Bellman Equations, Dynamic Programming, Generalized Policy Iteration | Reinforcement Learning Part 2](https://youtu.be/_j6pvGEchWU)
+3. [Monte Carlo And Off-Policy Methods | Reinforcement Learning Part 3](https://youtu.be/bpUszPiWM7o)
+4. [Temporal Difference Learning (including Q-Learning) | Reinforcement Learning Part 4](https://youtu.be/AJiG3ykOxmY)
+5. [Function Approximation | Reinforcement Learning Part 5](https://youtu.be/Vky0WVh_FSk)
+6. [Policy Gradient Methods | Reinforcement Learning Part 6](https://youtu.be/e20EY4tFC_Q)
+
+---
+
+## 8 Summary of Supervised and Unsupervised Prediction Models
+
+| Model                           | Inputs                                                       | Known                                                        | Outputs                                                  | High-Level Logic                                                                                                                                                 |
+|---------------------------------|--------------------------------------------------------------|--------------------------------------------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Linear Regression               | Continuous/numeric features $x_1, x_2, \ldots, x_n$          | Continuous target $y$                                        | Predicted numeric value $\hat{y}$                        | Fits a straight line (or hyperplane) that minimizes squared error between predictions and true values.                                                           |
+| Logistic Regression             | Continuous or categorical features                           | Binary or categorical class labels                           | Probability of class membership $P(y=1 \mid x)$          | Uses a logistic (sigmoid) function to map a linear combination of inputs to a probability between 0 and 1.                                                       |
+| Decision Tree (Classification)  | Categorical or numeric features                              | Class labels (supervised)                                    | Predicted class                                          | Recursively splits data into branches based on feature thresholds that maximize class purity (e.g., via Gini or entropy).                                        |
+| Regression Decision Tree        | Categorical or numeric features                              | Continuous target (supervised)                               | Predicted numeric value                                  | Same logic as a classification tree, but uses mean-squared error to predict continuous outputs at leaf nodes.                                                    |
+| Support Vector Machine (SVM)    | Numeric features                                             | Class labels (supervised)                                    | Class or decision boundary                               | Finds the optimal separating hyperplane that maximizes the margin between classes (can use kernels for nonlinear data).                                          |
+| K-Nearest Neighbors (KNN)       | Feature vectors                                              | Labeled samples (supervised)                                 | Class or numeric prediction                              | Compares a test datapoint to its *k* closest training datapoints and predicts by majority vote (classification) or mean (regression).                            |
+| K-Means Clustering              | Feature vectors                                              | Number of clusters $k$ (unsupervised)                        | Cluster assignments and centroids                        | Iteratively assigns datapoints to nearest cluster centers and updates centers to minimize within-cluster distance.                                               |
+| Gaussian Mixture Model (GMM)    | Feature vectors                                              | Number of Gaussian components (unsupervised)                 | Soft cluster memberships and parameters of each Gaussian | Models data as a mixture of multiple Gaussian distributions, uses Expectation-Maximization (EM) to estimate parameters.                                          |
+| Bayesian Belief Network (BBN)   | Variables (nodes) and conditional relationships              | Structure and conditional probability tables                 | Updated probability distributions                        | Represents probabilistic dependencies among variables, updates beliefs using Bayes' theorem when new evidence is observed.                                       |
+| Artificial Neural Network (ANN) | Numeric or encoded features (can include images, text, etc.) | Labeled samples (supervised)                                 | Predicted numeric value or class probabilities           | Composed of interconnected layers of nodes ("neurons") that learn nonlinear mappings from input to output through backpropagation and weight optimization.       |
+| Reinforcement Learning (RL)     | States, rewards and done/terminal flags                      | Discount factor, learning rate, policy, exploration strategy | Agent action                                             | Using states, rewards as inputs and problem structure, it produces actions and policies as outputs, improving behavior through iterative runs maximizing reward. |

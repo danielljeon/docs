@@ -63,11 +63,11 @@ Prerequisites for macOS:
 Installation for macOS:
 
 - If stopped by macOS, open the `Privacy & Security` in System Settings to allow
-  running `SetupSTM32CubeMX-6.9.1.app`.
+  running `SetupSTM32CubeMX-6.17.0.app`.
 
-    - If wizard never opens or errors, try (replace `6.9.1` with your version):
+    - If wizard never opens or errors, try (replace `6.17.0` with your version):
     ```shell
-    sudo xattr -cr ~/SetupSTM32CubeMX-6.9.1.app
+    sudo xattr -cr ~/SetupSTM32CubeMX-6.17.0.app
     ```
 
 ### 1.2 STM32CubeCLT*
@@ -79,7 +79,7 @@ STMicroelectronics tool integration for external IDEs.
 Installation for macOS:
 
 - If stopped by macOS, open the `Privacy & Security` in System Settings to allow
-  running `st-stm32cubeclt_1.18.0_24403_20250225_1636-macosx_x86_64.pkg`.
+  running `st-stm32cubeclt_<VERSION_TAG>-macosx_x86_64.pkg`.
 
 ### 1.3 STM32CubeIDE*
 
@@ -110,10 +110,7 @@ Installation for macOS:
       on [Original GCC](https://formulae.brew.sh/formula/arm-none-eabi-gcc).
 
 **Recommended resource:**
-The [Mbed Community Edition](https://github.com/mbed-ce/mbed-os) maintains a
-well documented [GitHub wiki](https://github.com/mbed-ce/mbed-os/wiki) with
-a [Toolchain Setup Guide](https://github.com/mbed-ce/mbed-os/wiki/Toolchain-Setup-Guide)
-for ARM GCC.
+See [Mbed CE Docs](https://mbed-ce.dev/getting-started/toolchain-install).
 
 ### 1.6 OpenOCD*
 
@@ -175,7 +172,7 @@ Add the path for `OpenOCD` and `STM32CubeMX`:
     /Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources/STM32CubeMX
     ```
     ```
-    /opt/ST/STM32CubeCLT_1.18.0
+    /opt/ST/STM32CubeCLT_1.21.0
     ```
 
 ### 2.3 Setup Arm GNU Toolchain GCC and G++
@@ -187,10 +184,10 @@ Add the path for `Arm GNU Toolchain` (`arm-none-eabi-gcc`).
 
 - For Windows the default paths are:
     ```
-    C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\12.3 rel1\bin\arm-none-eabi-gcc.exe
+    C:\Program Files\Arm\GNU Toolchain mingw-w64-x86_64-arm-none-eabi\bin\arm-none-eabi-gcc.exe
     ```
     ```
-    C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\12.3 rel1\bin\arm-none-eabi-g++.exe
+    C:\Program Files\Arm\GNU Toolchain mingw-w64-x86_64-arm-none-eabi\bin\arm-none-eabi-g++.exe
     ```
 - For macOS the default paths (for homebrew original GCC or ARM Developer
   version) are:
